@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  webapi:
+    build:
+      context: ./springboot
+      dockerfile: Dockerfile-dev
+    container_name: asakatu-kun-api
+    volumes:
+      - ./springboot:/usr/src/mymaven
+    command: mvn clean spring-boot:run
+    restart: always
+    ports:
+      - "8080:8080"
+    working_dir: /usr/src/mymaven
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0.16
+    container_name: asakatu-kun-db
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: asakatu
+      MYSQL_USER: asakatu
+      MYSQL_PASSWORD: himitu
+    volumes:
+      - ./mysql/sqls:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
