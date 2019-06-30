@@ -16,6 +16,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<Phone> phonesList;
 
+    @ManyToMany(mappedBy = "employeeList")
+    private List<Event> eventList;
+
     public Long getId() {
         return id;
     }

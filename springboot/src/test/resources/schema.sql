@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS event
 );
 
 
-CREATE TABLE IF NOT EXISTS user_event_association
+CREATE TABLE IF NOT EXISTS m_emp_event
 (
     empno    bigint(20),
     event_id bigint(20),
