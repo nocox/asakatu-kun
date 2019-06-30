@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS user_event_association;
+DROP TABLE IF EXISTS user_group_association;
+DROP TABLE IF EXISTS user_status;
+DROP TABLE IF EXISTS user_group;
+DROP TABLE IF EXISTS user_status_master;
+DROP TABLE IF EXISTS event;
+DROP TABLE IF EXISTS user;
+
 CREATE TABLE IF NOT EXISTS user(
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
