@@ -7,10 +7,10 @@ import javax.persistence.*;
 public class Phone {
 
     @Id
-    @Column(name = "`phone_id`")
+    @Column(name = "phone_id")
     private Long phoneId;
 
-    @Column(name = "`number`")
+    @Column(name = "number")
     private String number;
 
     @ManyToOne

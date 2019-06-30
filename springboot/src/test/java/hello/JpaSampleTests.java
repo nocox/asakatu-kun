@@ -27,21 +27,21 @@ public class JpaSampleTests {
 
     @Test
     public void testFindById() {
-        Optional<Employee> findEmployee = employeeRepository.findById(5L);
+        Optional<Employee> findEmployee = employeeRepository.findById(1L);
         assert findEmployee.isPresent();
-        Assert.assertThat(findEmployee.get().getId(), Is.is(5L));
+        Assert.assertThat(findEmployee.get().getId(), Is.is(1L));
     }
 
     @Test
     public void testFindByEmpname() {
         Optional<Employee> findEmployee = employeeRepository.findByEmpname("従業員B");
         assert findEmployee.isPresent();
-        Assert.assertThat(findEmployee.get().getId(), Is.is(6L));
+        Assert.assertThat(findEmployee.get().getId(), Is.is(2L));
     }
 
     @Test
     public void testFindPhoneListByEmployeeId() {
-        List<Phone> phoneList = phoneRepository.findPhonesByEmpId(5L);
+        List<Phone> phoneList = phoneRepository.findPhonesByEmpId(1L);
 
         Assert.assertThat(phoneList.size(), Is.is(2));
         Assert.assertThat(phoneList.get(0).getNumber(), Is.is("090-0000-0000"));
@@ -50,7 +50,7 @@ public class JpaSampleTests {
 
     @Test
     public void testFindPhoneListByEmployee() {
-        Optional<Employee> findEmployee = employeeRepository.findById(5L);
+        Optional<Employee> findEmployee = employeeRepository.findById(1L);
         assert findEmployee.isPresent();
         List<Phone> phoneList = phoneRepository.findPhonesByEmp(findEmployee.get());
 
@@ -61,7 +61,7 @@ public class JpaSampleTests {
 
     @Test
     public void testFindPhoneListByEmployeeIdAtAutoQuery() {
-        List<Phone> phoneList = phoneRepository.findPhonesByEmployee_Id(5L);
+        List<Phone> phoneList = phoneRepository.findPhonesByEmployee_Id(1L);
 
         Assert.assertThat(phoneList.size(), Is.is(2));
         Assert.assertThat(phoneList.get(0).getNumber(), Is.is("090-0000-0000"));
