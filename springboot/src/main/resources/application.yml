@@ -4,3 +4,7 @@ spring:
     username: asakatu
     password: himitu
     driverClassName: com.mysql.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
