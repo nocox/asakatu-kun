@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS asakatu_event (
      duration DOUBLE,
      address VARCHAR(255),
      seat_info VARCHAR(255),
-     event_status VARCHAR(50),
+     event_status ENUM('yet', 'fin', 'canceled', 'progress'),
      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
      updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
