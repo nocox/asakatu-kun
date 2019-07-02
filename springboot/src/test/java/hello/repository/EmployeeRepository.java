@@ -1,7 +1,7 @@
 package hello.repository;
 
 import hello.entity.Employee;
-import hello.entity.Event;
+import hello.entity.TestEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +13,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 
     Optional<Employee> findByEmpname(String empname);
 
-    List<Employee> findEmployeesByEventListIn(Event event);
+    List<Employee> findEmployeesByEventListIn(TestEvent testEvent);
 }

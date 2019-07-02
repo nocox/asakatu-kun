@@ -1,10 +1,10 @@
 package hello;
 
 import hello.entity.Employee;
-import hello.entity.Event;
+import hello.entity.TestEvent;
 import hello.entity.Phone;
 import hello.repository.EmployeeRepository;
-import hello.repository.EventRepository;
+import hello.repository.TestEventRepository;
 import hello.repository.PhoneRepository;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class JpaSampleTests {
     PhoneRepository phoneRepository;
 
     @Autowired
-    EventRepository eventRepository;
+    TestEventRepository testEventRepository;
 
     @Test
     public void testFindById() {
@@ -75,7 +75,7 @@ public class JpaSampleTests {
 
     @Test
     public void testFindEventListByEmployeeAtNativeQuery() {
-        List<Event> eventByEmployeeListIn = eventRepository.findEventListByEmployeeId(1L);
+        List<TestEvent> eventByEmployeeListIn = testEventRepository.findEventListByEmployeeId(1L);
         Assert.assertThat(eventByEmployeeListIn.size(), Is.is(2));
         Assert.assertThat(eventByEmployeeListIn.get(0).getEventName(), Is.is("asakatu_vol1"));
         Assert.assertThat(eventByEmployeeListIn.get(1).getEventName(), Is.is("hirukatu_vol1"));
@@ -85,14 +85,14 @@ public class JpaSampleTests {
     public void testFindEventListByEmployeeAtAutoQuery() {
         Optional<Employee> findEmployee = employeeRepository.findByEmpname("従業員C");
         assert findEmployee.isPresent();
-        List<Event> eventByEmployeeListIn = eventRepository.findEventsByEmployeeListIn(findEmployee.get());
+        List<TestEvent> eventByEmployeeListIn = testEventRepository.findEventsByEmployeeListIn(findEmployee.get());
         Assert.assertThat(eventByEmployeeListIn.size(), Is.is(1));
         Assert.assertThat(eventByEmployeeListIn.get(0).getEventName(), Is.is("hirukatu_vol1"));
     }
 
     @Test
     public void testFindEmployeeListByEvent() {
-        Optional<Event> event = eventRepository.findById(2L);
+        Optional<TestEvent> event = testEventRepository.findById(2L);
         assert event.isPresent();
         Assert.assertThat(event.get().getEventName(), Is.is("hirukatu_vol1"));
         List<Employee> employeeList = employeeRepository.findEmployeesByEventListIn(event.get());
