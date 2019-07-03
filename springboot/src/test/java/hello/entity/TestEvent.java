@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "event")
-public class Event {
+@Table(name = "test_event")
+public class TestEvent {
     @Id
     @Column(name = "event_id")
     private Long id;
