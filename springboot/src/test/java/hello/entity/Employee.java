@@ -17,7 +17,7 @@ public class Employee {
     private List<Phone> phonesList;
 
     @ManyToMany(mappedBy = "employeeList")
-    private List<Event> eventList;
+    private List<TestEvent> eventList;
 
     public Long getId() {
         return id;

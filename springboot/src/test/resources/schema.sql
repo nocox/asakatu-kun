@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS phone
     FOREIGN KEY (empno) REFERENCES m_emp (empno)
 );
 
-DROP TABLE IF EXISTS event;
-CREATE TABLE IF NOT EXISTS event
+DROP TABLE IF EXISTS test_event;
+CREATE TABLE IF NOT EXISTS test_event
 (
     event_id   bigint(20) AUTO_INCREMENT,
     event_name varchar(255) DEFAULT NULL,
@@ -31,5 +31,5 @@ CREATE TABLE IF NOT EXISTS m_emp_event
     empno    bigint(20),
     event_id bigint(20),
     FOREIGN KEY (empno) REFERENCES m_emp (empno),
-    FOREIGN KEY (event_id) REFERENCES event (event_id)
+    FOREIGN KEY (event_id) REFERENCES test_event (event_id)
 );

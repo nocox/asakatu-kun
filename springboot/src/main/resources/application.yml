@@ -5,7 +5,7 @@ spring:
     password: himitu
     driverClassName: com.mysql.cj.jdbc.Driver
     initialization-mode: always
-    schema: classpath:schema_prod.sql
+    schema: classpath:schema-product.sql
 
   jpa:
     hibernate:
