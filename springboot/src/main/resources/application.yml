@@ -4,6 +4,8 @@ spring:
     username: asakatu
     password: himitu
     driverClassName: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+    schema: classpath:schema_prod.sql
 
   jpa:
     hibernate:
