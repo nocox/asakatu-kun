@@ -1,8 +1,10 @@
 package hello.entity;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "event")
@@ -12,7 +14,7 @@ public class Event {
 	private Long id;
 
 	@Column(name = "start_date")
-	private LocalDateTime startDate;
+	private Timestamp startDate;
 
 	@Column(name = "duration")
 	private double duration;
@@ -27,10 +29,10 @@ public class Event {
 	private String eventStatus;
 
 	@Column(name = "created_at")
-	private LocalDateTime createdAt;
+	private Timestamp createdAt;
 
 	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
+	private Timestamp updatedAt;
 
 //	@ManyToMany
 //	@JoinTable(name = "user_event_association",
@@ -46,11 +48,11 @@ public class Event {
 		this.id = id;
 	}
 
-	public LocalDateTime getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
@@ -86,19 +88,19 @@ public class Event {
 		this.eventStatus = eventStatus;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public LocalDateTime getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(LocalDateTime updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 }
