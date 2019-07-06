@@ -18,6 +18,7 @@ public class RegistrationController {
 
     @PostMapping(path = "/registration")
     public User registration(@RequestBody User user) {
+        // TODO: nocox 0706 ここでバリデーション
         return userRepository.save(user);
     }
 }
