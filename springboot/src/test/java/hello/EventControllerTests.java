@@ -2,31 +2,25 @@ package hello;
 
 import hello.entity.Event;
 import hello.repository.EventRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EventControllerTests {
+public class EventControllerTests extends AbstractTest{
 
 	@Autowired
 	EventRepository eventRepository;
@@ -34,28 +28,22 @@ public class EventControllerTests {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	@Override
+	@Before
+	public void setUp() {
+		super.setUp();
+	}
+
 	@Test
-	public void testFinaAllEvent() {
-		List<Event> eventList = eventRepository.findAll();
+	public void getEventsList() throws Exception {
+		String uri = "/events";
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+				.accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
-		String sql = "SELECT * FROM event";
-		List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql);
-
-		for (int i = 0; i < eventList.size(); i++) {
-
-			Long eventId = ((long) maps.get(i).get("event_id"));
-			Timestamp startDate = ((Timestamp) maps.get(i).get("start_date"));
-			Double duration = ((Double) maps.get(i).get("duration"));
-			String address = ((String) maps.get(i).get("address"));
-			String seatInfo = ((String) maps.get(i).get("seat_info"));
-			String eventStatus = ((String) maps.get(i).get("event_status"));
-
-			assertThat(eventList.get(i).getId(), is(eventId));
-			assertThat(eventList.get(i).getStartDate(), is(startDate));
-			assertThat(eventList.get(i).getDuration(), is(duration));
-			assertThat(eventList.get(i).getAddress(), is(address));
-			assertThat(eventList.get(i).getSeatInfo(), is(seatInfo));
-			assertThat(eventList.get(i).getEventStatus(), is(eventStatus));
-		}
+		int status = mvcResult.getResponse().getStatus();
+		assertEquals(200, status);
+		String content = mvcResult.getResponse().getContentAsString();
+		Event[] eventList = super.mapFromJson(content, Event[].class);
+		assertTrue(eventList.length > 0);
 	}
 }
