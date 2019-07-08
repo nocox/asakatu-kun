@@ -1,4 +1,4 @@
-package hello.controller;
+package hello.exeptions;
 
 public class UserAlreadyExistException extends IllegalArgumentException {
 

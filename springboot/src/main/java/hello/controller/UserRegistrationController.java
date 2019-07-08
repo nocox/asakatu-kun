@@ -1,15 +1,11 @@
 package hello.controller;
 
 import hello.entity.User;
+import hello.exeptions.UserAlreadyExistException;
 import hello.repository.UserRepository;
 import hello.service.UserRegistrationService;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Optional;
 
 @RestController
 public class UserRegistrationController {
@@ -25,9 +21,9 @@ public class UserRegistrationController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(path = "/registration")
+    @PostMapping(path = "/user")
     @ResponseBody
-    public CreateUserResponse registration(@RequestBody User user) {
+    public UserRegistrationResponse userRegistration(@RequestBody User user) {
 
         // todo nocox 0706 nullcheckが必要かも
 
@@ -49,15 +45,15 @@ public class UserRegistrationController {
 
 
         userRegistrationService.save(user);
-        return new CreateUserResponse("success", user.getUsername());
+        return new UserRegistrationResponse("success", user.getUsername());
     }
 }
 
-class CreateUserResponse  {
+class UserRegistrationResponse {
     private String message;
     private String username;
 
-    public CreateUserResponse(String message, String username) {
+    UserRegistrationResponse(String message, String username) {
         this.message = message;
         this.username = username;
     }
