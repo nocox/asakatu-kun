@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -101,5 +104,79 @@ public class JpaSampleTests {
         Assert.assertThat(employeeList.get(0).getEmpname(), Is.is("従業員A"));
         Assert.assertThat(employeeList.get(1).getEmpname(), Is.is("従業員B"));
         Assert.assertThat(employeeList.get(2).getEmpname(), Is.is("従業員C"));
+    }
+
+    @Test
+    public void testSaveEvent() {
+        Optional<Employee> findEmpA = employeeRepository.findById(1L);
+        Optional<Employee> findEmpB = employeeRepository.findById(2L);
+        Optional<Employee> findEmpC = employeeRepository.findById(3L);
+
+        assert findEmpA.isPresent() && findEmpB.isPresent() && findEmpC.isPresent();
+
+        TestEvent testEvent = new TestEvent();
+        testEvent.setEvent_name("new_insert_event");
+
+        testEvent.getEmployeeList().add(findEmpA.get());
+        testEvent.getEmployeeList().add(findEmpB.get());
+        testEvent.getEmployeeList().add(findEmpC.get());
+
+        testEventRepository.save(testEvent);
+
+        Optional<TestEvent> insertedEvent = testEventRepository.findById(3L);
+
+        assert insertedEvent.isPresent();
+
+        List<Employee> employeeList = employeeRepository.findEmployeesByEventListIn(insertedEvent.get());
+
+        Assert.assertThat(employeeList.size(), Is.is(3));
+        Assert.assertThat(employeeList.get(0).getEmpname(), Is.is("従業員A"));
+        Assert.assertThat(employeeList.get(1).getEmpname(), Is.is("従業員B"));
+        Assert.assertThat(employeeList.get(2).getEmpname(), Is.is("従業員C"));
+    }
+
+    @Test
+    public void testRandomList() {
+        List<Employee> allEmployee = employeeRepository.findAll();
+
+        System.out.println("---シャッフル前---");
+        for (Employee employee : allEmployee) {
+            System.out.println(employee.getEmpname());
+        }
+
+        // リスト内の値をシャッフルする
+        Collections.shuffle(allEmployee);
+
+        System.out.println("---シャッフル後---");
+        for (Employee employee : allEmployee) {
+            System.out.println(employee.getEmpname());
+        }
+
+        System.out.println("---リスト分割---");
+        List<List<Employee>> chunk = chunk(allEmployee, 2);
+        for (List<Employee> employees : chunk) {
+            for (Employee employee : employees) {
+                System.out.println(employee.getEmpname());
+            }
+            System.out.println("----");
+        }
+
+    }
+
+    public static <T> List<List<T>> chunk(List<T> origin, int size) {
+        if (origin == null || origin.isEmpty() || size <= 0) {
+            return Collections.emptyList();
+        }
+
+        int block = origin.size() / size + (origin.size() % size > 0 ? 1 : 0);
+
+        return IntStream.range(0, block)
+                .boxed()
+                .map(i -> {
+                    int start = i * size;
+                    int end = Math.min(start + size, origin.size());
+                    return origin.subList(start, end);
+                })
+                .collect(Collectors.toList());
     }
 }

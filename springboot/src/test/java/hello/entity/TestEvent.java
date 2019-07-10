@@ -1,6 +1,7 @@
 package hello.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -8,6 +9,7 @@ import java.util.List;
 public class TestEvent {
     @Id
     @Column(name = "event_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "event_name")
@@ -17,7 +19,12 @@ public class TestEvent {
     @JoinTable(name = "m_emp_event",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "empno"))
-    private List<Employee> employeeList;
+    private List<Employee> employeeList = new ArrayList<>();
+
+    public void addEmployee(Employee employee){
+        employeeList.add(employee);
+        employee.getEventList().add(this);
+    }
 
     public Long getId() {
         return id;

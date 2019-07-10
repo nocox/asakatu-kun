@@ -8,12 +8,13 @@ services:
     volumes:
       - ./springboot:/usr/src/mymaven
     command: mvn clean spring-boot:run
-    restart: always
+    # restart: always
     ports:
       - "8080:8080"
     working_dir: /usr/src/mymaven
     depends_on:
       - db
+    env_file: /opt/secrets.env
   db:
     image: mysql:8.0.16
     container_name: asakatu-kun-db

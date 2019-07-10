@@ -1,6 +1,7 @@
 package hello.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,11 @@ public class Employee {
     private List<Phone> phonesList;
 
     @ManyToMany(mappedBy = "employeeList")
-    private List<TestEvent> eventList;
+    private List<TestEvent> eventList = new ArrayList<>();
+
+    public List<TestEvent> getEventList() {
+        return eventList;
+    }
 
     public Long getId() {
         return id;
