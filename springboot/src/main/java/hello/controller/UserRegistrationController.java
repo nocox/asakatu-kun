@@ -53,6 +53,7 @@ class UserRegistrationResponse {
     private String username;
 
     UserRegistrationResponse(String message, String username) {
+        this.status = 200;
         this.message = message;
         this.username = username;
     }
@@ -63,5 +64,26 @@ class UserRegistrationResponse {
 
     public String getUsername() {
         return username;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+}
+
+class OkResponseBuilder {
+    final private Integer status = 200;
+    private Object data;
+
+    public OkResponseBuilder(Object data) {
+        this.data = data;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public Object getData() {
+        return data;
     }
 }
