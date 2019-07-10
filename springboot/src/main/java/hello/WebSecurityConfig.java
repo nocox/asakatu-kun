@@ -16,14 +16,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .mvcMatchers("/greeting", "/user" )
+                .mvcMatchers("/greeting", "/user_registration" )
                     .permitAll()
                 .anyRequest()
                     .authenticated()
                 .and()
             .csrf()
                 //.disable()
-                .ignoringAntMatchers("/user")
+                .ignoringAntMatchers("/user_registration")
                 .csrfTokenRepository(new CookieCsrfTokenRepository())
         ;
     }

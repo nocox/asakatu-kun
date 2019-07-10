@@ -20,9 +20,9 @@ public class UserRegistrationController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/user_registration")
     @ResponseBody
-    public UserRegistrationResponse userRegistration(@RequestBody User user) {
+    public OkResponse userRegistration(@RequestBody User user) {
 
         // todo nocox 0706 nullcheckが必要かも
 
@@ -30,7 +30,7 @@ public class UserRegistrationController {
             throw new IllegalArgumentException("ユーザ名の長さが規定の範囲と違います");
         }
 
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UserAlreadyExistException("そのユーザ名は既に使われています．");
         }
 
@@ -44,16 +44,17 @@ public class UserRegistrationController {
 
 
         userRegistrationService.save(user);
-        return new UserRegistrationResponse("success", user.getUsername());
+
+        return new OkResponse(new UserRegistrationResponse("success", user.getUsername()));
     }
 }
+
 
 class UserRegistrationResponse {
     private String message;
     private String username;
 
     UserRegistrationResponse(String message, String username) {
-        this.status = 200;
         this.message = message;
         this.username = username;
     }
@@ -66,21 +67,18 @@ class UserRegistrationResponse {
         return username;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
 }
 
-class OkResponseBuilder {
-    final private Integer status = 200;
+
+class OkResponse {
     private Object data;
 
-    public OkResponseBuilder(Object data) {
+    public OkResponse(Object data) {
         this.data = data;
     }
 
     public Integer getStatus() {
-        return status;
+        return 200;
     }
 
     public Object getData() {

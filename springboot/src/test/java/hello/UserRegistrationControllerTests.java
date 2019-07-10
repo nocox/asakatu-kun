@@ -53,7 +53,7 @@ public class UserRegistrationControllerTests {
         User testUser = createTestUser();
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().isOk());
@@ -74,7 +74,7 @@ public class UserRegistrationControllerTests {
         testUser.setUsername("aa");
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().is5xxServerError());
@@ -87,7 +87,7 @@ public class UserRegistrationControllerTests {
         testUser.setUsername("abababababababababababababababababababababababababa");
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().is5xxServerError());
@@ -97,16 +97,17 @@ public class UserRegistrationControllerTests {
     public void userAlreadyExistException() throws Exception {
 
         User testUser = createTestUser();
+        testUser.setUsername("tester6");
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().isOk());
 
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().is5xxServerError());
@@ -119,7 +120,7 @@ public class UserRegistrationControllerTests {
         testUser.setPassword("aabbc");
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().is5xxServerError());
@@ -132,7 +133,7 @@ public class UserRegistrationControllerTests {
         testUser.setPassword("aaaaaaaaabbbbbbbbbbbcc");
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().is5xxServerError());
@@ -146,7 +147,7 @@ public class UserRegistrationControllerTests {
         testUser.setPasswordConfirm("aaaaaaaaa");
 
         this.mockMvc.perform(
-                post("/user")
+                post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser))
         ).andDo(print()).andExpect(status().is5xxServerError());
