@@ -15,7 +15,7 @@ public class SimpleLoginUser extends org.springframework.security.core.userdetai
     }
 
     public SimpleLoginUser(User user) {
-        super(user.getUsername(),user.getPassword(), determineRoles(false));
+        super(user.getUsername(),user.getPassword(), determineRoles(false)); // Adminユーザは持たないので，常にfalse
         this.user = user;
     }
 
