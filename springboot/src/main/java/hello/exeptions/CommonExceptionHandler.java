@@ -25,26 +25,47 @@ public class CommonExceptionHandler
     }
 }
 
+
 class ExceptionBody {
 
     private final String status;
-    private final String message;
+    private Object data;
 
-    public ExceptionBody(String status, String message) {
+
+
+    public ExceptionBody(String status, Object data) {
         this.status = status;
-        this.message = message;
+        this.data = data;
     }
 
-    public ExceptionBody(RuntimeException exception) {
+    ExceptionBody(RuntimeException exception) {
         this.status = "500";
-        this.message = exception.getMessage();
+        this.data = new ExceptionMessage(exception);
     }
 
     public String getStatus() {
         return status;
     }
 
+    public Object getData() {
+        return data;
+    }
+}
+
+
+class ExceptionMessage {
+
+    private String message;
+
+    ExceptionMessage(RuntimeException exception) {
+        this.message = exception.getMessage();
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

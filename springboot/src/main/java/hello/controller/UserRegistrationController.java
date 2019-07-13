@@ -31,7 +31,7 @@ public class UserRegistrationController {
         }
 
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserAlreadyExistException("そのユーザ名は既に使われています．");
+            throw new UserAlreadyExistException("そのユーザ名は既に使われています");
         }
 
         if (user.getPassword().length() < 6 || user.getPassword().length() > 20) {
@@ -39,7 +39,7 @@ public class UserRegistrationController {
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            throw new IllegalArgumentException("パスワードが一致しません．");
+            throw new IllegalArgumentException("パスワードが一致しません");
         }
 
 
