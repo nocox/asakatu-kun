@@ -20,6 +20,7 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .mvcMatchers("/greeting", "/user_registration" )
+                .mvcMatchers("/greeting", "/user_registration", "/prelogin" )
                     .permitAll()
                 .mvcMatchers( "/")
                     .hasRole("USER")
@@ -55,11 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureHandler(new SimpleAuthenticationFailureHandler())
             .and()
                 .csrf()
-                    .disable()
-//                    .ignoringAntMatchers("/user_registration")
-//                .ignoringAntMatchers("/login")
-//                .csrfTokenRepository(new CookieCsrfTokenRepository())
-
+                  .ignoringAntMatchers("/user_registration")
+                  .csrfTokenRepository(new CookieCsrfTokenRepository())
         ;
     }
 
