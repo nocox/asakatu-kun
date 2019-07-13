@@ -45,7 +45,7 @@ public class UserRegistrationControllerTests {
         testUser.setPassword("takatakataka");
         testUser.setPasswordConfirm("takatakataka");
         testUser.setEmail("doi@aaa.com");
-        testUser.setDisplay_name("nocox");
+        testUser.setDisplayName("nocox");
         return testUser;
     }
 
@@ -66,7 +66,7 @@ public class UserRegistrationControllerTests {
         Assert.assertThat(findUser.get().getUsername(), Is.is(testUser.getUsername()));
         Assert.assertThat(bCryptPasswordEncoder.matches(testUser.getPassword(), findUser.get().getPassword()), Is.is(true));
         Assert.assertThat(findUser.get().getEmail(), Is.is(testUser.getEmail()));
-        Assert.assertThat(findUser.get().getDisplay_name(), Is.is(testUser.getDisplay_name()));
+        Assert.assertThat(findUser.get().getDisplayName(), Is.is(testUser.getDisplayName()));
     }
 
     @Test
