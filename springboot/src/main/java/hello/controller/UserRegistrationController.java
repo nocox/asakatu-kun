@@ -21,9 +21,9 @@ public class UserRegistrationController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/user_registration")
     @ResponseBody
-    public UserRegistrationResponse userRegistration(@RequestBody User user) {
+    public OkResponse userRegistration(@RequestBody User user) {
 
         // todo nocox 0706 nullcheckが必要かも
 
@@ -31,8 +31,8 @@ public class UserRegistrationController {
             throw new IllegalArgumentException("ユーザ名の長さが規定の範囲と違います");
         }
 
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserAlreadyExistException("そのユーザ名は既に使われています．");
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new UserAlreadyExistException("そのユーザ名は既に使われています");
         }
 
         if (user.getPassword().length() < 6 || user.getPassword().length() > 20) {
@@ -40,14 +40,16 @@ public class UserRegistrationController {
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            throw new IllegalArgumentException("パスワードが一致しません．");
+            throw new IllegalArgumentException("パスワードが一致しません");
         }
 
 
         userRegistrationService.save(user);
-        return new UserRegistrationResponse("success", user.getUsername());
+
+        return new OkResponse(new UserRegistrationResponse("success", user.getUsername()));
     }
 }
+
 
 class UserRegistrationResponse {
     private String message;
@@ -64,5 +66,23 @@ class UserRegistrationResponse {
 
     public String getUsername() {
         return username;
+    }
+
+}
+
+
+class OkResponse {
+    private Object data;
+
+    public OkResponse(Object data) {
+        this.data = data;
+    }
+
+    public Integer getStatus() {
+        return 200;
+    }
+
+    public Object getData() {
+        return data;
     }
 }

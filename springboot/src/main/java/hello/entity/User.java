@@ -15,7 +15,8 @@ public class User {
 
     private String email;
 
-    private String display_name;
+    @Column(name = "display_name")
+    private String displayName;
 
     private String password;
 
@@ -46,12 +47,12 @@ public class User {
         this.email = email;
     }
 
-    public String getDisplay_name() {
-        return display_name;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setDisplay_name(String display_name) {
-        this.display_name = display_name;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getPassword() {

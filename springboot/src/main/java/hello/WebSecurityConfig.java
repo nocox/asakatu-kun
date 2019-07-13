@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .mvcMatchers("/greeting", "/user" )
+                .mvcMatchers("/greeting", "/user_registration" )
                     .permitAll()
                 .mvcMatchers( "/")
                     .hasRole("USER")
@@ -56,9 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .csrf()
                     .disable()
-//                .ignoringAntMatchers("/registration")
+//                    .ignoringAntMatchers("/user_registration")
 //                .ignoringAntMatchers("/login")
 //                .csrfTokenRepository(new CookieCsrfTokenRepository())
+
         ;
     }
 
