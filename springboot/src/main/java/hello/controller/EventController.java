@@ -5,12 +5,14 @@ import hello.entity.SimpleLoginUser;
 import hello.entity.User;
 import hello.entity.UserStatus;
 import hello.repository.EventRepository;
+import hello.repository.UserRepository;
 import hello.repository.UserStatusRepository;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,15 +21,34 @@ public class EventController {
 
     private final UserStatusRepository userStatusRepository;
 
-	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository) {
+    private final UserRepository userRepository;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository) {
 		this.eventRepository = eventRepository;
 		this.userStatusRepository = userStatusRepository;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping("/events")
 	public List<Event> getEventsList() {
 		return eventRepository.findAll();
 	}
+
+    @RequestMapping("/event/{id}/users")
+    public OkResponse getEventJoinedUsersList(@PathVariable long id) {
+        Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        List<User> eventJoinedUsersList = userRepository.findUsersByEventsListIn(event);
+        List<JoinedUserInfo> result = new ArrayList<>();
+        JoinedUserInfo user;
+        // 全部だとパスワードとかも入っちゃうので厳選
+        for (User jounedUser : eventJoinedUsersList) {
+            user = new JoinedUserInfo();
+            user.setDisplayName(jounedUser.getDisplayName());
+            user.setId(jounedUser.getId());
+            result.add(user);
+        }
+        return new OkResponse(new EventJoinedResponse("success", result));
+    }
 
     @PostMapping("/event/{id}/user")
     public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
@@ -73,6 +94,24 @@ class EventResponse {
 
 }
 
+class EventJoinedResponse {
+    private String message;
+    private List<JoinedUserInfo> userList;
+
+    EventJoinedResponse(String message, List<JoinedUserInfo> userList) {
+        this.message = message;
+        this.userList = userList;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<JoinedUserInfo> getUserList() {
+        return userList;
+    }
+}
+
 class CreatedResponse {
     private Object data;
 
@@ -86,5 +125,27 @@ class CreatedResponse {
 
     public Object getData() {
         return data;
+    }
+}
+
+class JoinedUserInfo {
+    private Long id;
+
+    private String displayName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
