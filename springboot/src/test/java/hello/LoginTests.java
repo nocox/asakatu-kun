@@ -1,7 +1,6 @@
 package hello;
 
 import hello.entity.User;
-import hello.service.LoginUserService;
 import hello.service.UserRegistrationService;
 import org.junit.Before;
 import org.junit.Test;
