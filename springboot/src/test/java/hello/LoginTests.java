@@ -43,26 +43,26 @@ public class LoginTests {
     }
 
 
-    @Before
-    public void userRegistration(){
-        // ユーザ登録
-        userRegistrationService.save(createTestUser());
-    }
-
-
     @Test
     public void login() throws Exception {
+        User testUser = createTestUser();
+        testUser.setUsername("loginTester");
+        userRegistrationService.save(testUser);
+
         this.mockMvc.perform(
                 post("/login")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("username", createTestUser().getUsername())
-                        .param("password", createTestUser().getPassword()))
+                        .param("username", testUser.getUsername())
+                        .param("password", createTestUser().getPassword())) // エンコード前のパスワードを代入
                 .andDo(print()).andExpect(status().isOk());
     }
 
 
     @Test
     public void loginFailure() throws Exception{
+        User testUser = createTestUser();
+        testUser.setUsername("loginFailureTester");
+        userRegistrationService.save(testUser);
 
         this.mockMvc.perform(
                 post("/login")
