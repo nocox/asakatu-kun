@@ -52,15 +52,15 @@ public class UserRegistrationControllerTests {
     @Test
     public void userRegistration() throws Exception {
         User testUser = createTestUser();
-
+        testUser.setUsername("registrationTester");
         this.mockMvc.perform(
                 post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.username").value("hogehoge"));
+                .andExpect(jsonPath("$.data.username").value(testUser.getUsername()));
 
-        Optional<User> findUser = userRepository.findByUsername("hogehoge");
+        Optional<User> findUser = userRepository.findByUsername(testUser.getUsername());
         assert findUser.isPresent();
 
         Assert.assertThat(findUser.get().getUsername(), Is.is(testUser.getUsername()));
