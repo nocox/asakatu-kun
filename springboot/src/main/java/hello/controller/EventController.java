@@ -45,6 +45,7 @@ public class EventController {
             user = new JoinedUserInfo();
             user.setDisplayName(jounedUser.getDisplayName());
             user.setId(jounedUser.getId());
+            user.setImagePath(jounedUser.getImagePath());
             result.add(user);
         }
         return new OkResponse(new EventJoinedResponse("success", result));
@@ -133,6 +134,8 @@ class JoinedUserInfo {
 
     private String displayName;
 
+    private String imagePath;
+
     public Long getId() {
         return id;
     }
@@ -147,5 +150,13 @@ class JoinedUserInfo {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

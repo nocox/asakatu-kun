@@ -21,6 +21,9 @@ public class User {
 
     private String password;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @Transient
     private String passwordConfirm;
 
@@ -68,6 +71,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getPasswordConfirm() {
