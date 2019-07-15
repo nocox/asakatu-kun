@@ -10,8 +10,14 @@
     <link rel="apple-touch-icon-precomposed" href="assets/img/apple-touch-icon-precomposed.png">
 
     <!-- 外部ファイルの読み込み -->
-    <link rel="stylesheet" href="assets/stylesheet/test.css">
-    <script src="assets/javascript/test.js" defer></script>
+    <link rel="stylesheet" href="assets/stylesheet/uikit.css">
+    <link rel="stylesheet" href="assets/stylesheet/uikit-rtl.css">
+    <link rel="stylesheet" href="assets/stylesheet/main.css">
+    <link rel="stylesheet" href="assets/stylesheet/event.css">
+    <script src="assets/javascript/uikit-icons.js" defer></script>
+    <script src="assets/javascript/uikit.js" defer></script>
+    <script src="assets/javascript/event.js" defer></script>
+
 
     <!-- facebookのOGPタグ -->
     <meta property="og:site_name" content="サイト名"/>
@@ -39,8 +45,11 @@
 
 <body>
 <header>
-    <nav>
-
+    <nav class="uk-navbar uk-navbar-container uk-margin">
+        <div class="uk-navbar-right">
+<!--            <a class="uk-navbar-toggle" uk-navbar-toggle-icon href="#"></a>-->
+            <img src="assets/img/human-icon-big.png" alt="user_profile" class="image_circle user_profile">
+        </div>
     </nav>
 </header>
 <main>
