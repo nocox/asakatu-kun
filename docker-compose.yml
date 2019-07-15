@@ -30,3 +30,9 @@ services:
       - ./mysql/sqls:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "9000:80"
+    volumes:
+      - ./nginx/html:/usr/share/nginx/html

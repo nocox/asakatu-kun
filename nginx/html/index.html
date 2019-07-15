@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TestPage</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.js"
+      integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+      crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Test Page with CodePipeline</h1>
+
+    <span>username:</span>
+    <input type="text" id="username">
+    <br>
+    <span>password:</span>
+    <input type="password" id="password">
+    <br>
+
+    <button type="button" name="button">login</button>
+
+    <script type="text/javascript">
+      $("button").click(function(){
+        var params = new URLSearchParams();
+        params.append('username', $("#username").val());
+        params.append('password', $("#password").val());
+        axios.post("http://localhost:8080/login", params, {withCredentials: true})
+        .then(function (response) {
+          alert("ログイン成功");
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      });
+    </script>
+
+</body>
+</html>
