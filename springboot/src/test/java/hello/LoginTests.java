@@ -32,9 +32,6 @@ public class LoginTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private LoginUserService loginUserService;
-
 
     private User createTestUser() {
         User testUser = new User();
