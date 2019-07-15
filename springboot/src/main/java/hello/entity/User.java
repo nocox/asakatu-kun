@@ -1,6 +1,7 @@
 package hello.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -22,6 +23,12 @@ public class User {
 
     @Transient
     private String passwordConfirm;
+
+    @ManyToMany(mappedBy = "userList")
+    private List<Event> eventsList;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserStatus> userStatusList;
 
     public Long getId() {
         return id;
@@ -69,5 +76,21 @@ public class User {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+    }
+
+    public List<Event> getEventsList() {
+        return eventsList;
+    }
+
+    public void setEventsList(List<Event> eventsList) {
+        this.eventsList = eventsList;
+    }
+
+    public List<UserStatus> getUserStatusList() {
+        return userStatusList;
+    }
+
+    public void setUserStatusList(List<UserStatus> userStatusList) {
+        this.userStatusList = userStatusList;
     }
 }
