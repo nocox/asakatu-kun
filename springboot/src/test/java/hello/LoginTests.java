@@ -32,9 +32,6 @@ public class LoginTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private LoginUserService loginUserService;
-
 
     private User createTestUser() {
         User testUser = new User();
@@ -46,15 +43,16 @@ public class LoginTests {
         return testUser;
     }
 
+
     @Before
     public void userRegistration(){
         // ユーザ登録
         userRegistrationService.save(createTestUser());
     }
 
+
     @Test
     public void login() throws Exception {
-
         this.mockMvc.perform(
                 post("/login")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -64,6 +62,14 @@ public class LoginTests {
     }
 
 
+    @Test
+    public void loginFailure() throws Exception{
 
-
+        this.mockMvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username", "tekitou")
+                        .param("password", createTestUser().getPassword()))
+                .andDo(print()).andExpect(status().is4xxClientError());
+    }
 }

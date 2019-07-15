@@ -1,1 +1,117 @@
-event details page
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>event_detail</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="assets/img/apple-touch-icon-precomposed.png">
+
+    <!-- 外部ファイルの読み込み -->
+    <link rel="stylesheet" href="assets/stylesheet/uikit.css">
+    <link rel="stylesheet" href="assets/stylesheet/uikit-rtl.css">
+    <link rel="stylesheet" href="assets/stylesheet/main.css">
+    <link rel="stylesheet" href="assets/stylesheet/event.css">
+    <script src="assets/javascript/uikit-icons.js" defer></script>
+    <script src="assets/javascript/uikit.js" defer></script>
+    <script src="assets/javascript/event.js" defer></script>
+
+
+    <!-- facebookのOGPタグ -->
+    <meta property="og:site_name" content="サイト名"/>
+    <meta property="og:url" content="ページURL"/>
+    <meta property="og:type" content="ページタイプ"/>
+    <meta property="og:title" content="ページタイトル"/>
+    <meta property="og:description" content="ページ説明文"/>
+    <meta property="og:image" content="サムネイル画像URL"/>
+    <meta property="fb:app_id" content="appIdを入力"/>
+    <meta property="og:locale" content="ja_JP"/>
+
+    <!-- twitterのOGPタグ -->
+    <meta name="twitter:card" content="カードの種類"/>
+    <meta name="twitter:site" content="@ユーザー名"/>
+    <meta name="twitter:description" content="ページ説明文"/>
+    <meta name="twitter:image:src" content="サムネイル画像URL"/>
+
+    <!--  Author著者：このページを誰が編集したかを書いておきます -->
+    <meta name=”author” content=”yuki-k-lion”>
+
+    <!--vueをつかうための記述-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- fontawsome -->
+    <script src="https://kit.fontawesome.com/e6817606ba.js"></script>
+</head>
+<body>
+<header>
+    <nav class="uk-navbar uk-navbar-container uk-margin">
+        <div class="uk-navbar-left arrow-left">
+            <i class="fas fa-angle-left"></i>
+        </div>
+        <div class="uk-navbar-center">
+            <img src="#" alt="Logo">
+        </div>
+
+        <div class="uk-navbar-right">
+            <!--            <a class="uk-navbar-toggle" uk-navbar-toggle-icon href="#"></a>-->
+            <img src="assets/img/human-icon-big.png" alt="user_profile" class="image_circle user_profile">
+        </div>
+    </nav>
+</header>
+<main class="event">
+
+    <section class="event-info">
+        <h2 class="event-info-title">ちょっぴり遅めの朝活くんvol.２</h2>
+        <h3 class="event-info-datetime">7月10日</h3>
+        <div class="event-info-place">コメダ珈琲店 渋谷道玄坂上店</div>
+        <div class="event-info-function">
+            <div class="event-info_google-api">
+                <div class="event-info-map">東京都</div>
+                <div class="event-info-add-calender">カレンダーに追加</div>
+            </div>
+            <button class="event-join">参加</button>
+        </div>
+        <div class="event-info_detail">
+            社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
+            もっと有意義に使いたい、もっと学びたい、
+            会社外の人たちと交流を持ちたいという20代～30代の社会人が集まって、
+            共に考えたり、学んだり。
+            休日、ちょっと早起きをして、暮らし、
+            人生をより豊かにするきっかけにしていきませんか？
+        </div>
+    </section>
+
+    <section class="event-participants">
+        <h3 class="participants-title">参加メンバー</h3>
+        <div class="participants-image-list">
+            <img src="#" alt="user-image" class="participant-image">
+        </div>
+    </section>
+
+    <section class="event-comment">
+        <h3 class="comment-title">やりたいこと</h3>
+        <div class="comment-list">
+            <div class="comment-user">
+                <img src="#" alt="user-image" class="comment-user__image">
+                <p class="comment-user__content">がんばりやす</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="join-button">
+        <button class="join">参加</button>
+    </div>
+</main>
+
+<footer>
+    <small>&copy; 2019 AsakatsuKun inc.</small>
+</footer>
+
+<template>
+    <!--  これ使えばフロントの実装楽になりそうだけどIE未対応なんだよな…  ref: https://developer.mozilla.org/ja/docs/Web/HTML/Element/template -->
+</template>
+</body>
+</html>
