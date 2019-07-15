@@ -6,6 +6,7 @@ import hello.repository.UserRepository;
 import hello.service.UserRegistrationService;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 public class UserRegistrationController {
 
