@@ -28,6 +28,14 @@ public class EventController {
 		eventRepository.save(event);
 		return new OkResponse(new EventResponse("success", event));
 	}
+
+	@RequestMapping("/events/{eventId}/cancel")
+	public OkResponse cancelEvent(@PathVariable Long eventId) {
+		Event cancelEvent = eventRepository.findById(eventId).get();
+		cancelEvent.setEventStatus("canceled");
+		eventRepository.save(cancelEvent);
+		return new OkResponse(new EventResponse("success", cancelEvent));
+	}
 }
 
 class GetEventsListResponse {
