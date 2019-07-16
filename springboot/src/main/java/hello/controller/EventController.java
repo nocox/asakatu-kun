@@ -23,13 +23,13 @@ public class EventController {
 		return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
-	@RequestMapping("/events/new")
+	@RequestMapping("/event/new")
 	public OkResponse createEvent(@RequestBody Event event) {
 		eventRepository.save(event);
 		return new OkResponse(new EventResponse("success", event));
 	}
 
-	@RequestMapping("/events/{eventId}/cancel")
+	@RequestMapping("/event/{eventId}/cancel")
 	public OkResponse cancelEvent(@PathVariable Long eventId) {
 		Event cancelEvent = eventRepository.findById(eventId).get();
 		cancelEvent.setEventStatus("canceled");
@@ -37,7 +37,7 @@ public class EventController {
 		return new OkResponse(new EventResponse("success", cancelEvent));
 	}
 
-	@RequestMapping("/events/{eventId}/edit")
+	@RequestMapping("/event/{eventId}/edit")
 	public OkResponse updateEvent(@RequestBody Event event, @PathVariable Long eventId) {
 		Event updateEvent = eventRepository.findById(eventId).get();
 		updateEvent.setStartDate(event.getStartDate());
