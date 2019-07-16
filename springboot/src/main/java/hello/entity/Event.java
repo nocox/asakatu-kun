@@ -1,16 +1,15 @@
 package hello.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "event")
 public class Event {
 	@Id
 	@Column(name = "event_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "start_date")
@@ -33,6 +32,17 @@ public class Event {
 
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
+
+	@PrePersist
+	public void onPrePersist() {
+		setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+	}
+
+	@PreUpdate
+	public void onPreUpdate() {
+		setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+	}
 
 //	@ManyToMany
 //	@JoinTable(name = "user_event_association",
