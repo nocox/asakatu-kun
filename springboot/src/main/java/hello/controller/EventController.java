@@ -23,6 +23,12 @@ public class EventController {
 		return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
+	@RequestMapping("/event/{eventId}")
+	public OkResponse getEvent(@PathVariable Long eventId) {
+		Event event = eventRepository.findById(eventId).get();
+		return new OkResponse(new EventResponse("success", event));
+	}
+
 	@RequestMapping("/event/new")
 	public OkResponse createEvent(@RequestBody Event event) {
 		eventRepository.save(event);
@@ -86,16 +92,16 @@ class EventResponse {
 	}
 }
 
-class OkResponse {
-	private Object data;
-
-	public OkResponse(Object data) {
-		this.data = data;
-	}
-
-	public Integer getStatus() { return 200; }
-
-	public Object getData() {
-		return data;
-	}
-}
+//class OkResponse {
+//	private Object data;
+//
+//	public OkResponse(Object data) {
+//		this.data = data;
+//	}
+//
+//	public Integer getStatus() { return 200; }
+//
+//	public Object getData() {
+//		return data;
+//	}
+//}
