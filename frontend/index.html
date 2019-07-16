@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>IndexTemplate</title>
+    <meta name="description" content="説明文"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="assets/img/apple-touch-icon-precomposed.png">
+
+    <!-- 外部ファイルの読み込み -->
+    <link rel="stylesheet" href="assets/stylesheet/test.css">
+    <script src="assets/javascript/test.js" defer></script>
+
+    <!-- スマホページのURLが異なる場合（PC側） -->
+    <link rel="alternate" media="only screen and (max-width: 640px)" href="スマホページのURL"/>
+
+    <!-- スマホページのURLが異なる場合（スマホ側） URLの正規化-->
+    <link rel="canonical" href="PCページのURL"/>
+    <link rel="canonical" href="評価を統一したいページのURL"/>
+
+    <!-- 分割ページの場合 -->
+    <link rel="prev" href="前のページのURL">
+    <link rel="next" href="次のページのURL">
+
+    <!-- facebookのOGPタグ -->
+    <meta property="og:site_name" content="サイト名"/>
+    <meta property="og:url" content="ページURL"/>
+    <meta property="og:type" content="ページタイプ"/>
+    <meta property="og:title" content="ページタイトル"/>
+    <meta property="og:description" content="ページ説明文"/>
+    <meta property="og:image" content="サムネイル画像URL"/>
+    <meta property="fb:app_id" content="appIdを入力"/>
+    <meta property="og:locale" content="ja_JP"/>
+
+    <!-- twitterのOGPタグ -->
+    <meta name="twitter:card" content="カードの種類"/>
+    <meta name="twitter:site" content="@ユーザー名"/>
+    <meta name="twitter:description" content="ページ説明文"/>
+    <meta name="twitter:image:src" content="サムネイル画像URL"/>
+
+    <!--  Author著者：このページを誰が編集したかを書いておきます -->
+    <meta name=”author” content=”yuki-k-lion”>
+
+    <!--vueをつかうための記述-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- fontawsome -->
+    <script src="https://kit.fontawesome.com/e6817606ba.js"></script>
+
+</head>
+
+
+<body>
+<header>
+    <nav>
+
+    </nav>
+</header>
+<main>
+
+</main>
+
+<footer>
+    <small>&copy; 2019 AsakatsuKun inc.</small>
+</footer>
+
+<template>
+    <!--  これ使えばフロントの実装楽になりそうだけどIE未対応なんだよな…  ref: https://developer.mozilla.org/ja/docs/Web/HTML/Element/template -->
+</template>
+</body>
+</html>

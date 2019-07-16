@@ -1,17 +1,10 @@
-DROP TABLE IF EXISTS user_event_association;
-DROP TABLE IF EXISTS user_group_association;
-DROP TABLE IF EXISTS user_status;
-DROP TABLE IF EXISTS user_group;
-DROP TABLE IF EXISTS user_status_master;
-DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS user;
 
 CREATE TABLE IF NOT EXISTS user
 (
     user_id       BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     username      VARCHAR(50)  NOT NULL,
     email         VARCHAR(255) NOT NULL,
-    password      VARCHAR(50)  NOT NULL,
+    password      VARCHAR(255)  NOT NULL,
     display_name  VARCHAR(50)  NOT NULL,
     image_path    VARCHAR(255),
     created_event BOOLEAN,
