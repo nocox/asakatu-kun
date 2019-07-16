@@ -5,8 +5,12 @@ spring:
     password:
     driverClassName: org.h2.Driver
     schema:
-      - classpath*:schema-product.sql
       - classpath:schema.sql
+      - classpath*:schema-product.sql
+    data:
+      - classpath:data.sql
+      - classpath:data-product.sql
+
 
   jpa:
     hibernate:

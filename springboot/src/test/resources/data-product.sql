@@ -23,11 +23,11 @@ INSERT INTO event(start_date, duration, address, seat_info, event_status)
 VALUES ('2019-07-05 00:00:00', 1.5, '東京都渋谷区5-2-3', '鏡の前の席', 'fin');
 
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (1, 1, FALSE);
-INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (1, 1, FALSE);
+-- INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (1, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (2, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (3, 1, FALSE);
-INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 1, FALSE);
-INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (2, 1, FALSE);
+-- INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 1, FALSE);
+-- INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (2, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 2, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 3, FALSE);
