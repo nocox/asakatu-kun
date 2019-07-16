@@ -36,6 +36,18 @@ public class EventController {
 		eventRepository.save(cancelEvent);
 		return new OkResponse(new EventResponse("success", cancelEvent));
 	}
+
+	@RequestMapping("/events/{eventId}/edit")
+	public OkResponse updateEvent(@RequestBody Event event, @PathVariable Long eventId) {
+		Event updateEvent = eventRepository.findById(eventId).get();
+		updateEvent.setStartDate(event.getStartDate());
+		updateEvent.setDuration(event.getDuration());
+		updateEvent.setAddress(event.getAddress());
+		updateEvent.setSeatInfo(event.getSeatInfo());
+		updateEvent.setEventStatus(event.getEventStatus());
+		eventRepository.save(updateEvent);
+		return new OkResponse(new EventResponse("success", event));
+	}
 }
 
 class GetEventsListResponse {
