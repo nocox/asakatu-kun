@@ -16,7 +16,40 @@ public class EventController {
 	}
 
 	@RequestMapping("/events")
+	public OkResponse getEventsList() {
+		List<Event> eventsList = eventRepository.findAll();
+		return new OkResponse(new GetEventsListResponse("success", eventsList));
+	}
+}
+
+class GetEventsListResponse {
+	private String message;
+	private List<Event> eventsList;
+
+	GetEventsListResponse(String message, List<Event> eventsList) {
+		this.message = message;
+		this.eventsList = eventsList;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
 	public List<Event> getEventsList() {
-		return eventRepository.findAll();
+		return eventsList;
+	}
+}
+
+class OkResponse {
+	private Object data;
+
+	public OkResponse(Object data) {
+		this.data = data;
+	}
+
+	public Integer getStatus() { return 200; }
+
+	public Object getData() {
+		return data;
 	}
 }
