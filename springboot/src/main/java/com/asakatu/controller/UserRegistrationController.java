@@ -1,5 +1,6 @@
 package com.asakatu.controller;
 
+import com.asakatu.controller.OkResponse;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.entity.User;
 import com.asakatu.exeptions.UserAlreadyExistException;
@@ -68,21 +69,4 @@ class UserRegistrationResponse {
         return username;
     }
 
-}
-
-
-class OkResponse {
-    private Object data;
-
-    public OkResponse(Object data) {
-        this.data = data;
-    }
-
-    public Integer getStatus() {
-        return 200;
-    }
-
-    public Object getData() {
-        return data;
-    }
 }

@@ -1,4 +1,4 @@
-package hello;
+package com.asakatu;
 
 import java.io.IOException;
 import org.junit.runner.RunWith;

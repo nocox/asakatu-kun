@@ -1,7 +1,7 @@
-package hello;
+package com.asakatu;
 
-import hello.entity.Event;
-import hello.repository.EventRepository;
+import com.asakatu.entity.Event;
+import com.asakatu.repository.EventRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
