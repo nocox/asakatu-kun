@@ -1,6 +1,6 @@
 package com.asakatu.controller;
 
-import com.asakatu.controller.OkResponse;
+import com.asakatu.OkResponse;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.entity.User;
 import com.asakatu.exeptions.UserAlreadyExistException;

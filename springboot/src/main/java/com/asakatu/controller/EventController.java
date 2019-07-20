@@ -1,5 +1,6 @@
 package com.asakatu.controller;
 
+import com.asakatu.OkResponse;
 import com.asakatu.entity.Event;
 import com.asakatu.repository.EventRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,19 +38,5 @@ class GetEventsListResponse {
 
 	public List<Event> getEventsList() {
 		return eventsList;
-	}
-}
-
-class OkResponse {
-	private Object data;
-
-	public OkResponse(Object data) {
-		this.data = data;
-	}
-
-	public Integer getStatus() { return 200; }
-
-	public Object getData() {
-		return data;
 	}
 }
