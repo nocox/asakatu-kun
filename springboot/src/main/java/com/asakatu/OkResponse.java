@@ -1,4 +1,4 @@
-package hello;
+package com.asakatu;
 
 public class OkResponse {
 	private Object data;
