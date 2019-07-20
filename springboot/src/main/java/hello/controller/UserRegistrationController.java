@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.OkResponse;
 import hello.entity.User;
 import hello.exeptions.UserAlreadyExistException;
 import hello.repository.UserRepository;
@@ -68,21 +69,4 @@ class UserRegistrationResponse {
         return username;
     }
 
-}
-
-
-class OkResponse {
-    private Object data;
-
-    public OkResponse(Object data) {
-        this.data = data;
-    }
-
-    public Integer getStatus() {
-        return 200;
-    }
-
-    public Object getData() {
-        return data;
-    }
 }
