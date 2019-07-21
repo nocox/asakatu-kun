@@ -3,8 +3,11 @@ package com.asakatu.controller;
 import com.asakatu.entity.SimpleLoginUser;
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
+import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.Event;
@@ -20,9 +23,12 @@ public class EventController {
 
     private final UserStatusRepository userStatusRepository;
 
-	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository) {
+    private final UserRepository userRepository;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository) {
 		this.eventRepository = eventRepository;
 		this.userStatusRepository = userStatusRepository;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping("/events")
@@ -66,9 +72,8 @@ public class EventController {
     @PostMapping("/event/{id}/user")
     public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
         // ログインユーザの取得
-        SecurityContext sessionContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
-        SimpleLoginUser loginUser = (SimpleLoginUser) sessionContext.getAuthentication().getPrincipal();
-        User user = loginUser.getUser();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
 
         // イベントの取得,設定
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
