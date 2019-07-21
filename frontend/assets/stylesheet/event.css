@@ -1,0 +1,56 @@
+.event {
+  margin: 0 1rem; }
+  .event__btn {
+    background-color: #FFB100;
+    border-radius: 22px;
+    border-color: white;
+    width: 30vw;
+    height: 5vh;
+    color: white;
+    float: right; }
+  .event-info-title {
+    margin-bottom: 5px; }
+  .event-info-datetime {
+    margin-top: 0;
+    margin-bottom: 0; }
+  .event-info_google-api {
+    float: left;
+    display: inline; }
+  .event-info_detail {
+    margin-top: 1rem; }
+
+.participant-list {
+  margin: 0 auto; }
+.participant-image {
+  width: 15vw;
+  margin-right: 1vw;
+  margin-left: 1vw;
+  margin-top: 2vh; }
+
+.comment-user {
+  height: 10vw;
+  border-bottom: #707070 solid 0.25px;
+  padding-top: 0.3rem; }
+  .comment-user__image {
+    width: 9vw;
+    float: left;
+    height: 9vw; }
+  .comment-user__content {
+    float: left;
+    height: 9vw;
+    line-height: 9vw;
+    margin: 0;
+    margin-left: 10px; }
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both; }
+
+.section-margin {
+  margin-top: 5vh;
+  margin-bottom: 3vh; }
+  .section-margin h3 {
+    margin-bottom: 10px; }
+
+/*# sourceMappingURL=event.css.map */
