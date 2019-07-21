@@ -23,6 +23,8 @@ var eventDetail = new Vue({
     created: async function () {
         let url = location.href;
         this.eventId = url.substr(url.lastIndexOf('/') + 1);
+        console.log(this.eventId);
+        this.eventId = 1;
         await this.refresh();
     },
     methods: {
