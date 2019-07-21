@@ -40,3 +40,8 @@ var eventDetail = new Vue({
         }
     }
 });
+
+//yet
+// progress
+// fin
+// canceled
