@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>gs-rest-service</artifactId>
+    <artifactId>asakatu-kun-service</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -35,6 +35,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
