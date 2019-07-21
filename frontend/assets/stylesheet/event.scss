@@ -36,12 +36,32 @@
     &:first-child{
     }
   }
-
   &-image{
     width: 15vw;
     margin-right: 1vw;
     margin-left: 1vw;
     margin-top: 2vh;
+  }
+}
+
+.comment{
+  &-user{
+    height: 10vw;
+    border-bottom: #707070 solid 0.25px;
+    //padding-bottom: 0.3rem;
+    padding-top: 0.3rem;
+    &__image{
+      width: 9vw;
+      float: left;
+      height: 9vw;
+    }
+    &__content{
+      float: left;
+      height: 9vw;
+      line-height: 9vw;
+      margin: 0;
+      margin-left: 10px;
+    }
   }
 }
 
@@ -53,6 +73,7 @@
 
 .section-margin{
   margin-top: 5vh;
+  margin-bottom: 3vh;
   h3{
     margin-bottom: 10px;
   }
