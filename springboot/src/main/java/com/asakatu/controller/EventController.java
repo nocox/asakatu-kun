@@ -1,5 +1,7 @@
 package com.asakatu.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.Event;
 import com.asakatu.repository.EventRepository;
@@ -21,6 +23,38 @@ public class EventController {
 		List<Event> eventsList = eventRepository.findAll();
 		return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
+
+	@RequestMapping("/event/{eventId}")
+	public OkResponse getEvent(@PathVariable Long eventId) {
+		Event event = eventRepository.findById(eventId).get();
+		return new OkResponse(new EventResponse("success", event));
+	}
+
+	@RequestMapping("/event/new")
+	public OkResponse createEvent(@RequestBody Event event) {
+		eventRepository.save(event);
+		return new OkResponse(new EventResponse("success", event));
+	}
+
+	@RequestMapping("/event/{eventId}/cancel")
+	public OkResponse cancelEvent(@PathVariable Long eventId) {
+		Event cancelEvent = eventRepository.findById(eventId).get();
+		cancelEvent.setEventStatus("canceled");
+		eventRepository.save(cancelEvent);
+		return new OkResponse(new EventResponse("success", cancelEvent));
+	}
+
+	@RequestMapping("/event/{eventId}/edit")
+	public OkResponse updateEvent(@RequestBody Event event, @PathVariable Long eventId) {
+		Event updateEvent = eventRepository.findById(eventId).get();
+		updateEvent.setStartDate(event.getStartDate());
+		updateEvent.setDuration(event.getDuration());
+		updateEvent.setAddress(event.getAddress());
+		updateEvent.setSeatInfo(event.getSeatInfo());
+		updateEvent.setEventStatus(event.getEventStatus());
+		eventRepository.save(updateEvent);
+		return new OkResponse(new EventResponse("success", event));
+	}
 }
 
 class GetEventsListResponse {
@@ -38,5 +72,23 @@ class GetEventsListResponse {
 
 	public List<Event> getEventsList() {
 		return eventsList;
+	}
+}
+
+class EventResponse {
+	private String message;
+	private Event event;
+
+	EventResponse(String message, Event event) {
+		this.message = message;
+		this.event = event;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public Event getEvent() {
+		return event;
 	}
 }
