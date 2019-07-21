@@ -1,0 +1,26 @@
+
+
+.event{
+  margin: 0 1rem;
+
+  &-info{
+    &-title{
+      margin-bottom: 5px;
+    }
+    &-datetime{
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    &-function{
+
+    }
+    &_google-api{
+
+    }
+    &__btn{
+      background-color: #FFB100;
+      border-radius: 22px;
+      border-color: inherit;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.event {
+  margin: 0 1rem; }
+  .event-info-title {
+    margin-bottom: 5px; }
+  .event-info-datetime {
+    margin-top: 0;
+    margin-bottom: 0; }
+  .event-info__btn {
+    background-color: #FFB100;
+    border-radius: 22px;
+    border-color: inherit; }
+
+/*# sourceMappingURL=event.css.map */
