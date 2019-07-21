@@ -18,6 +18,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -63,13 +66,13 @@ public class EventControllerTests extends AbstractTest{
 		return userStatus;
 	}
 
-//	@Test
-//    @WithMockUser
-//	public void joinEvent() throws Exception {
-//		this.mockMvc.perform(
-//				post("/event/1/user")
-//						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-//						.content(mapper.writeValueAsBytes(joinUserStatus())))
-//				.andDo(print()).andExpect(status().isOk());
-//	}
+	@Test
+    @WithMockUser(username = "doiiii")
+	public void joinEvent() throws Exception {
+		this.mockMvc.perform(
+				post("/event/1/user")
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsBytes(joinUserStatus())))
+				.andDo(print()).andExpect(status().isOk());
+	}
 }
