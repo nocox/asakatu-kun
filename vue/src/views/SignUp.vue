@@ -50,8 +50,6 @@
 </template>
 
 <script>
-
-
     import axios from 'axios'
 
     export default {
@@ -64,12 +62,8 @@
                     email: undefined,
                     password: undefined
                 },
-                users: [],
                 errors: []
             }
-        },
-        created: async function () {
-            await this.refresh()
         },
         methods: {
             checkForm: function (e) {
@@ -91,25 +85,16 @@
                     this.addUser();
                     return true;
                 }
-
                 e.preventDefault();
-            },
-            refresh: async function () {
-                const res = await axios.get('http://localhost:8080/');
-                this.users = res.data.userList;
-                //todo: これは仮置きでしかない。
-                console.info(this.users);
-                console.info(this.users[0].name);
             },
             addUser: async function () {
                 await axios.post('http://localhost:8080/', this.request);
                 await this.refresh();
                 //withCredenmtial
-            }
+            },
         }
     }
 </script>
-
 
 <style scoped lang="scss">
     @import "../assets/css/base";
