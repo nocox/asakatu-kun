@@ -3,11 +3,13 @@ var eventDetail = new Vue({
     data: {
         eventInfo: {
             eventId: 1,
+            eventName:"ちょっぴり遅めの朝活くんvol.２",
             startDate: "2019-07-28T09:00:00Z",
             duration: 3,
             address: "BOOK LAB TOKYO",
             seatInfo: "ソファー席",
-            eventStatus: "yet"
+            eventStatus: "yet", // yet,progress,fin,canceled
+            eventDetail:"社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、...."
         },
         request: {
             userId: 1,
@@ -15,10 +17,6 @@ var eventDetail = new Vue({
             comment: "おしゃべりしたい！"
         },
         users: []
-        //"userId": 1,
-        //"displayName": "朝活くん",
-        //"imagePath": "https://avatars0.githubusercontent.com/u/50159106",
-        //"content":"https://4.bp.blogspot.com/-m56DCo_VDbQ/UU--ubQ1vTI/AAAAAAAAO84/CWFZIAw-zxY/s1600/kaizoku_mark.png"
     },
     created: async function () {
         let url = location.href;
@@ -35,7 +33,6 @@ var eventDetail = new Vue({
             const eventUsers = await axios.get('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId + '/users');
             this.users = eventUsers.data;
             console.log(this.users);
-        //    todo:ここデータうまく取れてない。取り方調べる。     
         },
         joinEvent: async function () {
             await axios.post('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId + '/user', this.request);
@@ -43,8 +40,3 @@ var eventDetail = new Vue({
         }
     }
 });
-
-//yet
-// progress
-// fin
-// canceled

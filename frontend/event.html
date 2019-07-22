@@ -49,9 +49,9 @@
 <main class="event" id="event-detail">
 
     <section class="event-info">
-        <h2 class="event-info-title">ちょっぴり遅めの朝活くんvol.２</h2>
-        <h3 class="event-info-datetime">7月10日</h3>
-        <div class="event-info-place">コメダ珈琲店 渋谷道玄坂上店</div>
+        <h2 class="event-info-title" v-model="eventInfo.eventName">ちょっぴり遅めの朝活くんvol.２</h2>
+        <h3 class="event-info-datetime" v-model="eventInfo.startDate">7月10日</h3>
+        <div class="event-info-place" v-model="eventInfo.address">コメダ珈琲店 渋谷道玄坂上店</div>
         <div class="event-info-function clearfix">
             <div class="event-info_google-api">
                 <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i> 東京都</div>
