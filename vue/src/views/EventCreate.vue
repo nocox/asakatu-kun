@@ -1,5 +1,5 @@
 <template>
-    
+    <div class="event-create"></div>
 </template>
 
 <script>
