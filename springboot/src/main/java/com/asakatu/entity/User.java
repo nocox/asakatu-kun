@@ -20,6 +20,12 @@ public class User {
 
     private String password;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
+    @Column(name = "created_event")
+    private boolean createdEvent;
+
     @Transient
     private String passwordConfirm;
 
@@ -69,5 +75,21 @@ public class User {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public boolean isCreatedEvent() {
+        return createdEvent;
+    }
+
+    public void setCreatedEvent(boolean createdEvent) {
+        this.createdEvent = createdEvent;
     }
 }
