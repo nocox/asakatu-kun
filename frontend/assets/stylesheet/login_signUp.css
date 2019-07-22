@@ -1,0 +1,90 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size:16px;
+}
+
+main{
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+main > h2{
+  font-size:24px;
+  text-align: center;
+}
+
+main > form{
+  margin-top: 80px;
+}
+
+.form-part > label{
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.form-part input{
+  margin-top: 8px;
+  height:40px;
+  border:none;
+  border-bottom:1px solid #FFB100;
+}
+
+p {
+  text-align: left;
+}
+
+small{
+  font-size: 0.8rem;
+  color: #707070;
+}
+
+.form-part{
+  margin-top:48px;
+}
+
+label + p{
+  margin-top:8px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"]{
+  width: 100%;
+}
+
+.primaryButton{
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  height:62px;
+  /* width:calc(100% - 16px * 2); */
+  width: 100%;
+  padding:0 40px;
+  border-radius: 4px;
+  background-color: #FFB100;
+  font-size: 0.8rem;
+  font-weight:400;
+}
+.secondaryButton{
+  margin-top: 24px;
+  text-align: center;
+}
+
+main > p > a{
+  font-size:1rem;
+  color:#FFB100;
+}
+
+label::after{
+  content:"\A";
+  white-space: pre;
+}
+
+main{
+  margin-bottom:120px;
+}
