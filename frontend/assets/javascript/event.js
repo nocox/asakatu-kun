@@ -30,11 +30,12 @@ var eventDetail = new Vue({
     methods: {
         refresh: async function () {
             const eventInfo = await axios.get('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId);
-            this.eventInfo = eventInfo.data;
+            this.eventInfo = eventInfo.data.data;
             console.info(this.eventInfo);
             const eventUsers = await axios.get('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId + '/users');
             this.users = eventUsers.data;
             console.log(this.users);
+        //    todo:ここデータうまく取れてない。取り方調べる。     
         },
         joinEvent: async function () {
             await axios.post('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId + '/user', this.request);
