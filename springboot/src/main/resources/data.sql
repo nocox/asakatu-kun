@@ -38,14 +38,14 @@ INSERT INTO user_status_master(user_status_content) VALUES ('わいわい');
 INSERT INTO user_status_master(user_status_content) VALUES ('朝に負けた');
 
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'レッツ朝活！！！', 1, 1);
-INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'わいわい！！！', 1, 1);
+INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'わいわい！！！', 1, 2);
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (2, '遅れそう', 2, 1);
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, '今日も頑張ろう', 3, 1);
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'わーい', 4, 1);
-INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'やるぞ', 4, 1);
-INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, '眠い', 4, 2);
-INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (2, 'ごめんさい', 4, 3);
-INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'ASAKATSU', 4, 4);
+INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'やるぞ', 4, 2);
+INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, '眠い', 4, 3);
+INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (2, 'ごめんさい', 4, 4);
+INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'ASAKATSU', 4, 5);
 
 INSERT INTO user_group(order_user_id, product_key, description) VALUES (1, '3xq239r7h493c', '朝活グループ');
 INSERT INTO user_group(order_user_id, product_key, description) VALUES (2, 'f234jfqp4243jpr2', '朝活グループ2');
