@@ -32,4 +32,5 @@
 }
   /*@import "assets/css/uikit.css";*/
   /*@import "assets/css/uikit-rtl.css";*/
+  @import "assets/css/base";
 </style>
