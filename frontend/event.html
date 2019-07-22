@@ -20,27 +20,13 @@
     <script src="assets/javascript/event.js" defer></script>
 
 
-    <!-- facebookのOGPタグ -->
-    <meta property="og:site_name" content="サイト名"/>
-    <meta property="og:url" content="ページURL"/>
-    <meta property="og:type" content="ページタイプ"/>
-    <meta property="og:title" content="ページタイトル"/>
-    <meta property="og:description" content="ページ説明文"/>
-    <meta property="og:image" content="サムネイル画像URL"/>
-    <meta property="fb:app_id" content="appIdを入力"/>
-    <meta property="og:locale" content="ja_JP"/>
-
-    <!-- twitterのOGPタグ -->
-    <meta name="twitter:card" content="カードの種類"/>
-    <meta name="twitter:site" content="@ユーザー名"/>
-    <meta name="twitter:description" content="ページ説明文"/>
-    <meta name="twitter:image:src" content="サムネイル画像URL"/>
-
     <!--  Author著者：このページを誰が編集したかを書いておきます -->
     <meta name=”author” content=”yuki-k-lion”>
 
     <!--vueをつかうための記述-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
     <!-- fontawsome -->
     <script src="https://kit.fontawesome.com/e6817606ba.js"></script>
@@ -56,23 +42,22 @@
         </div>
 
         <div class="uk-navbar-right">
-            <!--            <a class="uk-navbar-toggle" uk-navbar-toggle-icon href="#"></a>-->
             <img src="assets/img/human-icon-big.png" alt="user_profile" class="image_circle user_profile">
         </div>
     </nav>
 </header>
-<main class="event">
+<main class="event" id="event-detail">
 
     <section class="event-info">
         <h2 class="event-info-title">ちょっぴり遅めの朝活くんvol.２</h2>
-        <h3 class="event-info-datetime">7月10日</h3>
-        <div class="event-info-place">コメダ珈琲店 渋谷道玄坂上店</div>
-        <div class="event-info-function">
+        <h3 class="event-info-datetime">{{eventInfo.startDate}}</h3>
+        <div class="event-info-place">{{eventInfo.address}}</div>
+        <div class="event-info-function clearfix">
             <div class="event-info_google-api">
-                <div class="event-info-map">東京都</div>
-                <div class="event-info-add-calender">カレンダーに追加</div>
+                <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i> 東京都</div>
+                <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i> カレンダーに追加</div>
             </div>
-            <button class="event-join">参加</button>
+            <button class="uk-button uk-button-default uk-button-small event__btn">参加</button>
         </div>
         <div class="event-info_detail">
             社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
@@ -84,25 +69,43 @@
         </div>
     </section>
 
-    <section class="event-participants">
-        <h3 class="participants-title">参加メンバー</h3>
-        <div class="participants-image-list">
-            <img src="#" alt="user-image" class="participant-image">
+    <section class="event-participant section-margin">
+        <h3 class="participant-title">参加メンバー</h3>
+        <div class="participant-list">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+            <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
         </div>
     </section>
 
-    <section class="event-comment">
+    <section class="event-comment section-margin">
         <h3 class="comment-title">やりたいこと</h3>
         <div class="comment-list">
-            <div class="comment-user">
-                <img src="#" alt="user-image" class="comment-user__image">
+            <div class="comment-user clearfix">
+                <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                <p class="comment-user__content">がんばりやす</p>
+            </div>
+            <div class="comment-user clearfix">
+                <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                <p class="comment-user__content">がんばりやす</p>
+            </div>
+            <div class="comment-user clearfix">
+                <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                <p class="comment-user__content">がんばりやす</p>
+            </div>
+            <div class="comment-user clearfix">
+                <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
                 <p class="comment-user__content">がんばりやす</p>
             </div>
         </div>
     </section>
 
-    <div class="join-button">
-        <button class="join">参加</button>
+    <div class="join-button uk-flex uk-flex-center">
+        <button class="event__btn">参加</button>
     </div>
 </main>
 
@@ -110,8 +113,5 @@
     <small>&copy; 2019 AsakatsuKun inc.</small>
 </footer>
 
-<template>
-    <!--  これ使えばフロントの実装楽になりそうだけどIE未対応なんだよな…  ref: https://developer.mozilla.org/ja/docs/Web/HTML/Element/template -->
-</template>
 </body>
 </html>
