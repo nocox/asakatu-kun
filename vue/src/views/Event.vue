@@ -25,13 +25,13 @@
         <section class="event-participant section-margin">
             <h3 class="participant-title">参加メンバー</h3>
             <div class="participant-list">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
-                <img src="assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
+                <img src="../assets/img/human-icon-big.png" alt="user-image" class="participant-image image_circle">
             </div>
         </section>
 
@@ -39,19 +39,19 @@
             <h3 class="comment-title">やりたいこと</h3>
             <div class="comment-list">
                 <div class="comment-user clearfix">
-                    <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                    <img src="../assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
                     <p class="comment-user__content">がんばりやす</p>
                 </div>
                 <div class="comment-user clearfix">
-                    <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                    <img src="../assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
                     <p class="comment-user__content">がんばりやす</p>
                 </div>
                 <div class="comment-user clearfix">
-                    <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                    <img src="../assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
                     <p class="comment-user__content">がんばりやす</p>
                 </div>
                 <div class="comment-user clearfix">
-                    <img src="assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
+                    <img src="../assets/img/human-icon-big.png" alt="user-image" class="comment-user__image image_circle">
                     <p class="comment-user__content">がんばりやす</p>
                 </div>
             </div>
