@@ -1,8 +1,8 @@
 <template>
-    <div id="sign_up">
-        <div class="sign_up">sign up</div>
+    <div id="login">
+        <div class="login">login</div>
         <form
-                id="sign-up-form"
+                id="login-form"
                 @submit="checkForm"
                 method="post"
         >
@@ -22,15 +22,6 @@
                 >
             </p>
             <p>
-                <label for="email">Email</label>
-                <input
-                        id="email"
-                        v-model="request.email"
-                        type="email"
-                        name="email"
-                >
-            </p>
-            <p>
                 <label for="password">Password</label>
                 <input
                         id="password"
@@ -42,24 +33,23 @@
             <input
                     type="submit"
                     value="Submit"
-                    id="sing_in--submit"
+                    id="login--submit"
             >
-
         </form>
     </div>
 </template>
 
 <script>
+
     import axios from 'axios'
 
     export default {
-        name: "signUp",
+        name: "login",
 
         data() {
             return {
                 request: {
                     name: undefined,
-                    email: undefined,
                     password: undefined
                 },
                 errors: []
@@ -72,15 +62,9 @@
                 if (!this.request.name) {
                     this.errors.push("Name required.");
                 }
-                if (!this.request.email) {
-                    this.errors.push('Email required.');
-                }
                 if (!this.request.password) {
                     this.errors.push('password required.');
-                }else if (this.request.password.length < 5) {
-                    this.errors.push('password is too short. min 6');
                 }
-
                 if (!this.errors.length) {
                     this.addUser();
                     return true;
