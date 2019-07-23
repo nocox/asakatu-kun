@@ -25,6 +25,8 @@
 
     <!--vueをつかうための記述-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
     <!-- fontawsome -->
     <script src="https://kit.fontawesome.com/e6817606ba.js"></script>
@@ -44,12 +46,12 @@
         </div>
     </nav>
 </header>
-<main class="event">
+<main class="event" id="event-detail">
 
     <section class="event-info">
         <h2 class="event-info-title">ちょっぴり遅めの朝活くんvol.２</h2>
-        <h3 class="event-info-datetime">7月10日</h3>
-        <div class="event-info-place">コメダ珈琲店 渋谷道玄坂上店</div>
+        <h3 class="event-info-datetime">{{eventInfo.startDate}}</h3>
+        <div class="event-info-place">{{eventInfo.address}}</div>
         <div class="event-info-function clearfix">
             <div class="event-info_google-api">
                 <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i> 東京都</div>

@@ -1,1 +1,103 @@
-event create page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event_create</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="assets/img/apple-touch-icon-precomposed.png">
+
+    <!-- 外部ファイルの読み込み -->
+    <link rel="stylesheet" href="assets/stylesheet/uikit.css">
+    <link rel="stylesheet" href="assets/stylesheet/uikit-rtl.css">
+    <link rel="stylesheet" href="assets/stylesheet/main.css">
+    <link rel="stylesheet" href="assets/stylesheet/eventCreate.css">
+    <script src="assets/javascript/uikit-icons.js" defer></script>
+    <script src="assets/javascript/uikit.js" defer></script>
+    <script src="assets/javascript/eventCreate.js" defer></script>
+
+    <!--  Author著者：このページを誰が編集したかを書いておきます -->
+    <meta name=”author” content=”yuki-k-lion”>
+
+    <!--vueをつかうための記述-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+    <!-- fontawsome -->
+    <script src="https://kit.fontawesome.com/e6817606ba.js"></script>
+</head>
+<body>
+<main id="createEvent">
+    <form
+            id="event-create-form"
+            @submit="checkForm"
+            method="post"
+    >
+        <div v-if="errors.length">
+            <p>Please correct the following error(s):</p>
+            <ul>
+                <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+        </div>
+        <p>
+            <label for="name">event Name</label>
+            <input
+                    id="name"
+                    v-model="request.eventName"
+                    type="text"
+                    name="name"
+            >
+        </p>
+        <p>
+            <label for="date">startDate</label>
+            <input
+                    id="date"
+                    v-model="request.startDate"
+                    type="datetime-local"
+                    name="date"
+            >
+        </p>
+        <p>
+            <label for="duration">duration</label>
+            <input
+                    id="duration"
+                    v-model="request.duration"
+                    type="number"
+                    name="duration"
+            >
+        </p>
+        <p>
+            <label for="address">address</label>
+            <input
+                    id="address"
+                    v-model="request.address"
+                    type="text"
+                    name="address"
+            >
+        </p>
+        <p>
+            <label for="eventDetail">eventDetail</label>
+            <textarea
+                    name="eventDetail"
+                    id="eventDetail"
+                    cols="30"
+                    rows="10"
+                    v-model="request.eventDetail"
+                    placeholder="add event details"
+            >
+            </textarea>
+        </p>
+        <input
+                type="submit"
+                value="Submit"
+                id="event_create--submit"
+        >
+
+    </form>
+</main>
+
+</body>
+</html>
