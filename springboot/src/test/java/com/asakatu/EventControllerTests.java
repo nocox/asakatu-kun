@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -75,4 +76,16 @@ public class EventControllerTests extends AbstractTest{
 						.content(mapper.writeValueAsBytes(joinUserStatus())))
 				.andDo(print()).andExpect(status().isOk());
 	}
+
+    @Test
+    @WithMockUser(username = "doiiii")
+    public void joinEventComment() throws Exception {
+        this.mockMvc.perform(
+                post("/event/1/user")
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsBytes(joinUserStatus())))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.comment").value("comment"))
+                .andExpect(jsonPath("$.data.message").value("created"));
+    }
 }
