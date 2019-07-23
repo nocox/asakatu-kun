@@ -8,16 +8,29 @@
 main{
   max-width: 375px;
   margin: 0 auto;
+  margin-top:40px;
   padding: 0 16px;
+  margin-bottom:120px;
 }
+
 
 main > h2{
   font-size:24px;
   text-align: center;
 }
 
+main > h2 + p{
+  margin-top: 24px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.linkToLogin{
+  text-align: center;
+  margin-top: 12px;
+}
+
 main > form{
-  margin-top: 80px;
+  margin-top: 40px;
 }
 
 .form-part > label{
@@ -37,12 +50,25 @@ p {
 }
 
 small{
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #707070;
+}
+
+small > a{
+  font-size: inherit;
+  color:#FFB100;
+  text-decoration: none;
 }
 
 .form-part{
   margin-top:48px;
+}
+
+.cautionMessage{
+  margin-top:8px;
+  color: #ff0000;
+  font-size: 0.8rem;
+  visibility: hidden;
 }
 
 label + p{
@@ -55,25 +81,6 @@ input[type="email"]{
   width: 100%;
 }
 
-.primaryButton{
-  margin-top: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  height:62px;
-  /* width:calc(100% - 16px * 2); */
-  width: 100%;
-  padding:0 40px;
-  border-radius: 4px;
-  background-color: #FFB100;
-  font-size: 0.8rem;
-  font-weight:400;
-}
-.secondaryButton{
-  margin-top: 24px;
-  text-align: center;
-}
 
 main > p > a{
   font-size:1rem;
@@ -85,6 +92,36 @@ label::after{
   white-space: pre;
 }
 
-main{
-  margin-bottom:120px;
+.primaryButton{
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  height:62px;
+  color: #ffffff;
+  width: 100%;
+  padding:0 40px;
+  border-radius: 4px;
+  background-color: #FFB100;
+  font-weight:400;
+  cursor: pointer;
+  filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.2));
+  text-decoration: none;
+  line-height:62px;
+}
+
+.primaryButton:hover{
+  opacity: 0.95;
+  filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+.secondaryButton{
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.8em;
+
+}
+.secondaryButton > a{
+  text-decoration: none;
 }
