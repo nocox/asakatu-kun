@@ -2,7 +2,7 @@ package com.asakatu.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -33,6 +33,14 @@ public class Event {
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
 
+	@ManyToMany
+	@JoinTable(name = "user_event_association",
+			joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> userList;
+
+	@OneToMany(mappedBy = "event")
+    private List<UserStatus> userStatusList;
 	@PrePersist
 	public void onPrePersist() {
 		setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -44,11 +52,6 @@ public class Event {
 		setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 
-//	@ManyToMany
-//	@JoinTable(name = "user_event_association",
-//			joinColumns = @JoinColumn(name = "event_id"),
-//			inverseJoinColumns = @JoinColumn(name = "user"))
-//	private List<User> userList;
 
 	public Long getId() {
 		return id;
@@ -113,4 +116,20 @@ public class Event {
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public List<UserStatus> getUserStatusList() {
+        return userStatusList;
+    }
+
+    public void setUserStatusList(List<UserStatus> userStatusList) {
+        this.userStatusList = userStatusList;
+    }
 }

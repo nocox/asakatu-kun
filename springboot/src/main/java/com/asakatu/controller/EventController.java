@@ -1,21 +1,34 @@
 package com.asakatu.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.asakatu.entity.SimpleLoginUser;
+import com.asakatu.entity.User;
+import com.asakatu.entity.UserStatus;
+import com.asakatu.repository.UserRepository;
+import com.asakatu.repository.UserStatusRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.Event;
 import com.asakatu.repository.EventRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
 public class EventController {
 	private final EventRepository eventRepository;
 
-	public EventController(EventRepository eventRepository) {
+    private final UserStatusRepository userStatusRepository;
+
+    private final UserRepository userRepository;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository) {
 		this.eventRepository = eventRepository;
+		this.userStatusRepository = userStatusRepository;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping("/events")
@@ -55,6 +68,30 @@ public class EventController {
 		eventRepository.save(updateEvent);
 		return new OkResponse(new EventResponse("success", event));
 	}
+
+    @PostMapping("/event/{id}/user")
+    public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
+        // ログインユーザの取得
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
+
+        // イベントの取得,設定
+        Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        event.getUserList().add(user);
+        eventRepository.save(event);
+
+        // ユーザステータスの設定
+        UserStatus userStatus = new UserStatus();
+        userStatus.setComment(request.getComment());
+        userStatus.setEvent(event);
+        userStatus.setUser(user);
+        userStatus.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        userStatus.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        userStatusRepository.save(userStatus);
+
+        return new CreatedResponse(new EventOnlyCommentResponse("created", userStatus.getComment()));
+    }
+
 }
 
 class GetEventsListResponse {
@@ -90,5 +127,41 @@ class EventResponse {
 
 	public Event getEvent() {
 		return event;
+	}
+}
+
+class EventOnlyCommentResponse {
+    private String message;
+    private String comment;
+
+    EventOnlyCommentResponse(String message, String comment) {
+        this.message = message;
+        this.comment = comment;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+}
+
+
+class CreatedResponse {
+	private Object data;
+
+	public CreatedResponse(Object data) {
+		this.data = data;
+	}
+
+	public Integer getStatus() {
+		return 201;
+	}
+
+	public Object getData() {
+		return data;
 	}
 }
