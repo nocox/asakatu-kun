@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="jp">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +13,13 @@
   </header>
   <main>
     <h2>新規会員登録</h2>
+    <p class="linkToLogin"><small><a href="login.html">ログインはこちら</a></small></p>
     <!-- TODO: actionの設定 -->
     <form action="" method="post">
       <div class="form-part">
         <label for="signUp__inputter--email">メールアドレス</label>
         <input type="email" value="" id="signUp__inputter--email">
-        <p hidden><strong>そのメールアドレスはすでに使われています</strong></p>
+        <p class="cautionMessage"><strong>そのメールアドレスはすでに使われています</strong></p>
       </div>
       <div class="form-part">
         <label for="signUp__inputter--userName">ユーザーID</label>
@@ -29,6 +30,7 @@
           </small>
         </p>
         <input type="text" value="" id="signUp__inputter--userName">
+        <p class="cautionMessage"><strong>そのユーザーIDはすでに使われています</strong></p>
       </div>
       <div class="form-part">
         <label for="signUp__inputter--nickname">ニックネーム</label>
@@ -43,9 +45,9 @@
       <div class="form-part">
         <label for="signUp__inputter--password-confirm">パスワードの再入力</label>
         <input type="password"value="" id="signUp__inputter--password-confirm">
-        <p hidden class="cautionMessage--confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>
+        <p  class="cautionMessage cautionMessage--confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>
       </div>
-      <input class="primaryButton" type="submit" name="" value="完了">
+      <input class="primaryButton" type="submit" name="" value="登録する">
     </form>
   </main>
 </body>
