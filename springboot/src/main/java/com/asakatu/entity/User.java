@@ -18,7 +18,6 @@ public class User {
     @Column(name = "display_name")
     private String displayName;
 
-
     @Column(name = "image_path")
     private String imagePath;
 
