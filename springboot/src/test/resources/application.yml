@@ -4,9 +4,14 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+    sql-script-encoding: UTF-8
     schema:
-      - classpath*:schema-product.sql
       - classpath:schema.sql
+      - classpath*:schema-product.sql
+    data:
+      - classpath:data.sql
+      - classpath:data-product.sql
+
 
   jpa:
     hibernate:
