@@ -3,12 +3,15 @@ package com.asakatu.controller;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
+import com.asakatu.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 
@@ -36,6 +39,30 @@ public class UserDetailController {
         User user = findUser.orElseThrow();
 
         user.setDisplayName(displayName);
+        userRepository.save(user);
+
+        return okUser(user);
+    }
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
+    @PutMapping("/user/edit/image")
+    public OkResponse uploadFile(@RequestParam("file") MultipartFile file) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> findUser = userRepository.findByUsername(authentication.getName());
+        User user = findUser.orElseThrow();
+
+
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        user.setImagePath(fileDownloadUri);
         userRepository.save(user);
 
         return okUser(user);
@@ -92,3 +119,33 @@ class UserDetailResponse {
     }
 }
 
+
+class UploadFileResponse {
+    private String fileName;
+    private String fileDownloadUri;
+    private String fileType;
+    private long size;
+
+    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
+        this.fileName = fileName;
+        this.fileDownloadUri = fileDownloadUri;
+        this.fileType = fileType;
+        this.size = size;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileDownloadUri() {
+        return fileDownloadUri;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public long getSize() {
+        return size;
+    }
+}
