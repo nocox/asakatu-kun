@@ -30,6 +30,7 @@
         axios.post("http://localhost:8080/login", params, {withCredentials: true})
         .then(function (response) {
           alert("ログイン成功");
+          window.location.href = "http://localhost:9000/user_detail.html";
           console.log(response);
         })
         .catch(function (error) {

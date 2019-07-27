@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TestPage</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.js"
+      integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+      crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<h1>Spring Boot file upload example</h1>
+<img id="user_profile" src="" alt="user-image" width="250" height="300">
+<br>
+<input id="file" type="file" name="file" /><br/><br/>
+<button type="button" name="button">upload</button>
+
+<script type="text/javascript">
+  let user_profile = document.getElementById("user_profile");
+  axios.get("http://localhost:8080/user/7", {withCredentials: true})
+  .then(function (response) {
+    console.log(response);
+    console.log(response.data.data);
+    user_profile.src = response.data.data.imagePath;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+  $("button").click(function(){
+    let api_url = 'http://localhost:8080/user/edit/image';
+    let element = document.getElementById("file");
+    let params = new FormData();
+    params.append('file', element.files[0]);
+    axios.put(api_url, params, {withCredentials: true})
+    .then(function (response) {
+      alert("アップロード成功");
+      console.log(response);
+      user_profile.src = response.data.data.imagePath;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+</script>
+
+
+</body>
+</html>
