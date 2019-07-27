@@ -3,15 +3,12 @@ package com.asakatu.controller;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
-import com.asakatu.service.FileStorageService;
+import com.asakatu.service.S3BucketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 
@@ -45,24 +42,16 @@ public class UserDetailController {
     }
 
     @Autowired
-    private FileStorageService fileStorageService;
+    private S3BucketService s3BucketService;
 
     @PutMapping("/user/edit/image")
     public OkResponse uploadFile(@RequestParam("file") MultipartFile file) {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> findUser = userRepository.findByUsername(authentication.getName());
         User user = findUser.orElseThrow();
 
-
-        String fileName = fileStorageService.storeFile(file);
-
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
-
-        user.setImagePath(fileDownloadUri);
+        String fileName = s3BucketService.storeFile(file);
+        user.setImagePath(s3BucketService.getObjectURL(fileName));
         userRepository.save(user);
 
         return okUser(user);
