@@ -74,6 +74,7 @@ public class EventController {
     public OkResponse getEventJoinedUsersList(@PathVariable long id) {
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
         List<User> eventJoinedUsersList = userRepository.findUsersByEventsListIn(event);
+
         List<JoinedUserInfo> result = new ArrayList<>();
         JoinedUserInfo user;
         // 全部だとパスワードとかも入っちゃうので厳選
@@ -82,6 +83,8 @@ public class EventController {
             user.setDisplayName(jounedUser.getDisplayName());
             user.setId(jounedUser.getId());
             user.setImagePath(jounedUser.getImagePath());
+            String comment = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser).getComment();
+            user.setComment(comment);
             result.add(user);
         }
         return new OkResponse(new EventJoinedResponse("success", result));
@@ -174,6 +177,8 @@ class JoinedUserInfo {
 
     private String imagePath;
 
+    private String comment;
+
     public Long getId() {
         return id;
     }
@@ -196,6 +201,14 @@ class JoinedUserInfo {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
 
