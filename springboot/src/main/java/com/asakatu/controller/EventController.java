@@ -5,6 +5,7 @@ import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
+import com.asakatu.response.GetEventsListResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -92,24 +93,6 @@ public class EventController {
         return new CreatedResponse(new EventOnlyCommentResponse("created", userStatus.getComment()));
     }
 
-}
-
-class GetEventsListResponse {
-	private String message;
-	private List<Event> eventsList;
-
-	GetEventsListResponse(String message, List<Event> eventsList) {
-		this.message = message;
-		this.eventsList = eventsList;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public List<Event> getEventsList() {
-		return eventsList;
-	}
 }
 
 class EventResponse {
