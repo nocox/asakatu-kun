@@ -15,7 +15,6 @@ import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,21 +33,8 @@ public class EventController {
 
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
-        List<SimpleEvent> result = new ArrayList<>();
 		List<Event> eventsList = eventRepository.findAll();
-        for (Event event : eventsList) {
-            SimpleEvent simpleEvent = new SimpleEvent();
-            simpleEvent.setId(event.getId());
-            simpleEvent.setStartDate(event.getStartDate());
-            simpleEvent.setDuration(event.getDuration());
-            simpleEvent.setAddress(event.getAddress());
-            simpleEvent.setSeatInfo(event.getSeatInfo());
-            simpleEvent.setEventStatus(event.getEventStatus());
-            simpleEvent.setCreatedAt(event.getCreatedAt());
-            simpleEvent.setUpdatedAt(event.getUpdatedAt());
-            result.add(simpleEvent);
-        }
-		return new OkResponse(new GetEventsListResponse("success", result));
+		return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
 	@RequestMapping("/event/{eventId}")
@@ -108,93 +94,11 @@ public class EventController {
 
 }
 
-class SimpleEvent {
-    private Long id;
-
-    private Timestamp startDate;
-
-    private double duration;
-
-    private String address;
-
-    private String seatInfo;
-
-    private String eventStatus;
-
-    private Timestamp createdAt;
-
-    private Timestamp updatedAt;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Timestamp getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-    }
-
-    public double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getSeatInfo() {
-        return seatInfo;
-    }
-
-    public void setSeatInfo(String seatInfo) {
-        this.seatInfo = seatInfo;
-    }
-
-    public String getEventStatus() {
-        return eventStatus;
-    }
-
-    public void setEventStatus(String eventStatus) {
-        this.eventStatus = eventStatus;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-}
-
 class GetEventsListResponse {
 	private String message;
-	private List<SimpleEvent> eventsList;
+	private List<Event> eventsList;
 
-	GetEventsListResponse(String message, List<SimpleEvent> eventsList) {
+	GetEventsListResponse(String message, List<Event> eventsList) {
 		this.message = message;
 		this.eventsList = eventsList;
 	}
@@ -203,7 +107,7 @@ class GetEventsListResponse {
 		return message;
 	}
 
-	public List<SimpleEvent> getEventsList() {
+	public List<Event> getEventsList() {
 		return eventsList;
 	}
 }
