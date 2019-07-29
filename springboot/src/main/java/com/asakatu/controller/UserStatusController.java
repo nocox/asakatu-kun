@@ -6,6 +6,7 @@ import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,23 @@ public class UserStatusController {
 	public OkResponse getUserStatus(@PathVariable Long eventId, @PathVariable Long userId) {
 		User user = userRepository.findById(userId).get();
 		UserStatus userStatus = userStatusRepository.findByEventIdAndUserId(eventId, userId).get();
+		return new OkResponse(new UserStatusResponse(
+				"success",
+				userStatus.getId(),
+				user.getUsername(),
+				user.getDisplayName(),
+				user.getImagePath(),
+				userStatus.getUserStatusComment()
+		));
+	}
+
+	@RequestMapping("/event/{eventId}/user/{userId}/edit")
+	public OkResponse updateUserStatus(@RequestBody String comment, @PathVariable Long eventId, @PathVariable Long userId) {
+		User user = userRepository.findById(userId).get();
+		UserStatus userStatus = userStatusRepository.findByEventIdAndUserId(eventId, userId).get();
+		userStatus.setUserStatusComment(comment);
+		userStatusRepository.save(userStatus);
+
 		return new OkResponse(new UserStatusResponse(
 				"success",
 				userStatus.getId(),
