@@ -70,6 +70,11 @@ public class EventControllerTests extends AbstractTest{
 		List<Event> eventsList = contentObj.getData().getEventsList();
 		Assert.assertThat(eventsList.size(), Is.is(5));
 
+		Assert.assertThat(eventsList.get(0).getAddress(), Is.is("東京都渋谷区1-2-3"));
+		Assert.assertThat(eventsList.get(1).getAddress(), Is.is("東京都渋谷区2-2-3"));
+		Assert.assertThat(eventsList.get(2).getAddress(), Is.is("東京都渋谷区3-2-3"));
+		Assert.assertThat(eventsList.get(3).getAddress(), Is.is("東京都渋谷区4-2-3"));
+		Assert.assertThat(eventsList.get(4).getAddress(), Is.is("東京都渋谷区5-2-3"));
 	}
 
 	private UserStatus joinUserStatus() {
