@@ -1,8 +1,13 @@
 package com.asakatu;
 
+import com.asakatu.entity.Event;
+import com.asakatu.response.GetEventsListResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.EventRepository;
+import org.hamcrest.core.Is;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +20,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
@@ -54,13 +60,20 @@ public class EventControllerTests extends AbstractTest{
     public void getEventsList() throws Exception {
 		String uri = "/events";
 		MvcResult mvcResult = mvc.perform(get(uri)
-				.accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-
+				.accept(MediaType.APPLICATION_JSON_VALUE)).andDo(print()).andReturn();
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(200, status);
-//		String content = mvcResult.getResponse().getContentAsString();
-//		Event[] eventList = super.mapFromJson(content, Event[].class);
-//		assertTrue(eventList.length > 0);
+		String content = mvcResult.getResponse().getContentAsString();
+
+		TOkResponse<GetEventsListResponse> contentObj = mapper.readValue(content, new TypeReference<TOkResponse<GetEventsListResponse>>(){});
+		List<Event> eventsList = contentObj.getData().getEventsList();
+		Assert.assertThat(eventsList.size(), Is.is(5));
+
+		Assert.assertThat(eventsList.get(0).getAddress(), Is.is("東京都渋谷区1-2-3"));
+		Assert.assertThat(eventsList.get(1).getAddress(), Is.is("東京都渋谷区2-2-3"));
+		Assert.assertThat(eventsList.get(2).getAddress(), Is.is("東京都渋谷区3-2-3"));
+		Assert.assertThat(eventsList.get(3).getAddress(), Is.is("東京都渋谷区4-2-3"));
+		Assert.assertThat(eventsList.get(4).getAddress(), Is.is("東京都渋谷区5-2-3"));
 	}
 
 	private UserStatus joinUserStatus() {
@@ -108,4 +121,13 @@ public class EventControllerTests extends AbstractTest{
                 .andExpect(jsonPath("$.data.userList[0].displayName").value("きしー"))
                 .andExpect(jsonPath("$.data.userList[0].imagePath").value("/images/profile/2u1e0h30x38.jpg"));
     }
+}
+
+
+class TOkResponse<T>{
+	private T data;
+
+	public T getData() {
+		return data;
+	}
 }

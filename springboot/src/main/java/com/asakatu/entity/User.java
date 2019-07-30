@@ -81,13 +81,13 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public List<Event> getEventsList() {
-        return eventsList;
-    }
-
-    public void setEventsList(List<Event> eventsList) {
-        this.eventsList = eventsList;
-    }
+//    public List<Event> getEventsList() {
+//        return eventsList;
+//    }
+//
+//    public void setEventsList(List<Event> eventsList) {
+//        this.eventsList = eventsList;
+//    }
 
     public List<UserStatus> getUserStatusList() {
         return userStatusList;
