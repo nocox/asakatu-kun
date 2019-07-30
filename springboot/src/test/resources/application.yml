@@ -16,3 +16,19 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+cloud:
+  aws:
+    credentials:
+      accessKey:
+      secretKey:
+    stack:
+      auto: false
+    region:
+      auto: false
+      static: us-east-1
+
+s3:
+  bucket: nocox-exp57-public
+  folder: asakatu_user_profile
+  defaultimage: human-icon-big.png
