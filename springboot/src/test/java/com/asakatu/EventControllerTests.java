@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -58,10 +59,8 @@ public class EventControllerTests extends AbstractTest{
     @WithMockUser
     public void getEventsList() throws Exception {
 		String uri = "/events";
-
 		MvcResult mvcResult = mvc.perform(get(uri)
 				.accept(MediaType.APPLICATION_JSON_VALUE)).andDo(print()).andReturn();
-
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(200, status);
 		String content = mvcResult.getResponse().getContentAsString();
@@ -83,26 +82,44 @@ public class EventControllerTests extends AbstractTest{
 		return userStatus;
 	}
 
-	@Test
-    @WithMockUser(username = "doiiii")
-	public void joinEvent() throws Exception {
-		this.mockMvc.perform(
-				post("/event/1/user")
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-						.content(mapper.writeValueAsBytes(joinUserStatus())))
-				.andDo(print()).andExpect(status().isOk());
-	}
-
     @Test
     @WithMockUser(username = "doiiii")
     public void joinEventComment() throws Exception {
         this.mockMvc.perform(
-                post("/event/1/user")
+                post("/event/2/user")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(joinUserStatus())))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.comment").value("comment"))
                 .andExpect(jsonPath("$.data.message").value("created"));
+    }
+
+    @Test
+    @WithMockUser(username = "doiiii")
+    public void joinEventUsers() throws Exception {
+        this.mockMvc.perform(
+                get("/event/1/users")).andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "doiiii")
+    public void joinEventUserListSize() throws Exception {
+        this.mockMvc.perform(
+                get("/event/1/users")).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.message").value("success"))
+                .andExpect(jsonPath("$.data.userList",hasSize(4)));
+	}
+
+    @Test
+    @WithMockUser(username = "doiiii")
+    public void joinEventUserListName() throws Exception {
+        this.mockMvc.perform(
+                get("/event/1/users")).andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.message").value("success"))
+                .andExpect(jsonPath("$.data.userList",hasSize(4)))
+                .andExpect(jsonPath("$.data.userList[0].id").value(1))
+                .andExpect(jsonPath("$.data.userList[0].displayName").value("きしー"))
+                .andExpect(jsonPath("$.data.userList[0].imagePath").value("/images/profile/2u1e0h30x38.jpg"));
     }
 }
 

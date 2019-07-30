@@ -16,6 +16,7 @@ import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -69,6 +70,26 @@ public class EventController {
 		eventRepository.save(updateEvent);
 		return new OkResponse(new EventResponse("success", event));
 	}
+
+    @RequestMapping("/event/{id}/users")
+    public OkResponse getEventJoinedUsersList(@PathVariable long id) {
+        Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        List<User> eventJoinedUsersList = userRepository.findUsersByEventsListIn(event);
+
+        List<JoinedUserInfo> result = new ArrayList<>();
+        JoinedUserInfo user;
+        // 全部だとパスワードとかも入っちゃうので厳選
+        for (User jounedUser : eventJoinedUsersList) {
+            user = new JoinedUserInfo();
+            user.setDisplayName(jounedUser.getDisplayName());
+            user.setId(jounedUser.getId());
+            user.setImagePath(jounedUser.getImagePath());
+            String comment = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser).getComment();
+            user.setComment(comment);
+            result.add(user);
+        }
+        return new OkResponse(new EventJoinedResponse("success", result));
+    }
 
     @PostMapping("/event/{id}/user")
     public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
@@ -132,6 +153,65 @@ class EventOnlyCommentResponse {
 
 }
 
+class JoinedUserInfo {
+    private Long id;
+
+    private String displayName;
+
+    private String imagePath;
+
+    private String comment;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+}
+
+class EventJoinedResponse {
+    private String message;
+    private List<JoinedUserInfo> userList;
+
+    EventJoinedResponse(String message, List<JoinedUserInfo> userList) {
+        this.message = message;
+        this.userList = userList;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<JoinedUserInfo> getUserList() {
+        return userList;
+    }
+}
 
 class CreatedResponse {
 	private Object data;
