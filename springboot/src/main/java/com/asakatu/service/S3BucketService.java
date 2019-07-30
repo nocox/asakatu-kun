@@ -26,8 +26,9 @@ public class S3BucketService {
         try {
             // TODO: fileの安全性確認
 
+            // .defaultClient()
             // ファイルをS3にアップロードする
-            AmazonS3ClientBuilder.defaultClient().putObject( new PutObjectRequest(
+            AmazonS3ClientBuilder.standard().withRegion("us-east-1").build().putObject( new PutObjectRequest(
                     s3BucketProperties.getBucket(),
                     getFilePath(fileName),
                     file.getInputStream(),
