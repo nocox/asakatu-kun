@@ -3,12 +3,12 @@ package com.asakatu.controller;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -18,7 +18,6 @@ public class UserDetailController {
     private final
     UserRepository userRepository;
 
-
     public UserDetailController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -26,6 +25,18 @@ public class UserDetailController {
     @GetMapping(path = "/user/{id}")
     public OkResponse userDetail(@PathVariable long id) {
         User user = userRepository.findById(id).orElseThrow();
+
+        return okUser(user);
+    }
+
+    @PutMapping(path = "/user/edit/display_name")
+    public OkResponse editUserDisplayName(@RequestParam("displayName") String displayName){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> findUser = userRepository.findByUsername(authentication.getName());
+        User user = findUser.orElseThrow();
+
+        user.setDisplayName(displayName);
+        userRepository.save(user);
 
         return okUser(user);
     }
