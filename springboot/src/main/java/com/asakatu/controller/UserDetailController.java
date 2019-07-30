@@ -50,7 +50,7 @@ public class UserDetailController {
         Optional<User> findUser = userRepository.findByUsername(authentication.getName());
         User user = findUser.orElseThrow();
 
-        String fileName = s3BucketService.storeFile(file);
+        String fileName = s3BucketService.storeFile(file, user);
         user.setImagePath(s3BucketService.getObjectURL(fileName));
         userRepository.save(user);
 

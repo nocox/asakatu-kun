@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.asakatu.entity.User;
 import com.asakatu.property.S3BucketProperties;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class S3BucketService {
         this.s3BucketProperties = s3BucketProperties;
     }
 
-    public String storeFile(MultipartFile file) {
-        String fileName = RandomString.make(10);
+    public String storeFile(MultipartFile file, User user) {
+        String fileName = user.getId() + "_" + RandomString.make(10);
 
         try {
             // TODO: fileの安全性確認
