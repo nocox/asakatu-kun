@@ -39,6 +39,14 @@ public class EventController {
 		return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
+    @RequestMapping("/joinevents")
+    public OkResponse getJoinEventsList() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
+        List<Event> eventsList = eventRepository.findEventsByUserListIn(user);
+        return new OkResponse(new GetEventsListResponse("success", eventsList));
+    }
+
 	@RequestMapping("/event/{eventId}")
 	public OkResponse getEvent(@PathVariable Long eventId) {
 		Event event = eventRepository.findById(eventId).get();
@@ -99,7 +107,9 @@ public class EventController {
 
         // イベントの取得,設定
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
-        event.getUserList().add(user);
+        List<User> userList = userRepository.findUsersByEventsListIn(event);
+        userList.add(user);
+        event.setUserList(userList);
         eventRepository.save(event);
 
         // ユーザステータスの設定
