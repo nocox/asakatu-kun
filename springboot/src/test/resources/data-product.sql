@@ -23,11 +23,8 @@ INSERT INTO event(start_date, duration, address, seat_info, event_status)
 VALUES ('2019-07-05 00:00:00', 1.5, '東京都渋谷区5-2-3', '鏡の前の席', 'fin');
 
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (1, 1, FALSE);
-INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (1, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (2, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (3, 1, FALSE);
-INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 1, FALSE);
-INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (2, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 1, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 2, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 3, FALSE);
@@ -53,10 +50,8 @@ INSERT INTO user_group(order_user_id, product_key, description) VALUES (3, 'f32r
 INSERT INTO user_group(order_user_id, product_key, description) VALUES (4, '234ere3e433', '朝活グループ4');
 
 INSERT INTO user_group_association(user_id, user_group_id) VALUES (1, 1);
-INSERT INTO user_group_association(user_id, user_group_id) VALUES (1, 1);
 INSERT INTO user_group_association(user_id, user_group_id) VALUES (1, 2);
 INSERT INTO user_group_association(user_id, user_group_id) VALUES (1, 3);
-INSERT INTO user_group_association(user_id, user_group_id) VALUES (1, 4);
 INSERT INTO user_group_association(user_id, user_group_id) VALUES (1, 4);
 INSERT INTO user_group_association(user_id, user_group_id) VALUES (2, 4);
 INSERT INTO user_group_association(user_id, user_group_id) VALUES (3, 4);

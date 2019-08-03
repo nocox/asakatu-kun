@@ -6,9 +6,29 @@ spring:
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
     schema:
-      - classpath*:schema-product.sql
       - classpath:schema.sql
+      - classpath*:schema-product.sql
+    data:
+      - classpath:data.sql
+      - classpath:data-product.sql
+
 
   jpa:
     hibernate:
       ddl-auto: none
+
+cloud:
+  aws:
+    credentials:
+      accessKey:
+      secretKey:
+    stack:
+      auto: false
+    region:
+      auto: false
+      static: us-east-1
+
+s3:
+  bucket: nocox-exp57-public
+  folder: asakatu_user_profile
+  defaultimage: human-icon-big.png

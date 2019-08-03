@@ -1,21 +1,36 @@
 package com.asakatu.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.asakatu.entity.SimpleLoginUser;
+import com.asakatu.entity.User;
+import com.asakatu.entity.UserStatus;
+import com.asakatu.repository.UserRepository;
+import com.asakatu.repository.UserStatusRepository;
+import com.asakatu.response.GetEventsListResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.Event;
 import com.asakatu.repository.EventRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class EventController {
 	private final EventRepository eventRepository;
 
-	public EventController(EventRepository eventRepository) {
+    private final UserStatusRepository userStatusRepository;
+
+    private final UserRepository userRepository;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository) {
 		this.eventRepository = eventRepository;
+		this.userStatusRepository = userStatusRepository;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping("/events")
@@ -55,24 +70,50 @@ public class EventController {
 		eventRepository.save(updateEvent);
 		return new OkResponse(new EventResponse("success", event));
 	}
-}
 
-class GetEventsListResponse {
-	private String message;
-	private List<Event> eventsList;
+    @RequestMapping("/event/{id}/users")
+    public OkResponse getEventJoinedUsersList(@PathVariable long id) {
+        Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        List<User> eventJoinedUsersList = userRepository.findUsersByEventsListIn(event);
 
-	GetEventsListResponse(String message, List<Event> eventsList) {
-		this.message = message;
-		this.eventsList = eventsList;
-	}
+        List<JoinedUserInfo> result = new ArrayList<>();
+        JoinedUserInfo user;
+        // 全部だとパスワードとかも入っちゃうので厳選
+        for (User jounedUser : eventJoinedUsersList) {
+            user = new JoinedUserInfo();
+            user.setDisplayName(jounedUser.getDisplayName());
+            user.setId(jounedUser.getId());
+            user.setImagePath(jounedUser.getImagePath());
+            String comment = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser).getComment();
+            user.setComment(comment);
+            result.add(user);
+        }
+        return new OkResponse(new EventJoinedResponse("success", result));
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    @PostMapping("/event/{id}/user")
+    public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
+        // ログインユーザの取得
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
 
-	public List<Event> getEventsList() {
-		return eventsList;
-	}
+        // イベントの取得,設定
+        Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        event.getUserList().add(user);
+        eventRepository.save(event);
+
+        // ユーザステータスの設定
+        UserStatus userStatus = new UserStatus();
+        userStatus.setComment(request.getComment());
+        userStatus.setEvent(event);
+        userStatus.setUser(user);
+        userStatus.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        userStatus.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        userStatusRepository.save(userStatus);
+
+        return new CreatedResponse(new EventOnlyCommentResponse("created", userStatus.getComment()));
+    }
+
 }
 
 class EventResponse {
@@ -90,5 +131,100 @@ class EventResponse {
 
 	public Event getEvent() {
 		return event;
+	}
+}
+
+class EventOnlyCommentResponse {
+    private String message;
+    private String comment;
+
+    EventOnlyCommentResponse(String message, String comment) {
+        this.message = message;
+        this.comment = comment;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+}
+
+class JoinedUserInfo {
+    private Long id;
+
+    private String displayName;
+
+    private String imagePath;
+
+    private String comment;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+}
+
+class EventJoinedResponse {
+    private String message;
+    private List<JoinedUserInfo> userList;
+
+    EventJoinedResponse(String message, List<JoinedUserInfo> userList) {
+        this.message = message;
+        this.userList = userList;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<JoinedUserInfo> getUserList() {
+        return userList;
+    }
+}
+
+class CreatedResponse {
+	private Object data;
+
+	public CreatedResponse(Object data) {
+		this.data = data;
+	}
+
+	public Integer getStatus() {
+		return 201;
+	}
+
+	public Object getData() {
+		return data;
 	}
 }

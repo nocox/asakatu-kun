@@ -30,7 +30,7 @@ public class UserStatusController {
 				user.getUsername(),
 				user.getDisplayName(),
 				user.getImagePath(),
-				userStatus.getUserStatusComment()
+				userStatus.getComment()
 		));
 	}
 
@@ -38,7 +38,7 @@ public class UserStatusController {
 	public OkResponse updateUserStatus(@RequestBody String comment, @PathVariable Long eventId, @PathVariable Long userId) {
 		User user = userRepository.findById(userId).get();
 		UserStatus userStatus = userStatusRepository.findByEventIdAndUserId(eventId, userId).get();
-		userStatus.setUserStatusComment(comment);
+		userStatus.setComment(comment);
 		userStatusRepository.save(userStatus);
 
 		return new OkResponse(new UserStatusResponse(
@@ -47,7 +47,7 @@ public class UserStatusController {
 				user.getUsername(),
 				user.getDisplayName(),
 				user.getImagePath(),
-				userStatus.getUserStatusComment()
+				userStatus.getComment()
 		));
 	}
 }
