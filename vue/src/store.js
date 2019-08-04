@@ -11,21 +11,18 @@ const loginState = new Vuex.Store({
   mutations: {
     initLogin(state){
       state.loginState = false;
-      state.token='';
       state.userInfo={}
     },
-    changeToLogin (state, token, userInfo) {
+    getLogin (state) {
       state.loginState = true;
-      state.userInfo = userInfo;
-    },
-
+    }
   },
   actions: {
 
   },
   plugins: [createPersistedState({
-    key: 'facelook',
-    paths: ['token','loginState','userinfo','testcount'],
+    key: 'asakatsukun',
+    paths: ['loginState','userInfo'],
     storage: window.sessionStorage
   })]
 });
