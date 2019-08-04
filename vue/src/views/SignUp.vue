@@ -88,7 +88,7 @@
                 e.preventDefault();
             },
             addUser: async function () {
-                await axios.post('http://localhost:8080/', this.request);
+                await axios.post('http://localhost:8080/user_registration', this.request);
             },
         }
     }

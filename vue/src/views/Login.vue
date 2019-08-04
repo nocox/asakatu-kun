@@ -72,7 +72,17 @@
                 e.preventDefault();
             },
             addUser: async function () {
-                await axios.post('http://localhost:8080/', this.request);
+                await axios.post('http://localhost:8080/login', this.request, {withCredentials: true})
+                    .then(function (response) {
+                        alert("ログイン成功");
+                        console.log(response);
+                        this.$store.commit('getLogin');
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("please retry");
+                        this.$route.router.go('/login');
+                    });
             },
         }
     }
@@ -82,3 +92,18 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
 </style>
+
+<!--  $("button").click(function(){
+        var params = new URLSearchParams();
+        params.append('username', $("#username").val());
+        params.append('password', $("#password").val());
+        axios.post("http://localhost:8080/login", params, {withCredentials: true})
+        .then(function (response) {
+          alert("ログイン成功");
+          window.location.href = "http://localhost:9000/user_detail.html";
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      });-->

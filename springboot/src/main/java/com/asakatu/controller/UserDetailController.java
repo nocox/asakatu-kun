@@ -3,12 +3,12 @@ package com.asakatu.controller;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
+import com.asakatu.service.S3BucketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -18,7 +18,6 @@ public class UserDetailController {
     private final
     UserRepository userRepository;
 
-
     public UserDetailController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -26,6 +25,34 @@ public class UserDetailController {
     @GetMapping(path = "/user/{id}")
     public OkResponse userDetail(@PathVariable long id) {
         User user = userRepository.findById(id).orElseThrow();
+
+        return okUser(user);
+    }
+
+    @PutMapping(path = "/user/edit/display_name")
+    public OkResponse editUserDisplayName(@RequestParam("displayName") String displayName){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> findUser = userRepository.findByUsername(authentication.getName());
+        User user = findUser.orElseThrow();
+
+        user.setDisplayName(displayName);
+        userRepository.save(user);
+
+        return okUser(user);
+    }
+
+    @Autowired
+    private S3BucketService s3BucketService;
+
+    @PutMapping("/user/edit/image")
+    public OkResponse uploadFile(@RequestParam("file") MultipartFile file) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> findUser = userRepository.findByUsername(authentication.getName());
+        User user = findUser.orElseThrow();
+
+        String fileName = s3BucketService.storeFile(file, user);
+        user.setImagePath(s3BucketService.getObjectURL(fileName));
+        userRepository.save(user);
 
         return okUser(user);
     }
@@ -81,3 +108,33 @@ class UserDetailResponse {
     }
 }
 
+
+class UploadFileResponse {
+    private String fileName;
+    private String fileDownloadUri;
+    private String fileType;
+    private long size;
+
+    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
+        this.fileName = fileName;
+        this.fileDownloadUri = fileDownloadUri;
+        this.fileType = fileType;
+        this.size = size;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileDownloadUri() {
+        return fileDownloadUri;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public long getSize() {
+        return size;
+    }
+}

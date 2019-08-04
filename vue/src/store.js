@@ -3,40 +3,28 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-const loginStore = new Vuex.Store({
+const loginState = new Vuex.Store({
   state: {
-    loginState:false,
-    token:'',
-    userInfo:{},
+    isLogin: false,
+    userInfo: {}
   },
   mutations: {
     initLogin(state){
       state.loginState = false;
-      state.token='';
       state.userInfo={}
     },
-    create (state, token, userInfo) {
+    getLogin (state) {
       state.loginState = true;
-      state.token = token;
-      state.userInfo = userInfo;
-    },
-    setToken(state,token){
-      state.token = token;
-    },
-    getActive(state, userInfo){
-      state.loginState =true;
-      state.userInfo = userInfo;
     }
-
   },
   actions: {
 
   },
   plugins: [createPersistedState({
-    key: 'facelook',
-    paths: ['token','loginState','userinfo','testcount'],
+    key: 'asakatsukun',
+    paths: ['loginState','userInfo'],
     storage: window.sessionStorage
   })]
-})
+});
 
-export default loginStore;
+export default loginState;
