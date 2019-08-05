@@ -17,7 +17,9 @@ import com.asakatu.repository.EventRepository;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class EventController {
@@ -39,15 +41,19 @@ public class EventController {
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
 		List<Event> entityEventsList = eventRepository.findAll();
-		List<ForFrontEvent> eventsList = new ArrayList<>();
+		List<ForFrontEvent> noSortedEventsList = new ArrayList<>();
         for (Event event : entityEventsList) {
             ForFrontEvent forFrontEvent = new ForFrontEvent();
             forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
             forFrontEvent.setEvent(event);
-            eventsList.add(forFrontEvent);
+            noSortedEventsList.add(forFrontEvent);
         }
 
-		return new OkResponse(new GetEventsListResponse("success", eventsList));
+        List<ForFrontEvent> eventsList = noSortedEventsList.stream()
+                .sorted(Comparator.comparing(event -> event.getEvent().getStartDate()))
+                .collect(Collectors.toList());
+
+        return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
 	@RequestMapping("/event/{eventId}")
