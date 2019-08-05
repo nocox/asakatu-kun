@@ -1,13 +1,13 @@
 package com.asakatu.controller;
 
-import com.asakatu.entity.SimpleLoginUser;
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
+import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
+import com.asakatu.service.PostService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.asakatu.OkResponse;
@@ -27,15 +27,26 @@ public class EventController {
 
     private final UserRepository userRepository;
 
-	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository) {
+    private final PostService postService;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository, PostService postService) {
 		this.eventRepository = eventRepository;
 		this.userStatusRepository = userStatusRepository;
 		this.userRepository = userRepository;
+		this.postService = postService;
 	}
 
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
-		List<Event> eventsList = eventRepository.findAll();
+		List<Event> entityEventsList = eventRepository.findAll();
+		List<ForFrontEvent> eventsList = new ArrayList<>();
+        for (Event event : entityEventsList) {
+            ForFrontEvent forFrontEvent = new ForFrontEvent();
+            forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
+            forFrontEvent.setEvent(event);
+            eventsList.add(forFrontEvent);
+        }
+
 		return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
@@ -115,6 +126,7 @@ public class EventController {
     }
 
 }
+
 
 class EventResponse {
 	private String message;

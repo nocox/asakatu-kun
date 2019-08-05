@@ -1,15 +1,13 @@
 package com.asakatu.response;
 
-import com.asakatu.entity.Event;
-
 import java.util.List;
 
 public class GetEventsListResponse {
     private String message;
 
-    private List<Event> eventsList;
+    private List<ForFrontEvent> eventsList;
 
-    public GetEventsListResponse(String message, List<Event> eventsList) {
+    public GetEventsListResponse(String message, List<ForFrontEvent> eventsList) {
         this.message = message;
         this.eventsList = eventsList;
     }
@@ -18,7 +16,7 @@ public class GetEventsListResponse {
         return message;
     }
 
-    public List<Event> getEventsList() {
+    public List<ForFrontEvent> getEventsList() {
         return eventsList;
     }
 }
