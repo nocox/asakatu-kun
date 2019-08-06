@@ -3,7 +3,7 @@
         <h2>create event</h2>
         <form
                 id="event-create-form"
-                @submit="checkForm"
+                @submit="checkEventCreateForm"
                 method="post"
         >
             <div v-if="errors.length">
@@ -90,7 +90,7 @@
             }
         },
         methods: {
-            checkLoginForm: function (e) {
+            checkEventCreateForm: function (e) {
                 this.errors = [];
                 if (!this.request.eventName) {
                     this.errors.push("Name required.");

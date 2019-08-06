@@ -3,7 +3,7 @@
         <div class="sign_up">sign up</div>
         <form
                 id="sign-up-form"
-                @submit="checkForm"
+                @submit="checkSignUPForm"
                 method="post"
         >
             <div v-if="errors.length">
@@ -66,7 +66,7 @@
             }
         },
         methods: {
-            checkLoginForm: function (e) {
+            checkSignUpForm: function (e) {
                 this.errors = [];
 
                 if (!this.request.name) {
