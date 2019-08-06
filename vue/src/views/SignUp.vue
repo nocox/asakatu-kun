@@ -66,7 +66,7 @@
             }
         },
         methods: {
-            checkForm: function (e) {
+            checkLoginForm: function (e) {
                 this.errors = [];
 
                 if (!this.request.name) {

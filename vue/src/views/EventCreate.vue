@@ -90,7 +90,7 @@
             }
         },
         methods: {
-            checkForm: function (e) {
+            checkLoginForm: function (e) {
                 this.errors = [];
                 if (!this.request.eventName) {
                     this.errors.push("Name required.");
