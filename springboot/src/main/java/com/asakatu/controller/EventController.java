@@ -2,6 +2,7 @@ package com.asakatu.controller;
 
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
+import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.ForFrontEvent;
@@ -16,6 +17,7 @@ import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -63,8 +65,16 @@ public class EventController {
 	}
 
 	@RequestMapping("/event/new")
-	public OkResponse createEvent(@RequestBody Event event) {
-		eventRepository.save(event);
+	public OkResponse createEvent(@RequestBody FromFrontEventProperties eventProperty) {
+        Event event = new Event();
+        event.setStartDate(Timestamp.valueOf(eventProperty.getStartDate()));
+        event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
+        event.setAddress(eventProperty.getAddress());
+        event.setSeatInfo(eventProperty.getSeatInfo());
+        event.setEventStatus("yet");
+        event.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        event.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        eventRepository.save(event);
 		return new OkResponse(new EventResponse("success", event));
 	}
 
