@@ -96,7 +96,7 @@
                     this.errors.push("Name required.");
                 }
                 if (!this.request.startDate) {
-                    this.errors.push('startdate required.');
+                    this.errors.push('start date required.');
                 }
                 if (!this.errors.length) {
                     this.createEvent();
@@ -105,12 +105,19 @@
                 e.preventDefault();
             },
             createEvent: async function () {
-                await axios.post('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/', this.request);
+                const axiosResponse = await axios.post('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/', this.request);
+                if (axiosResponse.status === 200 || axiosResponse.status === 201 ) {
+                    console.log("ok");
+                    console.log(axiosResponse);
+                }else {
+                    console.log("error");
+                    console.log(axiosResponse);
+                }
             }
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>
