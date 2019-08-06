@@ -43,18 +43,7 @@ public class EventController {
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
 		List<Event> entityEventsList = eventRepository.findAll();
-		List<ForFrontEvent> noSortedEventsList = new ArrayList<>();
-        for (Event event : entityEventsList) {
-            ForFrontEvent forFrontEvent = new ForFrontEvent();
-            forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
-            forFrontEvent.setEvent(event);
-            noSortedEventsList.add(forFrontEvent);
-        }
-
-        List<ForFrontEvent> eventsList = noSortedEventsList.stream()
-                .sorted(Comparator.comparing(event -> event.getEvent().getStartDate()))
-                .collect(Collectors.toList());
-
+        List<ForFrontEvent> eventsList = getEventsList(entityEventsList);
         return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
 
@@ -62,8 +51,24 @@ public class EventController {
     public OkResponse getJoinEventsList() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
-        List<Event> eventsList = eventRepository.findEventsByUserListIn(user);
+        List<Event> entityEventsList = eventRepository.findEventsByUserListIn(user);
+        List<ForFrontEvent> eventsList = getEventsList(entityEventsList);
         return new OkResponse(new GetEventsListResponse("success", eventsList));
+    }
+
+    private List<ForFrontEvent> getEventsList(List<Event> entityEventsList) {
+        List<ForFrontEvent> noSortedEventsList = new ArrayList<>();
+        for (Event event : entityEventsList) {
+            ForFrontEvent forFrontEvent = new ForFrontEvent();
+            forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
+            forFrontEvent.setEvent(event);
+            noSortedEventsList.add(forFrontEvent);
+        }
+        List<ForFrontEvent> eventsList = noSortedEventsList.stream()
+                .sorted(Comparator.comparing(event -> event.getEvent().getStartDate()))
+                .collect(Collectors.toList());
+
+        return eventsList;
     }
 
 	@RequestMapping("/event/{eventId}")
