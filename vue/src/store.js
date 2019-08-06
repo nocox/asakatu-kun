@@ -15,16 +15,17 @@ const loginState = new Vuex.Store({
       state.loginState = false;
       state.userInfo={}
     },
-    getLogin (state) {
-      state.loginState = true;
-    }
+    getActive(state, userInfo){
+      state.loginState =true;
+      state.userInfo = userInfo;
+    },
   },
   actions: {
 
   },
   plugins: [createPersistedState({
     key: 'asakatsukun',
-    paths: ['loginState','userInfo'],
+    paths: ['isLogin','userInfo'],
     storage: window.sessionStorage
   })]
 });
