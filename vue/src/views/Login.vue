@@ -1,10 +1,9 @@
 <template>
     <div id="login">
-        <div class="login">login</div>
+        <h2 class="login-title">login</h2>
         <form
                 id="login-form"
-                @submit="checkForm"
-                method="post"
+                @submit="checkLoginForm"
         >
             <div v-if="errors.length">
                 <p>Please correct the following error(s):</p>
@@ -36,6 +35,9 @@
                     id="login--submit"
             >
         </form>
+        <div v-if="userName">
+            <h3>{{this.userName}}</h3>
+        </div>
     </div>
 </template>
 
@@ -52,11 +54,12 @@
                     name: undefined,
                     password: undefined
                 },
-                errors: []
+                errors: [],
+                userName: this.$store.state.userName
             }
         },
         methods: {
-            checkForm: function (e) {
+            checkLoginForm: function (e) {
                 this.errors = [];
 
                 if (!this.request.name) {
@@ -67,13 +70,41 @@
                 }
                 if (!this.errors.length) {
                     this.addUser();
+                    this.whoami();
+                    e.preventDefault();
                     return true;
                 }
                 e.preventDefault();
             },
             addUser: async function () {
-                await axios.post('http://localhost:8080/', this.request);
+                var params = new URLSearchParams();
+                params.append('username', this.request.name);
+                params.append('password', this.request.password);
+                console.log(this.request);
+                const loginResponse = await axios.post('http://localhost:8080/login', params, {withCredentials: true});
+                await loginResponse
+                    .then(function (response) {
+                        alert("get login");
+                        console.log(response);
+                        this.$store.commit('getLogin');
+                        alert("ok");
+                    })
+                    .catch(function (error) {
+                        console.log("login is failed");
+                        console.log(error);
+                        alert("please retry");
+                        this.$route.router.go('/login');
+                    });
             },
+            whoami : function () {
+                const userNameResponse = axios.get('http://localhost8080/get_login_user');
+                const getUsername = userNameResponse.data;
+
+                this.$store.commit('getUserName',getUsername);
+                console.log("check username");
+                console.log(getUsername);
+                console.log(this.userName);
+            }
         }
     }
 </script>

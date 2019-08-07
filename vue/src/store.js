@@ -1,42 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import createPersistedState from 'vuex-persistedstate'
+
 Vue.use(Vuex);
 
-const loginStore = new Vuex.Store({
+const loginState = new Vuex.Store({
   state: {
-    loginState:false,
-    token:'',
-    userInfo:{},
+    isLogin: false,
+    userName: ""
   },
   mutations: {
-    initLogin(state){
+    initLogin(state) {
       state.loginState = false;
-      state.token='';
-      state.userInfo={}
+      state.userName = ""
     },
-    create (state, token, userInfo) {
+    getActive(state){
       state.loginState = true;
-      state.token = token;
-      state.userInfo = userInfo;
     },
-    setToken(state,token){
-      state.token = token;
+    getUserName(state, username){
+      state.userName = username;
     },
-    getActive(state, userInfo){
-      state.loginState =true;
-      state.userInfo = userInfo;
-    }
-
   },
   actions: {
 
   },
   plugins: [createPersistedState({
-    key: 'facelook',
-    paths: ['token','loginState','userinfo','testcount'],
+    key: 'asakatsukun',
+    paths: ['isLogin','userName'],
     storage: window.sessionStorage
   })]
-})
+});
 
-export default loginStore;
+export default loginState;

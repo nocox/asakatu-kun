@@ -3,7 +3,7 @@
         <div class="sign_up">sign up</div>
         <form
                 id="sign-up-form"
-                @submit="checkForm"
+                @submit="checkSignUPForm"
                 method="post"
         >
             <div v-if="errors.length">
@@ -66,7 +66,7 @@
             }
         },
         methods: {
-            checkForm: function (e) {
+            checkSignUpForm: function (e) {
                 this.errors = [];
 
                 if (!this.request.name) {
@@ -88,7 +88,7 @@
                 e.preventDefault();
             },
             addUser: async function () {
-                await axios.post('http://localhost:8080/', this.request);
+                await axios.post('http://localhost:8080/user_registration', this.request);
             },
         }
     }

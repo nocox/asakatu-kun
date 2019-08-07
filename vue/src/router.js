@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import store from './store';
 
-Vue.use(Router)
 
-export default new Router({
+Vue.use(Router);
+
+
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -25,6 +28,11 @@ export default new Router({
       component: () => import('./views/SignUp.vue')
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/Login.vue')
+    },
+    {
       path: '/events',
       name: 'events',
       component: () => import('./views/Events.vue')
@@ -41,3 +49,17 @@ export default new Router({
     }
   ]
 })
+
+export default router;
+
+//login check
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/sign_up', '/', '/top'];
+  const authRequired = !publicPages.includes(to.path);
+  const isLoggedIn = store.state.isLogin;
+
+  if (authRequired && !isLoggedIn) {
+    return next('/login');
+  }
+  next();
+});
