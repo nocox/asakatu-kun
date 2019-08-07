@@ -8,16 +8,18 @@ Vue.use(Vuex);
 const loginState = new Vuex.Store({
   state: {
     isLogin: false,
-    userInfo: {}
+    userName: ""
   },
   mutations: {
-    initLogin(state){
+    initLogin(state) {
       state.loginState = false;
-      state.userInfo={}
+      state.userName = ""
     },
-    getActive(state, userInfo){
-      state.loginState =true;
-      state.userInfo = userInfo;
+    getActive(state){
+      state.loginState = true;
+    },
+    getUserName(state, username){
+      state.userName = username;
     },
   },
   actions: {
@@ -25,7 +27,7 @@ const loginState = new Vuex.Store({
   },
   plugins: [createPersistedState({
     key: 'asakatsukun',
-    paths: ['isLogin','userInfo'],
+    paths: ['isLogin','userName'],
     storage: window.sessionStorage
   })]
 });
