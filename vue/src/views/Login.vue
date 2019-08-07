@@ -55,6 +55,7 @@
                     password: undefined
                 },
                 errors: [],
+                // userName: ""
                 userName: this.$store.state.userName
             }
         },
@@ -70,8 +71,8 @@
                 }
                 if (!this.errors.length) {
                     this.addUser();
-                    this.whoami();
                     e.preventDefault();
+
                     return true;
                 }
                 e.preventDefault();
@@ -81,7 +82,7 @@
                 params.append('username', this.request.name);
                 params.append('password', this.request.password);
                 console.log(this.request);
-                const loginResponse = await axios.post('http://localhost:8080/login', params, {withCredentials: true});
+                const loginResponse = axios.post('http://localhost:8080/login', params, {withCredentials: true});
                 await loginResponse
                     .then(function (response) {
                         alert("get login");
@@ -93,17 +94,34 @@
                         console.log("login is failed");
                         console.log(error);
                         alert("please retry");
-                        this.$route.router.go('/login');
+                        // this.$route.router.go('/login');
                     });
+                this.whoami();
+
             },
-            whoami : function () {
-                const userNameResponse = axios.get('http://localhost8080/get_login_user');
-                const getUsername = userNameResponse.data.displayName;
+            whoami: function () {
+                const userNameResponse = axios.get('http://localhost:8080/login_user', {withCredentials: true});
+                console.log(userNameResponse);
+                // const getUsername = userNameResponse.data.displayName;
+
+                userNameResponse.then(response => {
+                        console.log("in then");
+                        console.log(response.data);
+                        console.log(response.data.data);
+                        console.log(response.data.data.displayName);
+                        // this.userName = response.data.data.displayName;
+                        // console.log("name--");
+                        // console.log(this.userName);
+                        this.$store.commit('getUserName', response.data.data.displayName);
+                    }
+                );
+                // const getUsername = userNameResponse.data;
                 //it also conclude name, imagepath  and so on.
-                this.$store.commit('getUserName',getUsername);
-                console.log("check username");
-                console.log(getUsername);
-                console.log(this.userName);
+
+                // this.userName = getUsername;
+                // console.log("check username");
+                // console.log(getUsername);
+                // console.log(this.userName);
             }
         }
     }
@@ -113,3 +131,5 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
 </style>
+
+<!--curl -X POST -H "Content-Type: application/json" -d '{"username":"ito", "password":"aabbcc", "displayName":"itoFumiki", "email":"aaaaaa@bbbb.com", "passwordConfirm":"aabbcc"}' -i localhost:8080/user_registration-->
