@@ -1,10 +1,9 @@
 <template>
     <div id="login">
-        <div class="login">login</div>
+        <h2 class="login-title">login</h2>
         <form
                 id="login-form"
-                @submit="checkForm"
-                method="post"
+                @submit="checkLoginForm"
         >
             <div v-if="errors.length">
                 <p>Please correct the following error(s):</p>
@@ -36,6 +35,9 @@
                     id="login--submit"
             >
         </form>
+        <div v-if="userName">
+            <h3>{{this.userName}}</h3>
+        </div>
     </div>
 </template>
 
@@ -52,11 +54,13 @@
                     name: undefined,
                     password: undefined
                 },
-                errors: []
+                errors: [],
+                // userName: ""
+                userName: this.$store.state.userName
             }
         },
         methods: {
-            checkForm: function (e) {
+            checkLoginForm: function (e) {
                 this.errors = [];
 
                 if (!this.request.name) {
@@ -67,23 +71,58 @@
                 }
                 if (!this.errors.length) {
                     this.addUser();
+                    e.preventDefault();
+
                     return true;
                 }
                 e.preventDefault();
             },
             addUser: async function () {
-                await axios.post('http://localhost:8080/login', this.request, {withCredentials: true})
+                var params = new URLSearchParams();
+                params.append('username', this.request.name);
+                params.append('password', this.request.password);
+                console.log(this.request);
+                const loginResponse = axios.post('http://localhost:8080/login', params, {withCredentials: true});
+                await loginResponse
                     .then(function (response) {
-                        alert("ログイン成功");
+                        alert("get login");
                         console.log(response);
                         this.$store.commit('getLogin');
+                        alert("ok");
                     })
                     .catch(function (error) {
+                        console.log("login is failed");
                         console.log(error);
                         alert("please retry");
-                        this.$route.router.go('/login');
+                        // this.$route.router.go('/login');
                     });
+                this.whoami();
+
             },
+            whoami: function () {
+                const userNameResponse = axios.get('http://localhost:8080/login_user', {withCredentials: true});
+                console.log(userNameResponse);
+                // const getUsername = userNameResponse.data.displayName;
+
+                userNameResponse.then(response => {
+                        console.log("in then");
+                        console.log(response.data);
+                        console.log(response.data.data);
+                        console.log(response.data.data.displayName);
+                        // this.userName = response.data.data.displayName;
+                        // console.log("name--");
+                        // console.log(this.userName);
+                        this.$store.commit('getUserName', response.data.data.displayName);
+                    }
+                );
+                // const getUsername = userNameResponse.data;
+                //it also conclude name, imagepath  and so on.
+
+                // this.userName = getUsername;
+                // console.log("check username");
+                // console.log(getUsername);
+                // console.log(this.userName);
+            }
         }
     }
 </script>
@@ -93,17 +132,4 @@
     @import "../assets/css/sign_up";
 </style>
 
-<!--  $("button").click(function(){
-        var params = new URLSearchParams();
-        params.append('username', $("#username").val());
-        params.append('password', $("#password").val());
-        axios.post("http://localhost:8080/login", params, {withCredentials: true})
-        .then(function (response) {
-          alert("ログイン成功");
-          window.location.href = "http://localhost:9000/user_detail.html";
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      });-->
+<!--curl -X POST -H "Content-Type: application/json" -d '{"username":"ito", "password":"aabbcc", "displayName":"itoFumiki", "email":"aaaaaa@bbbb.com", "passwordConfirm":"aabbcc"}' -i localhost:8080/user_registration-->
