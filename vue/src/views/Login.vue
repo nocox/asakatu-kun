@@ -98,8 +98,8 @@
             },
             whoami : function () {
                 const userNameResponse = axios.get('http://localhost8080/get_login_user');
-                const getUsername = userNameResponse.data;
-
+                const getUsername = userNameResponse.data.displayName;
+                //it also conclude name, imagepath  and so on.
                 this.$store.commit('getUserName',getUsername);
                 console.log("check username");
                 console.log(getUsername);
