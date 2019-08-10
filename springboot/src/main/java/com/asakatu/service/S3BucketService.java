@@ -20,18 +20,19 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class S3BucketService {
     private final S3ProfileImageProperties s3ProfileImageProperties;
+    private MessageDigest digest;
 
-    public S3BucketService(S3ProfileImageProperties s3ProfileImageProperties) {
+    public S3BucketService(S3ProfileImageProperties s3ProfileImageProperties) throws NoSuchAlgorithmException {
         this.s3ProfileImageProperties = s3ProfileImageProperties;
+        this.digest = MessageDigest.getInstance("SHA-1");
     }
 
     public String storeFile(MultipartFile file, User user) {
-        String fileName = user.getId() + "_" + RandomString.make(10);
+        String fileName = Hex.encodeHexString(digest.digest(user.getUsername().getBytes()));
 
         try {
             // TODO: fileの安全性確認
 
-            // .defaultClient()
             // ファイルをS3にアップロードする
             AmazonS3ClientBuilder.standard().withRegion(s3ProfileImageProperties.getRegion()).build().putObject(
                     new PutObjectRequest(
