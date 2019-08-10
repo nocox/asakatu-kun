@@ -4,7 +4,6 @@
         <form
                 id="event-create-form"
                 @submit="checkEventCreateForm"
-                method="post"
         >
             <div v-if="errors.length">
                 <p>Please correct the following error(s):</p>
@@ -65,7 +64,6 @@
                     value="Submit"
                     id="event_create--submit"
             >
-
         </form>
     </div>
 </template>
@@ -100,16 +98,18 @@
                 }
                 if (!this.errors.length) {
                     this.createEvent();
+                    e.preventDefault();
                     return true;
                 }
                 e.preventDefault();
             },
             createEvent: async function () {
-                const axiosResponse = await axios.post('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/', this.request);
-                if (axiosResponse.status === 200 || axiosResponse.status === 201 ) {
+                console.log(this.request);
+                const axiosResponse = await axios.post('http://localhost:8080/event/new', this.request,{withCredentials:true});
+                if (axiosResponse.status === 200 || axiosResponse.status === 201) {
                     console.log("ok");
                     console.log(axiosResponse);
-                }else {
+                } else {
                     console.log("error");
                     console.log(axiosResponse);
                 }
@@ -119,5 +119,5 @@
 </script>
 
 <style scoped lang="scss">
-
+    @import "../assets/css/base";
 </style>
