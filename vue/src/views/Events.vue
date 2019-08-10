@@ -23,7 +23,7 @@
         },
         methods: {
             refresh: async function () {
-                const res = await axios.get('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/events');
+                const res = await axios.get('http://localhost:8080/events');
                 this.eventList.joinedEvents = res.data.joined;
                 this.eventList.yetEvents = res.data.yet;
                 console.info(this.eventList);
