@@ -21,6 +21,15 @@
                 >
             </p>
             <p>
+                <label for="displayName">displayName</label>
+                <input
+                        id="displayName"
+                        v-model="request.displayName"
+                        type="text"
+                        name="displayName"
+                >
+            </p>
+            <p>
                 <label for="email">Email</label>
                 <input
                         id="email"
@@ -36,6 +45,16 @@
                         v-model="request.password"
                         type="password"
                         name="password"
+                >
+            </p>
+
+            <p>
+                <label for="passwordConfirm">passwordConfirm</label>
+                <input
+                        id="passwordConfirm"
+                        v-model="request.passwordConfirm"
+                        type="password"
+                        name="passwordConfirm"
                 >
             </p>
             <input
@@ -57,9 +76,11 @@
         data() {
             return {
                 request: {
-                    name: undefined,
+                    username: undefined,
                     email: undefined,
-                    password: undefined
+                    password: undefined,
+                    displayName: undefined,
+                    passwordConfirm: undefined
                 },
                 errors: []
             }
@@ -76,19 +97,32 @@
                 }
                 if (!this.request.password) {
                     this.errors.push('password required.');
-                }else if (this.request.password.length < 5) {
+                } else if (this.request.password.length < 5) {
                     this.errors.push('password is too short. min 6');
                 }
 
                 if (!this.errors.length) {
-                    this.addUser();
+                    this.createUser();
                     e.preventDefault();
                     return true;
                 }
                 e.preventDefault();
             },
-            addUser: async function () {
-                await axios.post('http://localhost:8080/user_registration', this.request);
+            createUser: async function () {
+                console.log("request");
+                console.log(this.request);
+                const axiosResponse = await axios.post('http://localhost:8080/user_registration', this.request, {withCredentials: true});
+                axiosResponse
+                    .then((response) => {
+                            console.log(response);
+                            alert("ok");
+                        }
+                    )
+                    .catch((error) => {
+                            console.log(error);
+                            alert("Error");
+                        }
+                    )
             },
         }
     }
@@ -98,3 +132,4 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
 </style>
+
