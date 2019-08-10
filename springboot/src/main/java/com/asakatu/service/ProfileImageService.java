@@ -18,11 +18,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 @Service
-public class S3BucketService {
+public class ProfileImageService {
     private final S3ProfileImageProperties s3ProfileImageProperties;
     private MessageDigest digest;
 
-    public S3BucketService(S3ProfileImageProperties s3ProfileImageProperties) throws NoSuchAlgorithmException {
+    public ProfileImageService(S3ProfileImageProperties s3ProfileImageProperties) throws NoSuchAlgorithmException {
         this.s3ProfileImageProperties = s3ProfileImageProperties;
         this.digest = MessageDigest.getInstance("SHA-1");
     }

@@ -37,6 +37,3 @@ s3:
     folder: asakatu_user_profile
     defaultImage: human-icon-big.png
     region: us-east-1
-  reaction:
-    bucket: nocox-exp57-public
-    folder: asakatu_reaction
