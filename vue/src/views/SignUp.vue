@@ -12,12 +12,12 @@
                 </ul>
             </div>
             <p>
-                <label for="name">Name</label>
+                <label for="username">Name</label>
                 <input
-                        id="name"
-                        v-model="request.name"
+                        id="username"
+                        v-model="request.username"
                         type="text"
-                        name="name"
+                        name="username"
                 >
             </p>
             <p>
@@ -89,7 +89,7 @@
             checkSignUpForm: function (e) {
                 this.errors = [];
 
-                if (!this.request.name) {
+                if (!this.request.username) {
                     this.errors.push("Name required.");
                 }
                 if (!this.request.email) {
@@ -111,14 +111,21 @@
             createUser: async function () {
                 console.log("request");
                 console.log(this.request);
-                const axiosResponse = await axios.post('http://localhost:8080/user_registration', this.request, {withCredentials: true});
-                axiosResponse
-                    .then((response) => {
+                const axiosResponse = axios.post('http://localhost:8080/user_registration',
+                  JSON.stringify(this.request),
+                  {
+                    withCredentials: true,
+                    headers: {
+                      'Content-Type':'application/json'
+                    }
+                  });
+
+                axiosResponse.then(response => {
                             console.log(response);
                             alert("ok");
                         }
                     )
-                    .catch((error) => {
+                    .catch(error => {
                             console.log(error);
                             alert("Error");
                         }
@@ -132,4 +139,3 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
 </style>
-
