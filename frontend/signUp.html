@@ -1,1 +1,54 @@
-Sign Up page
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/stylesheet/login_signUp.css">
+</head>
+<body>
+  <header>
+    <h1><a href=""><img src="" alt=""></a></h1>
+  </header>
+  <main>
+    <h2>新規会員登録</h2>
+    <p class="linkToLogin"><small><a href="login.html">ログインはこちら</a></small></p>
+    <!-- TODO: actionの設定 -->
+    <form action="" method="post">
+      <div class="form-part">
+        <label for="signUp__inputter--email">メールアドレス</label>
+        <input type="email" value="" id="signUp__inputter--email">
+        <p class="cautionMessage"><strong>そのメールアドレスはすでに使われています</strong></p>
+      </div>
+      <div class="form-part">
+        <label for="signUp__inputter--userName">ユーザーID</label>
+        <p class="autionMessage--userIdMessage">
+          <small>
+            半角英字と半角数字の組み合わせで6文字以上、16字以内で登録してください。<br>
+            ユーザーIDは他の人が利用しているものは利用できません。
+          </small>
+        </p>
+        <input type="text" value="" id="signUp__inputter--userName">
+        <p class="cautionMessage"><strong>そのユーザーIDはすでに使われています</strong></p>
+      </div>
+      <div class="form-part">
+        <label for="signUp__inputter--nickname">ニックネーム</label>
+        <p><small>※任意です。後からでも変更できます。</small></p>
+        <input type="text" value="" id="signUp__inputter--nickname">
+      </div>
+      <div class="form-part">
+        <label for="signUp__inputter--password-new">新しいパスワード</label>
+        <p class="autionMessage--passwordMessage"><small>半角英字と半角数字の組み合わせで6文字以上、16字以内で登録してください。</small></p>
+        <input type="password" value="" id="signUp__inputter--password-new">
+      </div>
+      <div class="form-part">
+        <label for="signUp__inputter--password-confirm">パスワードの再入力</label>
+        <input type="password"value="" id="signUp__inputter--password-confirm">
+        <p  class="cautionMessage cautionMessage--confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>
+      </div>
+      <input class="primaryButton" type="submit" name="" value="登録する">
+    </form>
+  </main>
+</body>
+</html>

@@ -1,28 +1,33 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import createPersistedState from 'vuex-persistedstate'
+
 Vue.use(Vuex);
 
 const loginState = new Vuex.Store({
   state: {
     isLogin: false,
-    userInfo: {}
+    userName: ""
   },
   mutations: {
-    initLogin(state){
+    initLogin(state) {
       state.loginState = false;
-      state.userInfo={}
+      state.userName = ""
     },
-    getLogin (state) {
+    getActive(state){
       state.loginState = true;
-    }
+    },
+    getUserName(state, username){
+      state.userName = username;
+    },
   },
   actions: {
 
   },
   plugins: [createPersistedState({
     key: 'asakatsukun',
-    paths: ['loginState','userInfo'],
+    paths: ['isLogin','userName'],
     storage: window.sessionStorage
   })]
 });
