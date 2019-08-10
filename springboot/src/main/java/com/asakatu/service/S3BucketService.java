@@ -6,19 +6,23 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.asakatu.entity.User;
-import com.asakatu.property.S3BucketProperties;
+import com.asakatu.exeptions.FileStorageException;
+import com.asakatu.property.S3ProfileImageProperties;
 import net.bytebuddy.utility.RandomString;
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class S3BucketService {
-    private final S3BucketProperties s3BucketProperties;
+    private final S3ProfileImageProperties s3ProfileImageProperties;
 
-    public S3BucketService(S3BucketProperties s3BucketProperties) {
-        this.s3BucketProperties = s3BucketProperties;
+    public S3BucketService(S3ProfileImageProperties s3ProfileImageProperties) {
+        this.s3ProfileImageProperties = s3ProfileImageProperties;
     }
 
     public String storeFile(MultipartFile file, User user) {
@@ -29,12 +33,13 @@ public class S3BucketService {
 
             // .defaultClient()
             // ファイルをS3にアップロードする
-            AmazonS3ClientBuilder.standard().withRegion("us-east-1").build().putObject( new PutObjectRequest(
-                    s3BucketProperties.getBucket(),
-                    getFilePath(fileName),
-                    file.getInputStream(),
-                    new ObjectMetadata()
-            ).withCannedAcl(CannedAccessControlList.PublicRead)); // 公開設定
+            AmazonS3ClientBuilder.standard().withRegion(s3ProfileImageProperties.getRegion()).build().putObject(
+                    new PutObjectRequest(
+                        s3ProfileImageProperties.getBucket(),
+                        getFilePath(fileName),
+                        file.getInputStream(),
+                        new ObjectMetadata()
+                    ).withCannedAcl(CannedAccessControlList.PublicRead)); // 公開設定
             return fileName;
 
         } catch (IOException ex) {
@@ -48,32 +53,21 @@ public class S3BucketService {
         String url = "https://%s.s3.amazonaws.com/%s/%s";
         return String.format(
                 url,
-                s3BucketProperties.getBucket(),
-                s3BucketProperties.getFolder(),
+                s3ProfileImageProperties.getBucket(),
+                s3ProfileImageProperties.getFolder(),
                 fileName);
     }
 
     public String getDefaultImagePath(){
-        System.out.println(s3BucketProperties.getDefaultImage());
-        return getObjectURL(s3BucketProperties.getDefaultImage());
+        System.out.println(s3ProfileImageProperties.getDefaultImage());
+        return getObjectURL(s3ProfileImageProperties.getDefaultImage());
     }
 
     private String getFilePath(String fileName){
         String path = "%s/%s";
         return String.format(
                 path,
-                s3BucketProperties.getFolder(),
+                s3ProfileImageProperties.getFolder(),
                 fileName);
-    }
-}
-
-
-class FileStorageException extends RuntimeException {
-    public FileStorageException(String message) {
-        super(message);
-    }
-
-    public FileStorageException(String message, Throwable cause) {
-        super(message, cause);
     }
 }
