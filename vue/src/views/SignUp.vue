@@ -3,8 +3,7 @@
         <div class="sign_up">sign up</div>
         <form
                 id="sign-up-form"
-                @submit="checkSignUPForm"
-                method="post"
+                @submit="checkSignUpForm"
         >
             <div v-if="errors.length">
                 <p>Please correct the following error(s):</p>
@@ -83,6 +82,7 @@
 
                 if (!this.errors.length) {
                     this.addUser();
+                    e.preventDefault();
                     return true;
                 }
                 e.preventDefault();
