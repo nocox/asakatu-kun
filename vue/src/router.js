@@ -40,6 +40,11 @@ const router = new Router({
       component: () => import('./views/EventCreate.vue')
     },
     {
+      path: '/demo',
+      name: 'demo',
+      component: () => import('./views/ComponentDemo.vue')
+    },
+    {
       path: '*',
       name:'others',
       redirect: '/'
