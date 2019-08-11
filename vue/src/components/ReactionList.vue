@@ -30,10 +30,9 @@
             getReactionList: function(){
                 const reactionListResponse = axios.get('http://localhost:8080/reaction/list', {withCredentials: true});
                 reactionListResponse.then(response => {
-                        console.log("response.data.reactionList");
+                        console.log("response.data");
                         console.log(response.data);
-                        console.log(response.data.data.objectList);
-                        this.reactionList =  response.data.data.objectList;
+                        this.reactionList =  response.data;
                     }
                 ).catch(function (error) {
                   console.log(error);
@@ -44,7 +43,7 @@
                 reactionListResponse.then(response => {
                         console.log("response.data");
                         console.log(response.data);
-                        this.myReaction =  response.data.data;
+                        this.myReaction =  response.data;
                     }
                 ).catch(function (error) {
                     console.log(error);
@@ -55,7 +54,7 @@
                 reactionListResponse.then(response => {
                         console.log("response.data");
                         console.log(response.data);
-                        this.myReaction =  response.data.data;
+                        this.myReaction =  response.data;
                     }
                 ).catch(function (error) {
                     console.log(error);

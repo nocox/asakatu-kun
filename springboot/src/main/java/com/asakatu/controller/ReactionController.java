@@ -36,14 +36,12 @@ public class ReactionController {
     }
 
     @GetMapping(path = "/reaction/list")
-    public ObjectResponse getReactionList() {
-        return new ObjectResponse<>("200", new GetListResponse<>(
-                "success",
-                userStatusMasterRepository.findAll()));
+    public List<UserStatusMaster> getReactionList() {
+        return userStatusMasterRepository.findAll();
     }
 
     @GetMapping(path = "/reaction/my/{eventId}")
-    public ObjectResponse getMyReaction(@PathVariable Long eventId) {
+    public UserStatusMaster getMyReaction(@PathVariable Long eventId) {
         // ログインユーザの取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
@@ -51,13 +49,12 @@ public class ReactionController {
         // TODO: 2019-08-07 nocox ここDBにアクセスしすぎ．．なんとかしたい
         Event event = eventRepository.findById(eventId).orElseThrow();
         UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, user);
-        UserStatusMaster reaction = userStatusMasterRepository.findById(userStatus.getMasterId()).orElseThrow();
 
-        return new ObjectResponse<>("200", reaction);
+        return userStatusMasterRepository.findById(userStatus.getMasterId()).orElseThrow();
     }
 
     @PutMapping(path = "/reaction/change/{eventId}/{reactionId}")
-    public ObjectResponse changeReaction(@PathVariable Long eventId, @PathVariable Long reactionId) {
+    public UserStatusMaster changeReaction(@PathVariable Long eventId, @PathVariable Long reactionId) {
         // ログインユーザの取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
@@ -69,6 +66,6 @@ public class ReactionController {
         userStatus.setMasterId(reactionId);
         userStatusRepository.save(userStatus);
 
-        return new ObjectResponse<>("201", reaction);
+        return reaction;
     }
 }
