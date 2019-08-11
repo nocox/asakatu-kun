@@ -49,9 +49,9 @@ public class ReactionController {
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
 
         // TODO: 2019-08-07 nocox ここDBにアクセスしすぎ．．なんとかしたい
-        Event event = eventRepository.getOne(eventId);
+        Event event = eventRepository.findById(eventId).orElseThrow();
         UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, user);
-        UserStatusMaster reaction = userStatusMasterRepository.getOne(userStatus.getMasterId());
+        UserStatusMaster reaction = userStatusMasterRepository.findById(userStatus.getMasterId()).orElseThrow();
 
         return new ObjectResponse<>("200", reaction);
     }
@@ -65,7 +65,7 @@ public class ReactionController {
         // TODO: 2019-08-07 nocox ここDBにアクセスしすぎ．．なんとかしたい
         Event event = eventRepository.getOne(eventId);
         UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, user);
-        UserStatusMaster reaction = userStatusMasterRepository.getOne(reactionId);
+        UserStatusMaster reaction = userStatusMasterRepository.findById(reactionId).orElseThrow();
         userStatus.setMasterId(reactionId);
         userStatusRepository.save(userStatus);
 

@@ -1,7 +1,12 @@
 <template>
     <div id="demo-reaction-list">
-        <span v-for="(reaction, index) in reactionList" v-bind:key=index>
-          <span> {{reaction.userStatusContent}} </span>
+        <span> {{myReaction.userStatusContent}} </span>
+        |
+        <span v-for="reaction in reactionList" v-bind:key=reaction.id>
+            <input type="radio" v-bind:id="reaction.id" v-model="checked" v-bind:value="reaction.id" style="display:none">
+            <label v-bind:for="reaction.id">
+                <span> {{reaction.userStatusContent}} </span>
+            </label>
         </span>
     </div>
 </template>
@@ -15,7 +20,10 @@
         data() {
             return {
                 reactionList: [],
-                userName: this.$store.state.userName
+                userName: this.$store.state.userName,
+                eventId: 1,
+                myReaction: "",
+                checked: ""
             }
         },
         methods: {
@@ -30,10 +38,39 @@
                 ).catch(function (error) {
                   console.log(error);
                 });
+            },
+            getMyReaction: function () {
+                const reactionListResponse = axios.get('http://localhost:8080/reaction/my/' + this.eventId, {withCredentials: true});
+                reactionListResponse.then(response => {
+                        console.log("response.data");
+                        console.log(response.data);
+                        this.myReaction =  response.data.data;
+                    }
+                ).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            changeMyReaction: function (reactionId) {
+                const reactionListResponse = axios.put('http://localhost:8080/reaction/change/' + this.eventId + '/' + reactionId ,new FormData() ,{withCredentials: true});
+                reactionListResponse.then(response => {
+                        console.log("response.data");
+                        console.log(response.data);
+                        this.myReaction =  response.data.data;
+                    }
+                ).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        watch: {
+            checked: function() {
+                this.changeMyReaction(this.checked);
             }
         },
         created(){
           this.getReactionList();
+          this.getMyReaction();
+
         }
     }
 </script>
