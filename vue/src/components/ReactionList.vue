@@ -39,7 +39,7 @@
                 });
             },
             getMyReaction: function () {
-                const reactionListResponse = axios.get('http://localhost:8080/reaction/my/' + this.eventId, {withCredentials: true});
+                const reactionListResponse = axios.get('http://localhost:8080/reaction/myself/' + this.eventId, {withCredentials: true});
                 reactionListResponse.then(response => {
                         console.log("response.data");
                         console.log(response.data);

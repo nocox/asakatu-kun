@@ -40,7 +40,7 @@ public class ReactionController {
         return userStatusMasterRepository.findAll();
     }
 
-    @GetMapping(path = "/reaction/my/{eventId}")
+    @GetMapping(path = "/reaction/myself/{eventId}")
     public UserStatusMaster getMyReaction(@PathVariable Long eventId) {
         // ログインユーザの取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
