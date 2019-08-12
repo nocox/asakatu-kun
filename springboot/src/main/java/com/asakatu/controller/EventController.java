@@ -1,18 +1,16 @@
 package com.asakatu.controller;
 
-import com.asakatu.entity.SimpleLoginUser;
+import com.asakatu.OkResponse;
+import com.asakatu.entity.Event;
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
+import com.asakatu.repository.EventRepository;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.GetEventsListResponse;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import com.asakatu.OkResponse;
-import com.asakatu.entity.Event;
-import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
