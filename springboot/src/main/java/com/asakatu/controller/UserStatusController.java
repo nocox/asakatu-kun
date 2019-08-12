@@ -5,6 +5,8 @@ import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +24,8 @@ public class UserStatusController {
 	}
 	@RequestMapping("/event/{eventId}/user/{userId}")
 	public OkResponse getUserStatus(@PathVariable Long eventId, @PathVariable Long userId) {
-		User user = userRepository.findById(userId).get();
-		UserStatus userStatus = userStatusRepository.findByEventIdAndUserId(eventId, userId).get();
+		User user = userRepository.findById(userId).orElseThrow();
+		UserStatus userStatus = userStatusRepository.findByUserIdAndEventId(userId, eventId).orElseThrow();
 		return new OkResponse(new UserStatusResponse(
 				"success",
 				userStatus.getId(),
@@ -34,10 +36,14 @@ public class UserStatusController {
 		));
 	}
 
-	@RequestMapping("/event/{eventId}/user/{userId}/edit")
-	public OkResponse updateUserStatus(@RequestBody String comment, @PathVariable Long eventId, @PathVariable Long userId) {
-		User user = userRepository.findById(userId).get();
-		UserStatus userStatus = userStatusRepository.findByEventIdAndUserId(eventId, userId).get();
+	@RequestMapping("/event/{eventId}/user/edit")
+	public OkResponse updateUserStatus(@RequestBody String comment, @PathVariable Long eventId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		// TODO 2019/08/03 NotFoundUserExceptionみたいなものを作る jojo
+		User user  = userRepository.findByUsername(userName).orElseThrow();
+		// TODO 2019/08/03 NotFoundEventRelationExceptionみたいなものを作る jojo
+		UserStatus userStatus = userStatusRepository.findByUserIdAndEventId(user.getId(), eventId).orElseThrow();
 		userStatus.setComment(comment);
 		userStatusRepository.save(userStatus);
 

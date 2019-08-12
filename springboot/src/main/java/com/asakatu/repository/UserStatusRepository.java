@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface UserStatusRepository extends JpaRepository<UserStatus, Long> {
     UserStatus findUserStatusByEventAndUserIs(Event event, User user);
 
-    Optional<UserStatus> findByEventIdAndUserId(Long eventId, Long userId);
+    Optional<UserStatus> findByUserIdAndEventId(Long userId, Long eventId);
 }
