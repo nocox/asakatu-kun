@@ -84,7 +84,7 @@
                     seatInfo: "",
                     eventDetail: ""
                 },
-                errors: []
+                errors: [],
             }
         },
         methods: {

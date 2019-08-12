@@ -85,7 +85,8 @@
                     content: "https://4.bp.blogspot.com/-m56DCo_VDbQ/UU--ubQ1vTI/AAAAAAAAO84/CWFZIAw-zxY/s1600/kaizoku_mark.png",
                     comment: "おしゃべりしたい！"
                 },
-                users: []
+                users: [],
+                eventAPI : 'http://localhost:8080/event/'
             }
         },
         created: async function () {
@@ -97,15 +98,15 @@
         },
         methods: {
             refresh: async function () {
-                const eventInfo = await axios.get('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId);
+                const eventInfo = await axios.get(this.eventAPI + this.eventId);
                 this.eventInfo = eventInfo.data.data;
                 console.info(this.eventInfo);
-                const eventUsers = await axios.get('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId + '/users');
+                const eventUsers = await axios.get(this.eventAPI + this.eventId + '/users');
                 this.users = eventUsers.data;
                 console.log(this.users);
             },
             joinEvent: async function () {
-                await axios.post('https://virtserver.swaggerhub.com/projectormato/asakatu-kun/1.0.0/event/' + this.eventId + '/user', this.request);
+                await axios.post(this.eventAPI + this.eventId + '/user', this.request);
                 await this.refresh();
             }
         }
@@ -114,5 +115,4 @@
 
 <style scoped lang="scss">
     @import "../assets/css/eventCreate.js";
-
 </style>

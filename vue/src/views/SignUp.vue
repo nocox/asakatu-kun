@@ -3,8 +3,7 @@
         <div class="sign_up">sign up</div>
         <form
                 id="sign-up-form"
-                @submit="checkSignUPForm"
-                method="post"
+                @submit="checkSignUpForm"
         >
             <div v-if="errors.length">
                 <p>Please correct the following error(s):</p>
@@ -13,12 +12,21 @@
                 </ul>
             </div>
             <p>
-                <label for="name">Name</label>
+                <label for="username">Name</label>
                 <input
-                        id="name"
-                        v-model="request.name"
+                        id="username"
+                        v-model="request.username"
                         type="text"
-                        name="name"
+                        name="username"
+                >
+            </p>
+            <p>
+                <label for="displayName">displayName</label>
+                <input
+                        id="displayName"
+                        v-model="request.displayName"
+                        type="text"
+                        name="displayName"
                 >
             </p>
             <p>
@@ -37,6 +45,16 @@
                         v-model="request.password"
                         type="password"
                         name="password"
+                >
+            </p>
+
+            <p>
+                <label for="passwordConfirm">passwordConfirm</label>
+                <input
+                        id="passwordConfirm"
+                        v-model="request.passwordConfirm"
+                        type="password"
+                        name="passwordConfirm"
                 >
             </p>
             <input
@@ -58,9 +76,11 @@
         data() {
             return {
                 request: {
-                    name: undefined,
+                    username: undefined,
                     email: undefined,
-                    password: undefined
+                    password: undefined,
+                    displayName: undefined,
+                    passwordConfirm: undefined
                 },
                 errors: []
             }
@@ -69,7 +89,7 @@
             checkSignUpForm: function (e) {
                 this.errors = [];
 
-                if (!this.request.name) {
+                if (!this.request.username) {
                     this.errors.push("Name required.");
                 }
                 if (!this.request.email) {
@@ -77,18 +97,40 @@
                 }
                 if (!this.request.password) {
                     this.errors.push('password required.');
-                }else if (this.request.password.length < 5) {
+                } else if (this.request.password.length < 5) {
                     this.errors.push('password is too short. min 6');
                 }
 
                 if (!this.errors.length) {
-                    this.addUser();
+                    this.createUser();
+                    e.preventDefault();
                     return true;
                 }
                 e.preventDefault();
             },
-            addUser: async function () {
-                await axios.post('http://localhost:8080/user_registration', this.request);
+            createUser: async function () {
+                console.log("request");
+                console.log(this.request);
+                const axiosResponse = axios.post('http://localhost:8080/user_registration',
+                  JSON.stringify(this.request),
+                  {
+                    withCredentials: true,
+                    headers: {
+                      'Content-Type':'application/json'
+                    }
+                  });
+
+                axiosResponse.then(response => {
+                            console.log(response);
+                            // alert("ok");
+                            window.location.href = '/events';
+                        }
+                    )
+                    .catch(error => {
+                            console.log(error);
+                            alert("please retry");
+                        }
+                    )
             },
         }
     }
