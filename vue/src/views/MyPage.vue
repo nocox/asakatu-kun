@@ -1,5 +1,8 @@
 <template>
     <section class="mypage">
+        <div class="wrapper">
+
+        </div>
 
     </section>
 </template>
