@@ -7,6 +7,7 @@
       <router-link to="/login" class="login">Login</router-link> |
       <router-link to="/events" class="events">Events</router-link> |
       <router-link to="/event" class="event">Event</router-link> |
+      <router-link to="/mypage" class="mypage">Mypage</router-link> |
       <router-link to="/event/create" class="create">create</router-link>
     </div>
     <router-view/>

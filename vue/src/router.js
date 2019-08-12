@@ -40,12 +40,17 @@ const router = new Router({
       component: () => import('./views/EventCreate.vue')
     },
     {
+      path: '/mypage',
+      name: 'mypage',
+      component: () => import('./views/MyPage.vue')
+    },
+    {
       path: '*',
       name:'others',
       redirect: '/'
     }
   ]
-})
+});
 
 export default router;
 
