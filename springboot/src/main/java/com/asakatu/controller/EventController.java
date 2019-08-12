@@ -39,7 +39,7 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}")
 	public OkResponse getEvent(@PathVariable Long eventId) {
-		Event event = eventRepository.findById(eventId).get();
+		Event event = eventRepository.findById(eventId).orElseThrow();
 		return new OkResponse(new EventResponse("success", event));
 	}
 
@@ -51,7 +51,7 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}/cancel")
 	public OkResponse cancelEvent(@PathVariable Long eventId) {
-		Event cancelEvent = eventRepository.findById(eventId).get();
+		Event cancelEvent = eventRepository.findById(eventId).orElseThrow();
 		cancelEvent.setEventStatus("canceled");
 		eventRepository.save(cancelEvent);
 		return new OkResponse(new EventResponse("success", cancelEvent));
@@ -59,7 +59,8 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}/edit")
 	public OkResponse updateEvent(@RequestBody Event event, @PathVariable Long eventId) {
-		Event updateEvent = eventRepository.findById(eventId).get();
+		Event updateEvent = eventRepository.findById(eventId).orElseThrow();
+		updateEvent.setEventTitle(event.getEventTitle());
 		updateEvent.setStartDate(event.getStartDate());
 		updateEvent.setDuration(event.getDuration());
 		updateEvent.setAddress(event.getAddress());

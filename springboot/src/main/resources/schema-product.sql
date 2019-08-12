@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS user
 CREATE TABLE IF NOT EXISTS event
 (
     event_id     BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    event_title  VARCHAR(255) NOT NULL,
     start_date   DATETIME,
     duration     DOUBLE,
     address      VARCHAR(255),
