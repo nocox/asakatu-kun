@@ -44,12 +44,13 @@ const router = new Router({
       name: 'mypage',
       component: () => import('./views/MyPage.vue')
     },
+    {
       path: '*',
       name:'others',
       redirect: '/'
     }
   ]
-})
+});
 
 export default router;
 
