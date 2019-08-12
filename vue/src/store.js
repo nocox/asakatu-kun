@@ -13,11 +13,12 @@ const loginState = new Vuex.Store({
   },
   mutations: {
     initLogin(state) {
-      state.loginState = false;
+      state.islogin = false;
       state.userName = ""
     },
-    getActive(state){
-      state.loginState = true;
+    getActive(state, activation){
+      state.islogin = activation;
+      console.log("getActive")
     },
     getUserName(state, username){
       state.userName = username;
