@@ -1,7 +1,7 @@
 <template>
     <section class="mypage">
         <div class="user-info">
-            <img class="user-info__image" src="{{this.userInfo.userImage}}" alt="user image ">
+            <img class="user-info__image" :src="this.userInfo.userImage" alt="user image ">
             <h2 class="user-info__name">{{this.userInfo.userName}}</h2>
         </div>
     </section>
@@ -27,7 +27,7 @@
         methods:{
             //todo ここloginに持たせればいらなくなるかも
             getUserImage:　function () {
-                const getUserInfo = axios.get('http/:/localhost:8080/login_user');
+                const getUserInfo = axios.get('http://localhost:8080/login_user',{withCredentials:true});
                 getUserInfo.then(response=>{
                     console.log("ok");
                     console.log(response);
