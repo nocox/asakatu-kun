@@ -84,13 +84,15 @@
                 console.log(this.request);
                 const loginResponse = axios.post('http://localhost:8080/login', params, {withCredentials: true});
                 await loginResponse
-                    .then(function (response) {
+                    .then(response => {
                         alert("get login");
                         console.log(response);
-                        this.$store.commit('getLogin');
+                        this.$store.commit('getActive',true);
+                        console.log(this.$store.state.isLogin);
                         alert("ok");
+                        window.location.href='/mypage'
                     })
-                    .catch(function (error) {
+                    .catch(error => {
                         console.log("login is failed");
                         console.log(error);
                         alert("please retry");
