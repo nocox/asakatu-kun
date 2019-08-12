@@ -122,12 +122,13 @@
 
                 axiosResponse.then(response => {
                             console.log(response);
-                            alert("ok");
+                            // alert("ok");
+                            window.location.href = '/events';
                         }
                     )
                     .catch(error => {
                             console.log(error);
-                            alert("Error");
+                            alert("please retry");
                         }
                     )
             },
