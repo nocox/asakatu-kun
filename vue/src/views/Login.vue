@@ -70,14 +70,14 @@
                     this.errors.push('password required.');
                 }
                 if (!this.errors.length) {
-                    this.addUser();
+                    this.getLogin();
                     e.preventDefault();
 
                     return true;
                 }
                 e.preventDefault();
             },
-            addUser: async function () {
+            getLogin: async function () {
                 var params = new URLSearchParams();
                 params.append('username', this.request.name);
                 params.append('password', this.request.password);
@@ -87,6 +87,7 @@
                     .then(response => {
                         alert("get login");
                         console.log(response);
+                        console.log(this.$store.state.isLogin);
                         this.$store.commit('getActive',true);
                         console.log(this.$store.state.isLogin);
                         alert("ok");
