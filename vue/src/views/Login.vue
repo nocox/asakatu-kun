@@ -38,6 +38,28 @@
         <div v-if="userName">
             <h3>{{this.userName}}</h3>
         </div>
+
+        <main>
+            <h2>ログイン</h2>
+            <!-- TODO: actionの設定 -->
+            <form action="" method="post">
+                <div class="form-part">
+                    <label for="login__inputter--userName">ユーザーID</label>
+                    <input type="text" id="login__inputter--userName">
+                </div>
+
+                <div class="form-part">
+                    <label for="login__inputter--password">パスワード</label>
+                    <input type="password" id="login__inputter--password">
+                    <p hidden>パスワードをお忘れの場合はこちら</p>
+                </div>
+
+                <p hidden><strong>メールアドレスまたはパスワードが違います</strong></p>
+
+                <input class="primaryButton" type="submit" value="ログイン">
+            </form>
+            <p class="secondaryButton"><a href="signUp.html">アカウントを新規作成</a></p>
+        </main>
     </div>
 </template>
 
@@ -133,6 +155,8 @@
 <style scoped lang="scss">
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
+    @import "../assets/css/login-signup";
+
 </style>
 
 <!--curl -X POST -H "Content-Type: application/json" -d '{"username":"ito", "password":"aabbcc", "displayName":"itoFumiki", "email":"aaaaaa@bbbb.com", "passwordConfirm":"aabbcc"}' -i localhost:8080/user_registration-->
