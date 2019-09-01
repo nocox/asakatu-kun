@@ -1,62 +1,61 @@
 <template>
     <div id="login">
         <h2 class="login-title">login</h2>
-        <form
-                id="login-form"
-                @submit="checkLoginForm"
-        >
-            <div v-if="errors.length">
-                <p>Please correct the following error(s):</p>
-                <ul>
-                    <li v-for="error in errors" :key="error">{{ error }}</li>
-                </ul>
-            </div>
-            <p>
-                <label for="name">Name</label>
-                <input
-                        id="name"
-                        v-model="request.name"
-                        type="text"
-                        name="name"
-                >
-            </p>
-            <p>
-                <label for="password">Password</label>
-                <input
-                        id="password"
-                        v-model="request.password"
-                        type="password"
-                        name="password"
-                >
-            </p>
-            <input
-                    type="submit"
-                    value="Submit"
-                    id="login--submit"
-            >
-        </form>
         <div v-if="userName">
             <h3>{{this.userName}}</h3>
         </div>
 
         <main>
             <h2>ログイン</h2>
-            <!-- TODO: actionの設定 -->
+
             <form action="" method="post">
+                <!--        <form-->
+                <!--                id="login-form"-->
+                <!--                @submit="checkLoginForm"-->
+                <!--        >-->
+                <!--            <div v-if="errors.length">-->
+                <!--                <p>Please correct the following error(s):</p>-->
+                <!--                <ul>-->
+                <!--                    <li v-for="error in errors" :key="error">{{ error }}</li>-->
+                <!--                </ul>-->
+                <!--            </div>-->
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input type="text" id="login__inputter--userName">
+                    <!--            <p>-->
+                    <!--                <label for="name">Name</label>-->
+                    <!--                <input-->
+                    <!--                        id="name"-->
+                    <!--                        v-model="request.name"-->
+                    <!--                        type="text"-->
+                    <!--                        name="name"-->
+                    <!--                >-->
+                    <!--            </p>-->
                 </div>
 
                 <div class="form-part">
                     <label for="login__inputter--password">パスワード</label>
                     <input type="password" id="login__inputter--password">
                     <p hidden>パスワードをお忘れの場合はこちら</p>
+                    <!--            <p>-->
+                    <!--                <label for="password">Password</label>-->
+                    <!--                <input-->
+                    <!--                        id="password"-->
+                    <!--                        v-model="request.password"-->
+                    <!--                        type="password"-->
+                    <!--                        name="password"-->
+                    <!--                >-->
+                    <!--            </p>-->
                 </div>
 
                 <p hidden><strong>メールアドレスまたはパスワードが違います</strong></p>
 
                 <input class="primaryButton" type="submit" value="ログイン">
+                <!--            <input-->
+                <!--                    type="submit"-->
+                <!--                    value="Submit"-->
+                <!--                    id="login&#45;&#45;submit"-->
+                <!--            >-->
             </form>
             <p class="secondaryButton"><a href="signUp.html">アカウントを新規作成</a></p>
         </main>
