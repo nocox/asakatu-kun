@@ -12,7 +12,7 @@
                     id="login-form"
                     @submit="checkLoginForm"
             >
-                <!-- todo:fix validation function -->
+                <!-- todo:fix validation-->
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input
