@@ -18,7 +18,7 @@
                 <div class="form-part">
                     <label for="signUp__inputter--email">メールアドレス</label>
                     <input type="email" value="" id="signUp__inputter--email">
-                    <p class="cautionMessage"><strong>そのメールアドレスはすでに使われています</strong></p>
+<!--                    <p class="cautionMessage"><strong>そのメールアドレスはすでに使われています</strong></p>-->
                     <!--            <p>-->
                     <!--                <label for="email">Email</label>-->
                     <!--                <input-->
@@ -39,7 +39,7 @@
                         </small>
                     </p>
                     <input type="text" value="" id="signUp__inputter--userName">
-                    <p class="cautionMessage"><strong>そのユーザーIDはすでに使われています</strong></p>
+<!--                    <p class="cautionMessage"><strong>そのユーザーIDはすでに使われています</strong></p>-->
 
                    <!-- <p>-->
                         <!--                <label for="username">Name</label>-->
@@ -82,7 +82,7 @@
                 <div class="form-part">
                     <label for="signUp__inputter--password-confirm">パスワードの再入力</label>
                     <input type="password" value="" id="signUp__inputter--password-confirm">
-                    <p class="cautionMessage cautionMessage--confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>
+<!--                    <p class="cautionMessage cautionMessage&#45;&#45;confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>-->
                     <!--            <p>-->
                     <!--                <label for="passwordConfirm">passwordConfirm</label>-->
                     <!--                <input-->

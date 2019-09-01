@@ -6,8 +6,8 @@
     <main>
       <h2>BizSpotへようこそ</h2>
       <p>ログインまたはサインアップを行なってください</p>
-      <p><a class="primaryButton" href="signUp.html">サインアップ</a></p>
-      <p class="secondaryButton"><a href="login.html">ログイン</a></p>
+      <p><router-link class="primaryButton" to="/sign_up">サインアップ</router-link></p>
+      <p class="secondaryButton"><router-link to="/login">ログイン</router-link></p>
     </main>
   </div>
 </template>
