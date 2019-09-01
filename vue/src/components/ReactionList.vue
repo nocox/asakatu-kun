@@ -1,11 +1,11 @@
 <template>
     <div id="demo-reaction-list">
-        <span> {{myReaction.userStatusContent}} </span>
+        <i v-bind:class="myReaction.userStatusContent"></i>
         |
         <span v-for="reaction in reactionList" v-bind:key=reaction.id>
             <input type="radio" v-bind:id="reaction.id" v-model="checked" v-bind:value="reaction.id" style="display:none">
             <label v-bind:for="reaction.id">
-                <span> {{reaction.userStatusContent}} </span>
+                <i v-bind:class="reaction.userStatusContent"></i>
             </label>
         </span>
     </div>
