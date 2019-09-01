@@ -12,6 +12,9 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "event_title")
+	private String eventTitle;
+
 	@Column(name = "start_date")
 	private Timestamp startDate;
 
@@ -52,9 +55,16 @@ public class Event {
 		setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 
-
 	public Long getId() {
 		return id;
+	}
+
+	public String getEventTitle() {
+		return eventTitle;
+	}
+
+	public void setEventTitle(String eventTitle) {
+		this.eventTitle = eventTitle;
 	}
 
 	public void setId(Long id) {

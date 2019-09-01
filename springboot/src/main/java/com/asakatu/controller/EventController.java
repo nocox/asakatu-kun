@@ -1,7 +1,10 @@
 package com.asakatu.controller;
 
+import com.asakatu.OkResponse;
+import com.asakatu.entity.Event;
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
+import com.asakatu.repository.EventRepository;
 import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
@@ -11,9 +14,6 @@ import com.asakatu.service.PostService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import com.asakatu.OkResponse;
-import com.asakatu.entity.Event;
-import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -73,7 +73,7 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}")
 	public OkResponse getEvent(@PathVariable Long eventId) {
-		Event event = eventRepository.findById(eventId).get();
+		Event event = eventRepository.findById(eventId).orElseThrow();
 		return new OkResponse(new EventResponse("success", event));
 	}
 
@@ -93,7 +93,7 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}/cancel")
 	public OkResponse cancelEvent(@PathVariable Long eventId) {
-		Event cancelEvent = eventRepository.findById(eventId).get();
+		Event cancelEvent = eventRepository.findById(eventId).orElseThrow();
 		cancelEvent.setEventStatus("canceled");
 		eventRepository.save(cancelEvent);
 		return new OkResponse(new EventResponse("success", cancelEvent));
@@ -101,7 +101,8 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}/edit")
 	public OkResponse updateEvent(@RequestBody Event event, @PathVariable Long eventId) {
-		Event updateEvent = eventRepository.findById(eventId).get();
+		Event updateEvent = eventRepository.findById(eventId).orElseThrow();
+		updateEvent.setEventTitle(event.getEventTitle());
 		updateEvent.setStartDate(event.getStartDate());
 		updateEvent.setDuration(event.getDuration());
 		updateEvent.setAddress(event.getAddress());
