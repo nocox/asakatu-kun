@@ -8,13 +8,6 @@
                     @submit="checkSignUpForm"
             >
                 <!--                todo: バリデーションの処理を書き換える必要がある。-->
-                <!--            <div v-if="errors.length">-->
-                <!--                <p>Please correct the following error(s):</p>-->
-                <!--                <ul>-->
-                <!--                    <li v-for="error in errors" :key="error">{{ error }}</li>-->
-                <!--                </ul>-->
-                <!--            </div>-->
-
                 <div class="form-part">
                     <label for="signUp__inputter--email">メールアドレス</label>
                     <input

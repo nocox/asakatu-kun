@@ -8,22 +8,11 @@
         <main>
             <h2>ログイン</h2>
 
-            <form action="" method="post">
-                <!--        <form-->
-                <!--                id="login-form"-->
-                <!--                @submit="checkLoginForm"-->
-                <!--        -->
-
+            <form
+                    id="login-form"
+                    @submit="checkLoginForm"
+            >
                 <!-- todo:fix validation function -->
-
-                <!--            <div v-if="errors.length">-->
-                <!--                <p>Please correct the following error(s):</p>-->
-                <!--                <ul>-->
-                <!--                    <li v-for="error in errors" :key="error">{{ error }}</li>-->
-                <!--                </ul>-->
-                <!--            </div>-->
-
-
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input
