@@ -127,9 +127,9 @@ public class Event {
 		this.updatedAt = updatedAt;
 	}
 
-    public List<User> getUserList() {
-        return userList;
-    }
+//    public List<User> getUserList() {
+//        return userList;
+//    }
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
