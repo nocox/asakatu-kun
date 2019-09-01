@@ -70,27 +70,30 @@
                     this.errors.push('password required.');
                 }
                 if (!this.errors.length) {
-                    this.addUser();
+                    this.getLogin();
                     e.preventDefault();
 
                     return true;
                 }
                 e.preventDefault();
             },
-            addUser: async function () {
+            getLogin: async function () {
                 var params = new URLSearchParams();
                 params.append('username', this.request.name);
                 params.append('password', this.request.password);
                 console.log(this.request);
                 const loginResponse = axios.post('http://localhost:8080/login', params, {withCredentials: true});
                 await loginResponse
-                    .then(function (response) {
+                    .then(response => {
                         alert("get login");
                         console.log(response);
-                        this.$store.commit('getLogin');
+                        console.log(this.$store.state.isLogin);
+                        this.$store.commit('getActive',true);
+                        console.log(this.$store.state.isLogin);
                         alert("ok");
+                        window.location.href='/mypage'
                     })
-                    .catch(function (error) {
+                    .catch(error => {
                         console.log("login is failed");
                         console.log(error);
                         alert("please retry");
