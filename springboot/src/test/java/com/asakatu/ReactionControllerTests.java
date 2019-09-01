@@ -44,8 +44,8 @@ public class ReactionControllerTests {
         });
         Assert.assertThat(contentObj.size(), Is.is(4));
 
-        Assert.assertThat(contentObj.get(0).getUserStatusContent(), Is.is("😀"));
-        Assert.assertThat(contentObj.get(3).getUserStatusContent(), Is.is("🤔"));
+        Assert.assertThat(contentObj.get(0).getUserStatusContent(), Is.is("far fa-meh"));
+        Assert.assertThat(contentObj.get(3).getUserStatusContent(), Is.is("far fa-dizzy"));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ReactionControllerTests {
     public void getMyReaction() throws Exception {
         this.mockMvc.perform(get("/reaction/myself/1"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userStatusContent").value("👍"));
+                .andExpect(jsonPath("$.userStatusContent").value("far fa-grin-squint-tears"));
     }
 
     @Test
@@ -61,16 +61,16 @@ public class ReactionControllerTests {
     public void changeMyReaction() throws Exception {
         this.mockMvc.perform(get("/reaction/myself/1"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userStatusContent").value("👍"));
+                .andExpect(jsonPath("$.userStatusContent").value("far fa-grin-squint-tears"));
 
         this.mockMvc.perform(
                 put("/reaction/change/1/4")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userStatusContent").value("🤔"));
+                .andExpect(jsonPath("$.userStatusContent").value("far fa-dizzy"));
 
         this.mockMvc.perform(get("/reaction/myself/1"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userStatusContent").value("🤔"));
+                .andExpect(jsonPath("$.userStatusContent").value("far fa-dizzy"));
     }
 }
