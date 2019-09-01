@@ -12,51 +12,46 @@
                 <!--        <form-->
                 <!--                id="login-form"-->
                 <!--                @submit="checkLoginForm"-->
-                <!--        >-->
-                <!-- todo: fix validation function -->
+                <!--        -->
+
+                <!-- todo:fix validation function -->
+
                 <!--            <div v-if="errors.length">-->
                 <!--                <p>Please correct the following error(s):</p>-->
                 <!--                <ul>-->
                 <!--                    <li v-for="error in errors" :key="error">{{ error }}</li>-->
                 <!--                </ul>-->
                 <!--            </div>-->
+
+
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
-                    <input type="text" id="login__inputter--userName">
-                    <!--            <p>-->
-                    <!--                <label for="name">Name</label>-->
-                    <!--                <input-->
-                    <!--                        id="name"-->
-                    <!--                        v-model="request.name"-->
-                    <!--                        type="text"-->
-                    <!--                        name="name"-->
-                    <!--                >-->
-                    <!--            </p>-->
+                    <input
+                            type="text"
+                            name="name"
+                            id="login__inputter--userName"
+                            v-model="request.name"
+                            >
                 </div>
 
                 <div class="form-part">
                     <label for="login__inputter--password">パスワード</label>
-                    <input type="password" id="login__inputter--password">
+                    <input
+                            type="password"
+                            name="password"
+                            v-model="request.password"
+                            id="login__inputter--password"
+                    >
                     <p hidden>パスワードをお忘れの場合はこちら</p>
-                    <!--            <p>-->
-                    <!--                <label for="password">Password</label>-->
-                    <!--                <input-->
-                    <!--                        id="password"-->
-                    <!--                        v-model="request.password"-->
-                    <!--                        type="password"-->
-                    <!--                        name="password"-->
-                    <!--                >-->
-                    <!--            </p>-->
                 </div>
 
                 <p hidden><strong>メールアドレスまたはパスワードが違います</strong></p>
 
-                <input class="primaryButton" type="submit" value="ログイン">
-                <!--            <input-->
-                <!--                    type="submit"-->
-                <!--                    value="Submit"-->
-                <!--                    id="login&#45;&#45;submit"-->
-                <!--            >-->
+                <input
+                        class="primaryButton"
+                        type="submit"
+                        id="login--submit"
+                        value="ログイン">
             </form>
             <p class="secondaryButton"><a href="signUp.html">アカウントを新規作成</a></p>
         </main>
