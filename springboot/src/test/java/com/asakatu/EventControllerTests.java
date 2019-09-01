@@ -1,6 +1,6 @@
 package com.asakatu;
 
-import com.asakatu.entity.Event;
+import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,15 +66,20 @@ public class EventControllerTests extends AbstractTest{
 		String content = mvcResult.getResponse().getContentAsString();
 
 		TOkResponse<GetEventsListResponse> contentObj = mapper.readValue(content, new TypeReference<TOkResponse<GetEventsListResponse>>(){});
-		List<Event> eventsList = contentObj.getData().getEventsList();
+		List<ForFrontEvent   > eventsList = contentObj.getData().getEventsList();
 		Assert.assertThat(eventsList.size(), Is.is(5));
 
-		Assert.assertThat(eventsList.get(0).getAddress(), Is.is("東京都渋谷区1-2-3"));
-		Assert.assertThat(eventsList.get(1).getAddress(), Is.is("東京都渋谷区2-2-3"));
-		Assert.assertThat(eventsList.get(2).getAddress(), Is.is("東京都渋谷区3-2-3"));
-		Assert.assertThat(eventsList.get(3).getAddress(), Is.is("東京都渋谷区4-2-3"));
-		Assert.assertThat(eventsList.get(4).getAddress(), Is.is("東京都渋谷区5-2-3"));
-	}
+		Assert.assertThat(eventsList.get(0).getEvent().getAddress(), Is.is("東京都渋谷区1-2-3"));
+		Assert.assertThat(eventsList.get(0).getEvent().getEventTitle(), Is.is("第1回19新卒朝活"));
+		Assert.assertThat(eventsList.get(1).getEvent().getAddress(), Is.is("東京都渋谷区2-2-3"));
+		Assert.assertThat(eventsList.get(1).getEvent().getEventTitle(), Is.is("第2回19新卒朝活"));
+		Assert.assertThat(eventsList.get(2).getEvent().getAddress(), Is.is("東京都渋谷区3-2-3"));
+		Assert.assertThat(eventsList.get(2).getEvent().getEventTitle(), Is.is("第3回19新卒朝活"));
+		Assert.assertThat(eventsList.get(3).getEvent().getAddress(), Is.is("東京都渋谷区4-2-3"));
+		Assert.assertThat(eventsList.get(3).getEvent().getEventTitle(), Is.is("第4回19新卒朝活"));
+		Assert.assertThat(eventsList.get(4).getEvent().getAddress(), Is.is("東京都渋谷区5-2-3"));
+        Assert.assertThat(eventsList.get(4).getEvent().getEventTitle(), Is.is("第5回19新卒朝活"));
+    }
 
 	private UserStatus joinUserStatus() {
 		UserStatus userStatus = new UserStatus();

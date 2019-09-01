@@ -6,7 +6,11 @@ import com.asakatu.entity.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserStatusRepository extends JpaRepository<UserStatus, Long> {
-    public UserStatus findUserStatusByEventAndUserIs(Event event, User user);
+    UserStatus findUserStatusByEventAndUserIs(Event event, User user);
+
+    Optional<UserStatus> findByUserIdAndEventId(Long userId, Long eventId);
 }
