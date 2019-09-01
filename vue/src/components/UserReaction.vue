@@ -1,5 +1,5 @@
 <template>
-    <div id="demo-reaction-list">
+    <div id="demo-user-reaction">
         <i v-bind:class="myReaction.userStatusContent"></i>
         |
         <span v-for="reaction in reactionList" v-bind:key=reaction.id>
@@ -15,7 +15,7 @@
     import axios from 'axios'
 
     export default {
-        name: "demo-reaction-list",
+        name: "demo-user-reaction",
 
         data() {
             return {
