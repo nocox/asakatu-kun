@@ -1,13 +1,14 @@
 package com.asakatu.controller;
 
-import com.asakatu.entity.SimpleLoginUser;
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
+import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
+import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
+import com.asakatu.service.PostService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.asakatu.OkResponse;
@@ -16,8 +17,11 @@ import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class EventController {
@@ -27,17 +31,45 @@ public class EventController {
 
     private final UserRepository userRepository;
 
-	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository) {
+    private final PostService postService;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository, PostService postService) {
 		this.eventRepository = eventRepository;
 		this.userStatusRepository = userStatusRepository;
 		this.userRepository = userRepository;
+		this.postService = postService;
 	}
 
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
-		List<Event> eventsList = eventRepository.findAll();
-		return new OkResponse(new GetEventsListResponse("success", eventsList));
+		List<Event> entityEventsList = eventRepository.findAll();
+        List<ForFrontEvent> eventsList = getEventsList(entityEventsList);
+        return new OkResponse(new GetEventsListResponse("success", eventsList));
 	}
+
+    @RequestMapping("/joinevents")
+    public OkResponse getJoinEventsList() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
+        List<Event> entityEventsList = eventRepository.findEventsByUserListIn(user);
+        List<ForFrontEvent> eventsList = getEventsList(entityEventsList);
+        return new OkResponse(new GetEventsListResponse("success", eventsList));
+    }
+
+    private List<ForFrontEvent> getEventsList(List<Event> entityEventsList) {
+        List<ForFrontEvent> noSortedEventsList = new ArrayList<>();
+        for (Event event : entityEventsList) {
+            ForFrontEvent forFrontEvent = new ForFrontEvent();
+            forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
+            forFrontEvent.setEvent(event);
+            noSortedEventsList.add(forFrontEvent);
+        }
+        List<ForFrontEvent> eventsList = noSortedEventsList.stream()
+                .sorted(Comparator.comparing(event -> event.getEvent().getStartDate()))
+                .collect(Collectors.toList());
+
+        return eventsList;
+    }
 
 	@RequestMapping("/event/{eventId}")
 	public OkResponse getEvent(@PathVariable Long eventId) {
@@ -46,8 +78,16 @@ public class EventController {
 	}
 
 	@RequestMapping("/event/new")
-	public OkResponse createEvent(@RequestBody Event event) {
-		eventRepository.save(event);
+	public OkResponse createEvent(@RequestBody FromFrontEventProperties eventProperty) {
+        Event event = new Event();
+        event.setStartDate(Timestamp.valueOf(eventProperty.getStartDate()));
+        event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
+        event.setAddress(eventProperty.getAddress());
+        event.setSeatInfo(eventProperty.getSeatInfo());
+        event.setEventStatus("yet");
+        event.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        event.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        eventRepository.save(event);
 		return new OkResponse(new EventResponse("success", event));
 	}
 
@@ -99,7 +139,9 @@ public class EventController {
 
         // イベントの取得,設定
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
-        event.getUserList().add(user);
+        List<User> userList = userRepository.findUsersByEventsListIn(event);
+        userList.add(user);
+        event.setUserList(userList);
         eventRepository.save(event);
 
         // ユーザステータスの設定
@@ -115,6 +157,7 @@ public class EventController {
     }
 
 }
+
 
 class EventResponse {
 	private String message;
