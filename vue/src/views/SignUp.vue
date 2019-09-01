@@ -1,13 +1,13 @@
 <template>
     <div id="sign_up">
-        <div class="sign_up">sign up</div>
         <main>
             <h2>新規会員登録</h2>
             <p class="linkToLogin"><small><a href="login.html">ログインはこちら</a></small></p>
             <form
                     id="sign-up-form"
-                    @submit="checkSignUpForm">
-<!--                todo: バリデーションの処理を書き換える必要がある。-->
+                    @submit="checkSignUpForm"
+            >
+                <!--                todo: バリデーションの処理を書き換える必要がある。-->
                 <!--            <div v-if="errors.length">-->
                 <!--                <p>Please correct the following error(s):</p>-->
                 <!--                <ul>-->
@@ -17,17 +17,13 @@
 
                 <div class="form-part">
                     <label for="signUp__inputter--email">メールアドレス</label>
-                    <input type="email" value="" id="signUp__inputter--email">
-<!--                    <p class="cautionMessage"><strong>そのメールアドレスはすでに使われています</strong></p>-->
-                    <!--            <p>-->
-                    <!--                <label for="email">Email</label>-->
-                    <!--                <input-->
-                    <!--                        id="email"-->
-                    <!--                        v-model="request.email"-->
-                    <!--                        type="email"-->
-                    <!--                        name="email"-->
-                    <!--                >-->
-                    <!--            </p>-->
+                    <input
+                            type="email"
+                            name="email"
+                            v-model="request.email"
+                            id="signUp__inputter--email"
+                    >
+                    <!--                    <p class="cautionMessage"><strong>そのメールアドレスはすでに使われています</strong></p>-->
                 </div>
 
                 <div class="form-part">
@@ -38,67 +34,50 @@
                             ユーザーIDは他の人が利用しているものは利用できません。
                         </small>
                     </p>
-                    <input type="text" value="" id="signUp__inputter--userName">
-<!--                    <p class="cautionMessage"><strong>そのユーザーIDはすでに使われています</strong></p>-->
+                    <input
+                            type="text"
+                            name="username"
+                            v-model="request.username"
+                            id="signUp__inputter--userName"
+                    >
+                    <!--                    <p class="cautionMessage"><strong>そのユーザーIDはすでに使われています</strong></p>-->
 
-                   <!-- <p>-->
-                        <!--                <label for="username">Name</label>-->
-                        <!--                <input-->
-                        <!--                        id="username"-->
-                        <!--                        v-model="request.username"-->
-                        <!--                        type="text"-->
-                        <!--                        name="username"-->
-                        <!--                >-->
-                        <!--            </p>-->
                 </div>
                 <div class="form-part">
                     <label for="signUp__inputter--nickname">ニックネーム</label>
                     <p><small>※任意です。後からでも変更できます。</small></p>
-                    <input type="text" value="" id="signUp__inputter--nickname">
-                    <!--            <p>-->
-                    <!--                <label for="displayName">displayName</label>-->
-                    <!--                <input-->
-                    <!--                        id="displayName"-->
-                    <!--                        v-model="request.displayName"-->
-                    <!--                        type="text"-->
-                    <!--                        name="displayName"-->
-                    <!--                >-->
-                    <!--            </p>-->
+                    <input
+                            type="text"
+                            name="displayName"
+                            v-model="request.displayName"
+                            id="signUp__inputter--nickname"
+                    >
                 </div>
                 <div class="form-part">
                     <label for="signUp__inputter--password-new">新しいパスワード</label>
                     <p class="autionMessage--passwordMessage"><small>半角英字と半角数字の組み合わせで6文字以上、16字以内で登録してください。</small></p>
-                    <input type="password" value="" id="signUp__inputter--password-new">
-                    <!--            <p>-->
-                    <!--                <label for="password">Password</label>-->
-                    <!--                <input-->
-                    <!--                        id="password"-->
-                    <!--                        v-model="request.password"-->
-                    <!--                        type="password"-->
-                    <!--                        name="password"-->
-                    <!--                >-->
-                    <!--            </p>-->
+                    <input
+                            type="password"
+                            name="password"
+                            v-model="request.password"
+                            id="signUp__inputter--password-new">
                 </div>
                 <div class="form-part">
                     <label for="signUp__inputter--password-confirm">パスワードの再入力</label>
-                    <input type="password" value="" id="signUp__inputter--password-confirm">
-<!--                    <p class="cautionMessage cautionMessage&#45;&#45;confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>-->
-                    <!--            <p>-->
-                    <!--                <label for="passwordConfirm">passwordConfirm</label>-->
-                    <!--                <input-->
-                    <!--                        id="passwordConfirm"-->
-                    <!--                        v-model="request.passwordConfirm"-->
-                    <!--                        type="password"-->
-                    <!--                        name="passwordConfirm"-->
-                    <!--                >-->
-                    <!--            </p>-->
+                    <input
+                            type="password"
+                            name="passwordConfirm"
+                            v-model="request.passwordConfirm"
+                            id="signUp__inputter--password-confirm">
+                    <!--                    <p class="cautionMessage cautionMessage&#45;&#45;confirmPassword"><strong>新しいパスワードと一致しません。</strong></p>-->
                 </div>
-                <input class="primaryButton" type="submit" name="" value="登録する">
-                <!--            <input-->
-                <!--                    type="submit"-->
-                <!--                    value="Submit"-->
-                <!--                    id="sing_in&#45;&#45;submit"-->
-                <!--            >-->
+                <input
+                        class="primaryButton"
+                        type="submit"
+                        name=""
+                        value="登録する"
+                        id="sing_in--submit"
+                >
             </form>
         </main>
     </div>
