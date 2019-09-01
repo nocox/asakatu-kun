@@ -31,7 +31,7 @@
                             name="name"
                             id="login__inputter--userName"
                             v-model="request.name"
-                            >
+                    >
                 </div>
 
                 <div class="form-part">
@@ -105,10 +105,10 @@
                         alert("get login");
                         console.log(response);
                         console.log(this.$store.state.isLogin);
-                        this.$store.commit('getActive',true);
+                        this.$store.commit('getActive', true);
                         console.log(this.$store.state.isLogin);
                         alert("ok");
-                        window.location.href='/mypage'
+                        window.location.href = '/mypage'
                     })
                     .catch(error => {
                         console.log("login is failed");
