@@ -21,11 +21,11 @@
             return {
                 reactionList: [],
                 userName: this.$store.state.userName,
-                eventId: 1,
                 myReaction: "",
                 checked: ""
             }
         },
+        props: ['eventId'],
         methods: {
             getReactionList: function(){
                 const reactionListResponse = axios.get('http://localhost:8080/reaction/list', {withCredentials: true});
