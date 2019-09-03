@@ -74,3 +74,8 @@ CREATE TABLE IF NOT EXISTS user_group_association
     FOREIGN KEY (user_id) REFERENCES user (user_id),
     FOREIGN KEY (user_group_id) REFERENCES user_group (user_group_id)
 );
+
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-meh');
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-grin-squint-tears');
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-smile');
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-dizzy');

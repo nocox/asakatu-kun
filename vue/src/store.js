@@ -22,6 +22,7 @@ const loginState = new Vuex.Store({
     },
     getUserName(state, username){
       state.userName = username;
+      state.isLogin = true;
     },
     getUserImage(state,imagePath){
       state.userImagePath = imagePath;

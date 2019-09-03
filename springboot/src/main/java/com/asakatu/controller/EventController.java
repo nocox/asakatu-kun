@@ -150,6 +150,7 @@ public class EventController {
         userStatus.setComment(request.getComment());
         userStatus.setEvent(event);
         userStatus.setUser(user);
+        userStatus.setMasterId(1L); // 初期値変更
         userStatus.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         userStatus.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         userStatusRepository.save(userStatus);

@@ -30,10 +30,6 @@ INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4,
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 3, FALSE);
 INSERT INTO user_event_association(user_id, event_id, event_canceled) VALUES (4, 4, FALSE);
 
-INSERT INTO user_status_master(user_status_content) VALUES ('もくもく');
-INSERT INTO user_status_master(user_status_content) VALUES ('わいわい');
-INSERT INTO user_status_master(user_status_content) VALUES ('朝に負けた');
-
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'レッツ朝活！！！', 1, 1);
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (1, 'わいわい！！！', 1, 2);
 INSERT INTO user_status(user_status_master_id, user_status_comment, user_id, event_id) VALUES (2, '遅れそう', 2, 1);
