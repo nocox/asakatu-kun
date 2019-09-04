@@ -26,7 +26,7 @@
         },
         methods:{
             //todo ここloginに持たせればいらなくなるかも
-            getUserImage:　function () {
+            getUserImage: function () {
                 const getUserInfo = axios.get('http://localhost:8080/login_user',{withCredentials:true});
                 getUserInfo.then(response=>{
                     console.log("ok");
@@ -35,7 +35,7 @@
                     const userImagePath = response.data.data.imagePath;
                     console.log("userImagePath");
                     console.log(userImagePath);
-                    this.$store.commit('getUserImage',　userImagePath);
+                    this.$store.commit('getUserImage', userImagePath);
                 })
                     .catch(error => {
                         console.error("error in get user image path");

@@ -8,11 +8,9 @@
         <main>
             <h2>ログイン</h2>
 
-            <form action="" method="post">
-                <!--        <form-->
-                <!--                id="login-form"-->
-                <!--                @submit="checkLoginForm"-->
-                <!--        -->
+<!--            <form action="" method="post">-->
+            <form id="login-form" @submit="checkLoginForm">
+
 
                 <!-- todo:fix validation function -->
 
@@ -108,7 +106,7 @@
                         this.$store.commit('getActive', true);
                         console.log(this.$store.state.isLogin);
                         alert("ok");
-                        window.location.href = '/mypage'
+                        window.location.href = '/'
                     })
                     .catch(error => {
                         console.log("login is failed");
