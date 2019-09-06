@@ -1,9 +1,9 @@
 <template>
     <div id="login">
-        <h2 class="login-title">login</h2>
-        <div v-if="userName">
-            <h3>{{this.userName}}</h3>
-        </div>
+<!--        <h2 class="login-title">login</h2>-->
+<!--        <div v-if="userName">-->
+<!--            <h3>{{this.userName}}</h3>-->
+<!--        </div>-->
 
         <main>
             <h2>ログイン</h2>
@@ -106,7 +106,9 @@
                         this.$store.commit('getActive', true);
                         console.log(this.$store.state.isLogin);
                         alert("ok");
-                        window.location.href = '/'
+                        this.whoami();
+                        this.$router.push('/mypage');
+                        // window.location.href = '/'
                     })
                     .catch(error => {
                         console.log("login is failed");
@@ -114,7 +116,6 @@
                         alert("please retry");
                         // this.$route.router.go('/login');
                     });
-                this.whoami();
 
             },
             whoami: function () {
