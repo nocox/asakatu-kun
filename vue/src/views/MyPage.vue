@@ -1,8 +1,8 @@
 <template>
     <section class="mypage">
         <div class="user-info">
-            <img class="user-info__image" :src="this.userInfo.userImage" alt="user image ">
-            <h2 class="user-info__name">{{this.userInfo.userName}}</h2>
+            <img class="user-info__image" :src="userImage" alt="user image ">
+            <h2 class="user-info__name" >{{userName}}</h2>
         </div>
     </section>
 </template>
@@ -13,12 +13,7 @@
     export default {
         name: "MyPage",
         data(){
-            return{
-                userInfo:{
-                    userName: this.$store.state.username,
-                    userImage: this.$store.state.userImagePath
-                }
-            }
+            return{}
         },
         created: function () {
             this.getUserImage();
@@ -40,10 +35,18 @@
                     .catch(error => {
                         console.error("error in get user image path");
                         console.error(error);
-               })
+                        this.$store.commit('initLogin');
+                        this.$router.push('/login');
+                    })
             }
         },
         computed:{
+            userName() {
+                return this.$store.state.userName;
+            },
+            userImage() {
+                return this.$store.state.userImagePath;
+            },
 
         }
     }
