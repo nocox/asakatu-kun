@@ -14,7 +14,8 @@ const loginState = new Vuex.Store({
   mutations: {
     initLogin(state) {
       state.isLogin = false;
-      state.userName = ""
+      state.userName = "";
+      state.userImagePath = "";
     },
     getActive(state, activation){
       state.isLogin = activation;
