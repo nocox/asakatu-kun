@@ -1,8 +1,8 @@
 <template>
     <section class="mypage">
         <div class="user-info">
-            <img class="user-info__image" :src="userImage" alt="user image ">
             <h2 class="user-info__name" >{{userName}}</h2>
+            <img class="user-info__image" :src="userImage" alt="user image ">
         </div>
     </section>
 </template>
