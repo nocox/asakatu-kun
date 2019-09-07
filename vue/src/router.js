@@ -27,7 +27,22 @@ const router = new Router({
     {
       path: '/events',
       name: 'events',
-      component: () => import('./views/Events.vue')
+      component: () => import('./views/Events.vue'),
+      children: [
+          {
+            path: '',
+            component: () => import('./components/AllEventList.vue'),
+          },
+          {
+            path: 'all',
+            component: () => import('./components/AllEventList.vue'),
+          },
+          {
+            path: 'joined',
+            component: () => import('./components/JoinedEventList.vue'),
+          }
+        ]
+
     },
     {
       path: '/event',

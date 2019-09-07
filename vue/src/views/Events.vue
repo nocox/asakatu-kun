@@ -1,33 +1,23 @@
 <template>
     <div id="events">
-        <p>event list</p>
-<!--    todo: 裏側の実装がまだなので後ほど。    -->
+        <div>
+            <router-link to="/events/all">すべて</router-link>|
+            <router-link to="/events/joined">参加済み</router-link>
+        </div>
+        <div>
+            <router-view/>
+        </div>
     </div>
 </template>
 
 <script>
-    import axios from 'axios'
-
     export default {
         name: "Events",
         data() {
             return {
-                eventList: {
-                    joinedEvents:[],
-                    yetEvents:[]
-                }
             }
         },
-        created: async function () {
-            await this.refresh()
-        },
         methods: {
-            refresh: async function () {
-                const res = await axios.get('http://localhost:8080/events');
-                this.eventList.joinedEvents = res.data.joined;
-                this.eventList.yetEvents = res.data.yet;
-                console.info(this.eventList);
-            },
         }
     }
 </script>
