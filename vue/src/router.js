@@ -34,10 +34,6 @@ const router = new Router({
             component: () => import('./components/AllEventList.vue'),
           },
           {
-            path: 'all',
-            component: () => import('./components/AllEventList.vue'),
-          },
-          {
             path: 'joined',
             component: () => import('./components/JoinedEventList.vue'),
           }
