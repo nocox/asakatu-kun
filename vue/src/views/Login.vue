@@ -12,7 +12,7 @@
                     id="login-form"
                     @submit="checkLoginForm"
             >
-                <!-- todo:fix validations-->
+                <!-- todo:fix validation-->
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input
@@ -34,7 +34,7 @@
                     <p hidden>パスワードをお忘れの場合はこちら</p>
                 </div>
 
-                <p hidden><strong>メールアドレスまたはパスワードが違います</strong></p>
+                <p v-if="hasError"><strong>メールアドレスまたはパスワードが違います</strong></p>
 
                 <input
                         class="primaryButton"
@@ -60,14 +60,14 @@
                     name: undefined,
                     password: undefined
                 },
-                errors: [],
-                // userName: ""
+                hasError:false,
                 userName: this.$store.state.userName
             }
         },
         methods: {
             checkLoginForm: function (e) {
                 this.errors = [];
+                this.hasError = false;
 
                 if (!this.request.name) {
                     this.errors.push("Name required.");
@@ -102,7 +102,8 @@
                     .catch(error => {
                         console.log("login is failed");
                         console.log(error);
-                        alert("please retry");
+                        // alert("please retry");
+                        this.hasError = true;
                         // this.$route.router.go('/login');
                     });
                 this.whoami();
