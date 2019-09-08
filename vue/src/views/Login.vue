@@ -102,36 +102,18 @@
                     .catch(error => {
                         console.log("login is failed");
                         console.log(error);
-                        // alert("please retry");
                         this.hasError = true;
-                        // this.$route.router.go('/login');
+                        //todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
                     });
                 this.whoami();
 
             },
             whoami: function () {
                 const userNameResponse = axios.get('http://localhost:8080/login_user', {withCredentials: true});
-                console.log(userNameResponse);
-                // const getUsername = userNameResponse.data.displayName;
-
                 userNameResponse.then(response => {
-                        console.log("in then");
-                        console.log(response.data);
-                        console.log(response.data.data);
-                        console.log(response.data.data.displayName);
-                        // this.userName = response.data.data.displayName;
-                        // console.log("name--");
-                        // console.log(this.userName);
                         this.$store.commit('getUserName', response.data.data.displayName);
                     }
                 );
-                // const getUsername = userNameResponse.data;
-                //it also conclude name, imagepath  and so on.
-
-                // this.userName = getUsername;
-                // console.log("check username");
-                // console.log(getUsername);
-                // console.log(this.userName);
             }
         }
     }
@@ -144,4 +126,3 @@
 
 </style>
 
-<!--curl -X POST -H "Content-Type: application/json" -d '{"username":"ito", "password":"aabbcc", "displayName":"itoFumiki", "email":"aaaaaa@bbbb.com", "passwordConfirm":"aabbcc"}' -i localhost:8080/user_registration-->
