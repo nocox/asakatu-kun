@@ -132,7 +132,6 @@
                 if (!this.errors.length) {
                     this.createEvent();
                     e.preventDefault();
-                    return true;
                 }
                 e.preventDefault();
             },
@@ -142,9 +141,12 @@
                 if (axiosResponse.status === 200 || axiosResponse.status === 201) {
                     console.log("ok");
                     console.log(axiosResponse);
+                    this.$router.push('/events');
                 } else {
                     console.log("error");
                     console.log(axiosResponse);
+                    this.$store.commit('initLogin');
+                    this.$router.push('/login');
                 }
             }
         }
