@@ -80,6 +80,7 @@ public class EventController {
 	@RequestMapping("/event/new")
 	public OkResponse createEvent(@RequestBody FromFrontEventProperties eventProperty) {
         Event event = new Event();
+        event.setEventTitle(eventProperty.getEventTitle());
         event.setStartDate(Timestamp.valueOf(eventProperty.getStartDate()));
         event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
         event.setAddress(eventProperty.getAddress());

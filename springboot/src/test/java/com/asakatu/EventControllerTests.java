@@ -1,5 +1,7 @@
 package com.asakatu;
 
+import com.asakatu.entity.Event;
+import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -21,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -98,6 +101,38 @@ public class EventControllerTests extends AbstractTest{
                 .andExpect(jsonPath("$.data.comment").value("comment"))
                 .andExpect(jsonPath("$.data.message").value("created"));
     }
+
+	private FromFrontEventProperties getTestEventProperties() {
+		FromFrontEventProperties eventProperties = new FromFrontEventProperties();
+		eventProperties.setEventTitle("作成テストイベント");
+		eventProperties.setAddress("テスト街テスト市1-2-3");
+		eventProperties.setSeatInfo("席情報");
+		eventProperties.setStartDate(LocalDateTime.of(2019, 10, 31, 9, 0));
+		eventProperties.setEndDate(LocalDateTime.of(2019, 10, 31, 12, 0));
+		return eventProperties;
+	}
+
+	@Test
+	@WithMockUser(username = "doiiii")
+	public void createEvent() throws Exception {
+		this.mockMvc.perform(
+				post("/event/new")
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsBytes(getTestEventProperties())))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(jsonPath("$.data.event.eventTitle").value("作成テストイベント"))
+				.andExpect(jsonPath("$.data.event.address").value("テスト街テスト市1-2-3"))
+				.andExpect(jsonPath("$.data.event.seatInfo").value("席情報"))
+				.andExpect(jsonPath("$.data.event.eventStatus").value("yet"))
+				// 時刻はUTCなので9時間マイナスになる。取得の時直す方針
+				.andExpect(jsonPath("$.data.event.startDate").value("2019-10-31T00:00:00.000+0000"))
+				.andExpect(jsonPath("$.data.event.duration").value("3.0"))
+				.andExpect(jsonPath("$.data.message").value("success"));
+
+		// 後片付け
+		Event event = eventRepository.findEventByEventTitle("作成テストイベント");
+		eventRepository.delete(event);
+	}
 
     @Test
     @WithMockUser(username = "doiiii")
