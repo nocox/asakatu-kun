@@ -11,6 +11,7 @@ import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.asakatu.service.PostService;
+import org.joda.time.LocalDateTime;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -81,7 +82,7 @@ public class EventController {
 	public OkResponse createEvent(@RequestBody FromFrontEventProperties eventProperty) {
         Event event = new Event();
         event.setEventTitle(eventProperty.getEventTitle());
-        event.setStartDate(Timestamp.valueOf(eventProperty.getStartDate()));
+        event.setStartDate(eventProperty.getStartDate());
         event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
         event.setAddress(eventProperty.getAddress());
         event.setSeatInfo(eventProperty.getSeatInfo());
