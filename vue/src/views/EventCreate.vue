@@ -25,8 +25,17 @@
                 <input
                         id="startDate"
                         v-model="request.startDate"
-                        type="datetime-local"
+                        type="date"
                         name="startDate"
+                >
+            </p>
+            <p>
+                <label for="startDate">start time</label>
+                <input
+                        id="startTime"
+                        v-model="startTime"
+                        type="time"
+                        name="startTime"
                 >
             </p>
             <p>
@@ -34,8 +43,17 @@
                 <input
                         id="endDate"
                         v-model="request.endDate"
-                        type="datetime-local"
+                        type="date"
                         name="endDate"
+                >
+            </p>
+            <p>
+                <label for="endTime">end time</label>
+                <input
+                        id="endTime"
+                        v-model="endTime"
+                        type="time"
+                        name="endTime"
                 >
             </p>
             <p>
@@ -63,7 +81,7 @@
                         id="eventDetail"
                         cols="30"
                         rows="10"
-                        v-model="request.eventDetail"
+                        v-model="eventDetail"
                         placeholder="add event details"
                 >
             </textarea>
@@ -90,8 +108,10 @@
                     endDate: "",
                     address: "",
                     seatInfo: "",
-                    eventDetail: ""
                 },
+                startTime: "",
+                endTime: "",
+                eventDetail: "",
                 errors: [],
             }
         },
@@ -104,6 +124,11 @@
                 if (!this.request.startDate) {
                     this.errors.push('start date required.');
                 }
+                console.log(this.startTime);
+
+                this.request.startDate += "T" + this.startTime;
+                this.request.endDate += "T" + this.endTime;
+
                 if (!this.errors.length) {
                     this.createEvent();
                     e.preventDefault();
