@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 @Component
 public class FromFrontEventProperties {
     // 本当はタイトルとかあるけどそのPRまだなので後から追加
+    private String eventTitle;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
@@ -14,6 +16,14 @@ public class FromFrontEventProperties {
     private String address;
 
     private String seatInfo;
+
+    public String getEventTitle() {
+        return eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
 
     public LocalDateTime getStartDate() {
         return startDate;

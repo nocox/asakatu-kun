@@ -12,30 +12,48 @@
                 </ul>
             </div>
             <p>
-                <label for="name">event Name</label>
+                <label for="name">event title</label>
                 <input
                         id="name"
-                        v-model="request.eventName"
+                        v-model="request.eventTitle"
                         type="text"
                         name="name"
                 >
             </p>
             <p>
-                <label for="date">startDate</label>
+                <label for="startDate">start date</label>
                 <input
-                        id="date"
+                        id="startDate"
                         v-model="request.startDate"
-                        type="datetime-local"
-                        name="date"
+                        type="date"
+                        name="startDate"
                 >
             </p>
             <p>
-                <label for="duration">duration</label>
+                <label for="startDate">start time</label>
                 <input
-                        id="duration"
-                        v-model="request.duration"
-                        type="number"
-                        name="duration"
+                        id="startTime"
+                        v-model="startTime"
+                        type="time"
+                        name="startTime"
+                >
+            </p>
+            <p>
+                <label for="endDate">end date</label>
+                <input
+                        id="endDate"
+                        v-model="request.endDate"
+                        type="date"
+                        name="endDate"
+                >
+            </p>
+            <p>
+                <label for="endTime">end time</label>
+                <input
+                        id="endTime"
+                        v-model="endTime"
+                        type="time"
+                        name="endTime"
                 >
             </p>
             <p>
@@ -48,13 +66,22 @@
                 >
             </p>
             <p>
+                <label for="seatInfo">seat info</label>
+                <input
+                        id="seatInfo"
+                        v-model="request.seatInfo"
+                        type="text"
+                        name="seatInfo"
+                >
+            </p>
+            <p>
                 <label for="eventDetail">eventDetail</label>
                 <textarea
                         name="eventDetail"
                         id="eventDetail"
                         cols="30"
                         rows="10"
-                        v-model="request.eventDetail"
+                        v-model="eventDetail"
                         placeholder="add event details"
                 >
             </textarea>
@@ -71,35 +98,40 @@
 <script>
 
     import axios from 'axios';
-
     export default {
         name: "EventCreate",
         data() {
             return {
                 request: {
-                    eventName: "",
+                    eventTitle: "",
                     startDate: "",
-                    duration: 0,
+                    endDate: "",
                     address: "",
                     seatInfo: "",
-                    eventDetail: ""
                 },
+                startTime: "",
+                endTime: "",
+                eventDetail: "",
                 errors: [],
             }
         },
         methods: {
             checkEventCreateForm: function (e) {
                 this.errors = [];
-                if (!this.request.eventName) {
+                if (!this.request.eventTitle) {
                     this.errors.push("Name required.");
                 }
                 if (!this.request.startDate) {
                     this.errors.push('start date required.');
                 }
+                console.log(this.startTime);
+
+                this.request.startDate += "T" + this.startTime;
+                this.request.endDate += "T" + this.endTime;
+
                 if (!this.errors.length) {
                     this.createEvent();
                     e.preventDefault();
-                    return true;
                 }
                 e.preventDefault();
             },
@@ -109,9 +141,12 @@
                 if (axiosResponse.status === 200 || axiosResponse.status === 201) {
                     console.log("ok");
                     console.log(axiosResponse);
+                    this.$router.push('/events');
                 } else {
                     console.log("error");
                     console.log(axiosResponse);
+                    this.$store.commit('initLogin');
+                    this.$router.push('/login');
                 }
             }
         }
