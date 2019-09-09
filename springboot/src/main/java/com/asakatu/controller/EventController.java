@@ -133,13 +133,17 @@ public class EventController {
     }
 
     @PostMapping("/event/{id}/user")
-    public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
+    public CreatedResponse joinEvent(@PathVariable long id, @RequestBody UserStatus request) {
         // ログインユーザの取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
 
         // イベントの取得,設定
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        // 複合ユニーク制約チェック
+        if (eventRepository.findEventByIdAndUserListIn(event.getId(), user) != null) {
+            throw new IllegalArgumentException("すでにそのイベントに参加しています");
+        }
         List<User> userList = userRepository.findUsersByEventsListIn(event);
         userList.add(user);
         event.setUserList(userList);

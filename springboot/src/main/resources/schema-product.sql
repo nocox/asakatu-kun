@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS user_event_association
     event_id       BIGINT(20),
     event_canceled BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES user (user_id),
-    FOREIGN KEY (event_id) REFERENCES event (event_id)
+    FOREIGN KEY (event_id) REFERENCES event (event_id),
+    UNIQUE (user_id, event_id)
 );
 
 CREATE TABLE IF NOT EXISTS user_status_master
