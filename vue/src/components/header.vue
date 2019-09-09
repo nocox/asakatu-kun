@@ -1,12 +1,14 @@
-<template class="header">
-  <div class="hader__backBtn"></div>
-  <h1 class="header__logo"><img alt="BizSpot" src="asseets/logo.png"></h1>
-  <figure class="header__profileImg"><img alt="user profile image" src=""></figure>
+<template>
+  <div class="header">
+    <div class="header__backBtn"></div>
+    <h1 class="header__logo"><img alt="BizSpot" src="asseets/logo.png"></h1>
+    <figure class="header__profileImg"><img alt="user profile image" src=""></figure>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'header',
+  name: 'Header',
   props: {
     msg: String
   }
@@ -17,28 +19,37 @@ export default {
 <style scoped lang="scss">
 .header{
   display:flex;
+  position: fixed;
+  width: 100%;
   height: 72px;
+  background: #FFF;
+  z-index: 100000;
   padding: 0 16px;
   align-items: center;
   justify-content: space-between;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4));
   &__backBtn{
+    position:relative;
     &::before{
+      content:"";
       display:block;
       height:3px;
       width:16px;
       background: #707070;
       transform: rotate(-45deg);
       position: absolute;
-      top:-100%;
+      top:-5px;
       left:-25%;
     }
     &::after{
+      content:"";
       display:block;
-      height:1px;
+      height:3px;
       width:16px;
       background: #707070;
       transform: rotate(45deg);
-      top:50%;
+      position: absolute;
+      top:5px;
       left:-25%;
     }
   }
