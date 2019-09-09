@@ -12,30 +12,30 @@
                 </ul>
             </div>
             <p>
-                <label for="name">event Name</label>
+                <label for="name">event title</label>
                 <input
                         id="name"
-                        v-model="request.eventName"
+                        v-model="request.eventTitle"
                         type="text"
                         name="name"
                 >
             </p>
             <p>
-                <label for="date">startDate</label>
+                <label for="startDate">start date</label>
                 <input
-                        id="date"
+                        id="startDate"
                         v-model="request.startDate"
                         type="datetime-local"
-                        name="date"
+                        name="startDate"
                 >
             </p>
             <p>
-                <label for="duration">duration</label>
+                <label for="endDate">end date</label>
                 <input
-                        id="duration"
-                        v-model="request.duration"
-                        type="number"
-                        name="duration"
+                        id="endDate"
+                        v-model="request.endDate"
+                        type="datetime-local"
+                        name="endDate"
                 >
             </p>
             <p>
@@ -45,6 +45,15 @@
                         v-model="request.address"
                         type="text"
                         name="address"
+                >
+            </p>
+            <p>
+                <label for="seatInfo">seat info</label>
+                <input
+                        id="seatInfo"
+                        v-model="request.seatInfo"
+                        type="text"
+                        name="seatInfo"
                 >
             </p>
             <p>
@@ -71,15 +80,14 @@
 <script>
 
     import axios from 'axios';
-
     export default {
         name: "EventCreate",
         data() {
             return {
                 request: {
-                    eventName: "",
+                    eventTitle: "",
                     startDate: "",
-                    duration: 0,
+                    endDate: "",
                     address: "",
                     seatInfo: "",
                     eventDetail: ""
@@ -90,7 +98,7 @@
         methods: {
             checkEventCreateForm: function (e) {
                 this.errors = [];
-                if (!this.request.eventName) {
+                if (!this.request.eventTitle) {
                     this.errors.push("Name required.");
                 }
                 if (!this.request.startDate) {
