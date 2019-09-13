@@ -2,6 +2,8 @@ package com.asakatu.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,7 @@ public class Event {
 	private String eventTitle;
 
 	@Column(name = "start_date")
-	private Timestamp startDate;
+	private LocalDateTime startDate;
 
 	@Column(name = "duration")
 	private double duration;
@@ -71,11 +73,11 @@ public class Event {
 		this.id = id;
 	}
 
-	public Timestamp getStartDate() {
-		return startDate;
+	public LocalDateTime getStartDate() {
+		return startDate.atZone(ZoneId.of("Asia/Tokyo")).toLocalDateTime();
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 

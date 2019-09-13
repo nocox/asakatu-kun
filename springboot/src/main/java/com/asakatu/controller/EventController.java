@@ -11,6 +11,7 @@ import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.asakatu.service.PostService;
+import org.joda.time.LocalDateTime;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -81,7 +82,7 @@ public class EventController {
 	public OkResponse createEvent(@RequestBody FromFrontEventProperties eventProperty) {
         Event event = new Event();
         event.setEventTitle(eventProperty.getEventTitle());
-        event.setStartDate(Timestamp.valueOf(eventProperty.getStartDate()));
+        event.setStartDate(eventProperty.getStartDate());
         event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
         event.setAddress(eventProperty.getAddress());
         event.setSeatInfo(eventProperty.getSeatInfo());
@@ -134,13 +135,17 @@ public class EventController {
     }
 
     @PostMapping("/event/{id}/user")
-    public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
+    public CreatedResponse joinEvent(@PathVariable long id, @RequestBody UserStatus request) {
         // ログインユーザの取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
 
         // イベントの取得,設定
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        // 複合ユニーク制約チェック
+        if (eventRepository.findEventByIdAndUserListIn(event.getId(), user) != null) {
+            throw new IllegalArgumentException("すでにそのイベントに参加しています");
+        }
         List<User> userList = userRepository.findUsersByEventsListIn(event);
         userList.add(user);
         event.setUserList(userList);
