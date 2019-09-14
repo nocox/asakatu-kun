@@ -58,24 +58,16 @@ public class EventController {
     }
 
     private List<ForFrontEvent> getEventsList(List<Event> entityEventsList) {
-        List<ForFrontEvent> noSortedEventsList = new ArrayList<>();
-        for (Event event : entityEventsList) {
-            ForFrontEvent forFrontEvent = new ForFrontEvent();
-            forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
-            forFrontEvent.setEvent(event);
-            noSortedEventsList.add(forFrontEvent);
-        }
-        List<ForFrontEvent> eventsList = noSortedEventsList.stream()
+        return entityEventsList.stream()
+                .map(postService::convertEventForFront)
                 .sorted(Comparator.comparing(event -> event.getEvent().getStartDate()))
                 .collect(Collectors.toList());
-
-        return eventsList;
     }
 
 	@RequestMapping("/event/{eventId}")
-	public OkResponse getEvent(@PathVariable Long eventId) {
+	public ForFrontEvent getEvent(@PathVariable Long eventId) {
 		Event event = eventRepository.findById(eventId).orElseThrow();
-		return new OkResponse(new EventResponse("success", event));
+		return postService.convertEventForFront(event);
 	}
 
 	@RequestMapping("/event/new")

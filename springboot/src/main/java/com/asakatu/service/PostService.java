@@ -1,5 +1,7 @@
 package com.asakatu.service;
 
+import com.asakatu.entity.Event;
+import com.asakatu.response.ForFrontEvent;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -19,5 +21,12 @@ public class PostService{
                 + dateFormat.format(startDate)
                 + " 〜 "
                 + dateFormat.format(endLocalDate);
+    }
+
+    public ForFrontEvent convertEventForFront(Event event){
+        ForFrontEvent forFrontEvent = new ForFrontEvent();
+        forFrontEvent.setDesignDate(getDesignDate(event.getStartDate(), event.getDuration()));
+        forFrontEvent.setEvent(event);
+        return forFrontEvent;
     }
 }
