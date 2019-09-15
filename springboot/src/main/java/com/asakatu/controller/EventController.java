@@ -117,12 +117,13 @@ public class EventController {
         List<JoinedUserInfo> result = new ArrayList<>();
         JoinedUserInfo user;
         // 全部だとパスワードとかも入っちゃうので厳選
-        for (User jounedUser : eventJoinedUsersList) {
+        for (User joinedUser : eventJoinedUsersList) {
             user = new JoinedUserInfo();
-            user.setDisplayName(jounedUser.getDisplayName());
-            user.setId(jounedUser.getId());
-            user.setImagePath(jounedUser.getImagePath());
-            UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser);
+            user.setDisplayName(joinedUser.getDisplayName());
+            user.setId(joinedUser.getId());
+            user.setUsername(joinedUser.getUsername());
+            user.setImagePath(joinedUser.getImagePath());
+            UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, joinedUser);
             user.setComment(userStatus.getComment());
             user.setReaction(userStatusMasterRepository.findById(userStatus.getMasterId()).orElseThrow().getUserStatusContent());
             result.add(user);
@@ -203,6 +204,8 @@ class EventOnlyCommentResponse {
 class JoinedUserInfo {
     private Long id;
 
+    private String username;
+
     private String displayName;
 
     private String imagePath;
@@ -210,6 +213,14 @@ class JoinedUserInfo {
     private String comment;
 
     private String reaction;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getReaction() {
         return reaction;
