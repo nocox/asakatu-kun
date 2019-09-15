@@ -7,16 +7,16 @@ import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.EventRepository;
 import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.repository.UserRepository;
+import com.asakatu.repository.UserStatusMasterRepository;
 import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.asakatu.service.PostService;
-import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -34,12 +34,15 @@ public class EventController {
 
     private final PostService postService;
 
-	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository, PostService postService) {
+    private final UserStatusMasterRepository userStatusMasterRepository;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository, PostService postService, UserStatusMasterRepository userStatusMasterRepository) {
 		this.eventRepository = eventRepository;
 		this.userStatusRepository = userStatusRepository;
 		this.userRepository = userRepository;
 		this.postService = postService;
-	}
+        this.userStatusMasterRepository = userStatusMasterRepository;
+    }
 
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
@@ -119,8 +122,9 @@ public class EventController {
             user.setDisplayName(jounedUser.getDisplayName());
             user.setId(jounedUser.getId());
             user.setImagePath(jounedUser.getImagePath());
-            String comment = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser).getComment();
-            user.setComment(comment);
+            UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser);
+            user.setComment(userStatus.getComment());
+            user.setReaction(userStatusMasterRepository.findById(userStatus.getMasterId()).orElseThrow().getUserStatusContent());
             result.add(user);
         }
         return new OkResponse(new EventJoinedResponse("success", result));
@@ -204,6 +208,16 @@ class JoinedUserInfo {
     private String imagePath;
 
     private String comment;
+
+    private String reaction;
+
+    public String getReaction() {
+        return reaction;
+    }
+
+    public void setReaction(String reaction) {
+        this.reaction = reaction;
+    }
 
     public Long getId() {
         return id;
