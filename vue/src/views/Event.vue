@@ -10,7 +10,7 @@
                     <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}</div>
                     <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加</div>
                 </div>
-                <button class="uk-button uk-button-default uk-button-small event__btn">参加</button>
+                <button v-if="!this.hasJoin" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
             </div>
             <div class="event-info_detail">
                 社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
@@ -20,6 +20,10 @@
                 休日、ちょっと早起きをして、暮らし、
                 人生をより豊かにするきっかけにしていきませんか？
             </div>
+        </section>
+
+        <section v-if="this.hasJoin" class="reaction-change">
+            参加していたら、ここでリアクション変更
         </section>
 
         <section class="event-participant section-margin">
@@ -45,7 +49,7 @@
             </div>
         </section>
 
-        <div class="join-button uk-flex uk-flex-center">
+        <div v-if="!this.hasJoin" class="join-button uk-flex uk-flex-center">
             <button class="event__btn">参加</button>
         </div>
     </div>
@@ -84,15 +88,23 @@
             console.log("event id : " + this.eventId);
             this.refresh();
         },
+        computed: {
+            username() {
+                return this.$store.state.username;
+            },
+            hasJoin(){
+                for(let i=0 ; i < this.users.length ; i++){
+                    if (this.users[i].username === this.username){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        },
         methods: {
             refresh: function () {
                 this.getEventInfo();
                 this.getUsers();
-                // console.log(this.eventInfo);
-                // console.info(this.eventInfo);
-                // const eventUsers = await axios.get(this.eventAPI + this.eventId + '/users');
-                // this.users = eventUsers.data;
-                // console.log(this.users);
             },
             joinEvent: async function () {
                 await axios.post(this.eventAPI + this.eventId + '/user', this.request);
