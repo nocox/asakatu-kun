@@ -47,6 +47,14 @@
   }
 }
 
+.reaction{
+  &-change{
+    margin: auto;
+    padding: 15px;
+    border: 2px black solid;
+  }
+}
+
 .participant{
   &-list{
     margin: 0 auto;

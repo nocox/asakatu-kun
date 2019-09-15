@@ -8,13 +8,14 @@ Vue.use(Vuex);
 const loginState = new Vuex.Store({
   state: {
     isLogin: false,
-    userName: "",
-    userImagePath:""
+    username: "",
+    userImagePath: "",
+    displayName: ""
   },
   mutations: {
     initLogin(state) {
       state.isLogin = false;
-      state.userName = "";
+      state.username = "";
       state.userImagePath = "";
     },
     getActive(state, activation){
@@ -22,14 +23,17 @@ const loginState = new Vuex.Store({
       console.log("getActive")
     },
     getUserName(state, username){
-      state.userName = username;
+      state.username = username;
       state.isLogin = true;
     },
     getUserImage(state,imagePath){
       state.userImagePath = imagePath;
     },
+    getDisplayName(state, displayName){
+      state.displayName = displayName
+    },
     getUserAllInfo(state,username,imagePath){
-      state.userName = username;
+      state.username = username;
       state.userImagePath = imagePath;
     }
   },
@@ -38,7 +42,7 @@ const loginState = new Vuex.Store({
   },
   plugins: [createPersistedState({
     key: 'asakatsukun',
-    paths: ['isLogin','userName','userImagePath'],
+    paths: ['isLogin','username','userImagePath','displayName'],
     storage: window.sessionStorage
   })]
 });

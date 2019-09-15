@@ -42,7 +42,7 @@
         },
         computed:{
             userName() {
-                return this.$store.state.userName;
+                return this.$store.state.username;
             },
             userImage() {
                 return this.$store.state.userImagePath;
