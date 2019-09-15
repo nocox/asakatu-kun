@@ -50,14 +50,50 @@
 .participant{
   &-list{
     margin: 0 auto;
+    display: flex;
     &:first-child{
     }
   }
   &-image{
     width: 15vw;
+    height: 15vw;
     margin-right: 1vw;
     margin-left: 1vw;
     margin-top: 2vh;
+  }
+  &-reaction {
+    margin: auto;
+
+    &-balloon1 {
+      position: relative;
+      display: inline-block;
+      margin: auto;
+      padding: 1px 10px;
+      min-width: 15%;
+      max-width: 100%;
+      color: #555;
+      background: #FFDE95;
+      border-radius: 10px;
+    }
+
+    &-balloon1:before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border: 5px solid transparent;
+      border-top: 8px solid #FFDE95;
+    }
+
+    &-balloon1 p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &-element{
+    display: grid;
   }
 }
 

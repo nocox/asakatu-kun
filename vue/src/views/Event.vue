@@ -25,7 +25,12 @@
         <section class="event-participant section-margin">
             <h3 class="participant-title">参加メンバー</h3>
             <div  class="participant-list">
-                <img v-for="user in users" v-bind:key="user.id" :src="user.imagePath" v-bind:alt="user.displayName" class="participant-image image_circle">
+                <div class="participant-element" v-for="user in users" v-bind:key="user.id" >
+                    <div class="participant-reaction-balloon1">
+                        <i v-bind:class="user.reaction" class="participant-reaction"></i>
+                    </div>
+                    <img :src="user.imagePath" v-bind:alt="user.displayName" class="participant-image image_circle">
+                </div>
             </div>
         </section>
 
