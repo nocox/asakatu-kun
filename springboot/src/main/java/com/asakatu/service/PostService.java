@@ -23,9 +23,20 @@ public class PostService{
                 + dateFormat.format(endLocalDate);
     }
 
+    String getDesignDateTime(Event event){
+        DateTimeFormatter dateFormatDate = DateTimeFormatter.ofPattern("[]MM月dd日(eee)", Locale.JAPAN);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("[]H:mm");
+
+        LocalDateTime endLocalDate = event.getStartDate().plusHours((long) event.getDuration());
+        return dateFormatDate.format(event.getStartDate()) + " "
+                + dateFormat.format(event.getStartDate())
+                + " 〜 "
+                + dateFormat.format(endLocalDate);
+    }
+
     public ForFrontEvent convertEventForFront(Event event){
         ForFrontEvent forFrontEvent = new ForFrontEvent();
-        forFrontEvent.setDesignDate(getDesignDate(event.getStartDate(), event.getDuration()));
+        forFrontEvent.setDesignDate(getDesignDateTime(event));
         forFrontEvent.setEvent(event);
         return forFrontEvent;
     }
