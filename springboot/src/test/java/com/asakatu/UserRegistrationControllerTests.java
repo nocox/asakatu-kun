@@ -1,5 +1,6 @@
 package com.asakatu;
 
+import com.asakatu.entity.USER_REGISTRATION_ERROR;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,7 +82,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("ユーザ名の長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR));
         ;
     }
 
@@ -97,7 +98,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("ユーザ名の長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR));
     }
 
     @Test
@@ -121,7 +122,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("そのユーザ名は既に使われています"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED));
 
     }
 
@@ -137,7 +138,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("パスワードの長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR));
 
     }
 
@@ -153,7 +154,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("パスワードの長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR));
 
     }
 
@@ -170,7 +171,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("パスワードが一致しません"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.INCORRECT_PASSWORD));
 
     }
 
