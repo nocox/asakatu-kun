@@ -37,7 +37,7 @@ public class UserRegistrationController {
 
         if (user.getUsername().length() < 3 || user.getUsername().length() > 50) {
 //            throw new UserRegistrationException("ユーザ名の長さが規定の範囲と違います",USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR);
-            //todo: なんかうまく行かなかったので、一旦これで
+            //todo: ↑なんかうまく行かなかったので、一旦これで↓
             throw new IllegalArgumentException(String.valueOf(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR));
         }
 
@@ -46,9 +46,15 @@ public class UserRegistrationController {
             throw new UserAlreadyExistException(String.valueOf(USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED));
         }
 
+        if (userRepository.findByEmail(user.getEmail()).isPresent()){
+//            throw new UserRegistrationException("そのアドレスは既に使われています",USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED);
+            throw new IllegalArgumentException(String.valueOf(USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED));
+
+        }
+
         if (user.getPassword().length() < 6 || user.getPassword().length() > 20) {
 //            throw new UserRegistrationException("パスワードの長さが規定の範囲と違います",USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR);
-            throw new IllegalArgumentException(String.valueOf(USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR));
+            throw new IllegalArgumentException(String.valueOf(USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED));
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
