@@ -10,7 +10,7 @@
                     <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}</div>
                     <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加</div>
                 </div>
-                <button v-if="!this.hasJoin" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
+                <button v-if="!this.hasJoin" @click="showModal = 1" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
             </div>
             <div class="event-info_detail">
                 社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
@@ -21,6 +21,28 @@
                 人生をより豊かにするきっかけにしていきませんか？
             </div>
         </section>
+
+        <modal-template v-if="showModal === 1" @close="showModal = false" :key="1">
+            <div slot="header">
+                やりたいことを記入
+            </div>
+            <div slot="body">
+                <div class="participant-modal-detail">
+                    参加する朝活をもっと有意義にするために決意表明をして，目的とゴールを明確にしよう
+                </div>
+                <label class="participant-label">
+                    <textarea class="participant-modal-textlines"></textarea>
+                </label>
+            </div>
+            <div class="link_area" slot="footer">
+                <button v-if="!this.hasJoin" @click="showModal = 2" class="uk-button uk-button-default uk-button-small event__btn">
+                    確認する
+                </button>
+                <p class="modal-default-button" @click="showModal = false">
+                    あとにする
+                </p>
+            </div>
+        </modal-template>
 
         <section v-if="this.hasJoin" class="reaction-change">
             参加していたら、ここでリアクション変更
@@ -57,9 +79,14 @@
 
 <script>
     import axios from 'axios';
+    import ModalTemplate from "../components/ModalTemplate";
 
     export default {
         name: "Event",
+        components: {
+            ModalTemplate
+        },
+        template: '<modal-template></modal-template>',
         data() {
             return {
                 eventInfo: {
@@ -80,7 +107,8 @@
                 },
                 users: [],
                 userStatusList: [],
-                eventAPI: 'http://localhost:8080/event/'
+                eventAPI: 'http://localhost:8080/event/',
+                showModal: false,
             }
         },
         mounted: function () {
