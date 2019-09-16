@@ -119,28 +119,6 @@
             }
         }
     }
-
-    export const USER_REGISTRATION_ERROR = {
-        //todo: vue jsでenum使うの案外面倒だったので、TSにしたいなーーーーと思った。
-        //ここのメッセージはこういう制約あったわ。って思い出せるように。ユーザーに見せてもよい想定で書きます。
-        USER_NAME_LENGTH_ERROR: {
-            eVal: "1",
-            text: "ユーザー名の長さは3文字以上50文字以下で入力してください。"
-        },
-        USER_NAME_ALREADY_USED: {
-            eVal: "2",
-            text: "ユーザー名はすでに使われています。"
-        },
-        PASSWORD_LENGTH_ERROR: {
-            eVal: "3",
-            text:"パスワードは6文字以上20文字以下で入力してください"
-        },
-        INCORRECT_PASSWORD: {
-            eVal:"11",
-            text:"パスワードまたはユーザー名が違います。"
-
-        }
-    }
 </script>
 
 <style scoped lang="scss">
