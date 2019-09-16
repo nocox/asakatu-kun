@@ -30,17 +30,17 @@
                 <div class="participant-modal-detail">
                     参加する朝活をもっと有意義にするために決意表明をして，目的とゴールを明確にしよう
                 </div>
-                <label class="participant-label">
+                <label>
                     <textarea class="participant-modal-textlines"></textarea>
                 </label>
             </div>
             <div class="link_area" slot="footer">
-                <button v-if="!this.hasJoin" @click="showModal = 2" class="uk-button uk-button-default uk-button-small event__btn">
+                <button v-if="!this.hasJoin" @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
                     確認する
                 </button>
-                <p class="modal-default-button" @click="showModal = false">
+                <div class="participant-modal__btn-cancel" @click="showModal = false">
                     あとにする
-                </p>
+                </div>
             </div>
         </modal-template>
 
@@ -72,7 +72,7 @@
         </section>
 
         <div v-if="!this.hasJoin" class="join-button uk-flex uk-flex-center">
-            <button class="event__btn">参加</button>
+            <button @click="showModal = 1" class="event__btn">参加</button>
         </div>
     </div>
 </template>

@@ -75,8 +75,9 @@
         width: 80%;
         max-width: 840px;
         margin: 0 auto;
-        padding: 60px 2vw 80px;
+        padding: 40px 3vw 20px;
         border: 2px solid #aaa;
+        border-radius: 13px;
         text-align: center;
         background: #fff;
         box-sizing: border-box;

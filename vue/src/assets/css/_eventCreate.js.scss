@@ -105,14 +105,30 @@
   }
 
   &-modal{
+    &__btn{
+      background-color: #FFB100;
+      border-radius: 22px;
+      border-color: white;
+      width: 30vw;
+      height: 5vh;
+      color: white;
+
+      &-cancel{
+        font-size: small;
+        color: #08c;
+        margin-top: 10px;
+      }
+    }
+
     &-textlines{
       border: 1px solid #707070;  /* 枠線 */
       border-radius: 8px;         /* 角丸 */
-      padding: 10px;              /* 内側の余白量 */
-      width: auto;           /* 横幅 */
+      padding: 5%;              /* 内側の余白量 */
+      width: 90%;           /* 横幅 */
       height: 120px;              /* 高さ */
       font-size: 1em;             /* 文字サイズ */
       line-height: 1.2;           /* 行の高さ */
+      resize: none;
     }
 
     &-detail{
