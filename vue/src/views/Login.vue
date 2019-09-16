@@ -1,9 +1,9 @@
 <template>
     <div id="login">
-<!--        <h2 class="login-title">login</h2>-->
-<!--        <div v-if="userName">-->
-<!--            <h3>{{this.userName}}</h3>-->
-<!--        </div>-->
+        <!--        <h2 class="login-title">login</h2>-->
+        <!--        <div v-if="userName">-->
+        <!--            <h3>{{this.userName}}</h3>-->
+        <!--        </div>-->
 
         <main>
             <h2>ログイン</h2>
@@ -61,8 +61,9 @@
                     name: undefined,
                     password: undefined
                 },
-                hasError:false,
-                userName: this.$store.state.userName
+                hasError: false,
+                userName: this.$store.state.userName,
+                ERRORMESSAGE: USER_REGISTRATION_ERROR
             }
         },
         methods: {
@@ -79,13 +80,12 @@
                 if (!this.errors.length) {
                     this.getLogin();
                     e.preventDefault();
-
                     return true;
                 }
                 e.preventDefault();
             },
             getLogin: async function () {
-                var params = new URLSearchParams();
+                const params = new URLSearchParams();
                 params.append('username', this.request.name);
                 params.append('password', this.request.password);
                 console.log(this.request);
@@ -117,6 +117,28 @@
                     }
                 );
             }
+        }
+    }
+
+    export const USER_REGISTRATION_ERROR = {
+        //todo: vue jsでenum使うの案外面倒だったので、TSにしたいなーーーーと思った。
+        //ここのメッセージはこういう制約あったわ。って思い出せるように。ユーザーに見せてもよい想定で書きます。
+        USER_NAME_LENGTH_ERROR: {
+            eVal: "1",
+            text: "ユーザー名の長さは3文字以上50文字以下で入力してください。"
+        },
+        USER_NAME_ALREADY_USED: {
+            eVal: "2",
+            text: "ユーザー名はすでに使われています。"
+        },
+        PASSWORD_LENGTH_ERROR: {
+            eVal: "3",
+            text:"パスワードは6文字以上20文字以下で入力してください"
+        },
+        INCORRECT_PASSWORD: {
+            eVal:"11",
+            text:"パスワードまたはユーザー名が違います。"
+
         }
     }
 </script>
