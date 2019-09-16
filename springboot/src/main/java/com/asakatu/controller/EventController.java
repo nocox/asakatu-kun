@@ -1,19 +1,20 @@
 package com.asakatu.controller;
 
+import com.asakatu.OkResponse;
+import com.asakatu.entity.Event;
 import com.asakatu.entity.User;
 import com.asakatu.entity.UserStatus;
+import com.asakatu.repository.EventRepository;
 import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.asakatu.service.PostService;
+import org.joda.time.LocalDateTime;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import com.asakatu.OkResponse;
-import com.asakatu.entity.Event;
-import com.asakatu.repository.EventRepository;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -73,14 +74,15 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}")
 	public OkResponse getEvent(@PathVariable Long eventId) {
-		Event event = eventRepository.findById(eventId).get();
+		Event event = eventRepository.findById(eventId).orElseThrow();
 		return new OkResponse(new EventResponse("success", event));
 	}
 
 	@RequestMapping("/event/new")
 	public OkResponse createEvent(@RequestBody FromFrontEventProperties eventProperty) {
         Event event = new Event();
-        event.setStartDate(Timestamp.valueOf(eventProperty.getStartDate()));
+        event.setEventTitle(eventProperty.getEventTitle());
+        event.setStartDate(eventProperty.getStartDate());
         event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
         event.setAddress(eventProperty.getAddress());
         event.setSeatInfo(eventProperty.getSeatInfo());
@@ -93,7 +95,7 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}/cancel")
 	public OkResponse cancelEvent(@PathVariable Long eventId) {
-		Event cancelEvent = eventRepository.findById(eventId).get();
+		Event cancelEvent = eventRepository.findById(eventId).orElseThrow();
 		cancelEvent.setEventStatus("canceled");
 		eventRepository.save(cancelEvent);
 		return new OkResponse(new EventResponse("success", cancelEvent));
@@ -101,7 +103,8 @@ public class EventController {
 
 	@RequestMapping("/event/{eventId}/edit")
 	public OkResponse updateEvent(@RequestBody Event event, @PathVariable Long eventId) {
-		Event updateEvent = eventRepository.findById(eventId).get();
+		Event updateEvent = eventRepository.findById(eventId).orElseThrow();
+		updateEvent.setEventTitle(event.getEventTitle());
 		updateEvent.setStartDate(event.getStartDate());
 		updateEvent.setDuration(event.getDuration());
 		updateEvent.setAddress(event.getAddress());
@@ -132,13 +135,17 @@ public class EventController {
     }
 
     @PostMapping("/event/{id}/user")
-    public CreatedResponse getJoinedUser(@PathVariable long id, @RequestBody UserStatus request, HttpSession session) {
+    public CreatedResponse joinEvent(@PathVariable long id, @RequestBody UserStatus request) {
         // ログインユーザの取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUsersByUsername(authentication.getName()).get(0);
 
         // イベントの取得,設定
         Event event = eventRepository.findById(id).orElseThrow(IllegalStateException::new);
+        // 複合ユニーク制約チェック
+        if (eventRepository.findEventByIdAndUserListIn(event.getId(), user) != null) {
+            throw new IllegalArgumentException("すでにそのイベントに参加しています");
+        }
         List<User> userList = userRepository.findUsersByEventsListIn(event);
         userList.add(user);
         event.setUserList(userList);
@@ -149,6 +156,7 @@ public class EventController {
         userStatus.setComment(request.getComment());
         userStatus.setEvent(event);
         userStatus.setUser(user);
+        userStatus.setMasterId(1L); // 初期値変更
         userStatus.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         userStatus.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         userStatusRepository.save(userStatus);

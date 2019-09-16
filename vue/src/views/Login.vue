@@ -1,9 +1,9 @@
 <template>
     <div id="login">
-        <h2 class="login-title">login</h2>
-        <div v-if="userName">
-            <h3>{{this.userName}}</h3>
-        </div>
+<!--        <h2 class="login-title">login</h2>-->
+<!--        <div v-if="userName">-->
+<!--            <h3>{{this.userName}}</h3>-->
+<!--        </div>-->
 
         <main>
             <h2>ログイン</h2>
@@ -13,6 +13,7 @@
                     @submit="checkLoginForm"
             >
                 <!-- todo:fix validation-->
+
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input
@@ -97,7 +98,9 @@
                         this.$store.commit('getActive', true);
                         console.log(this.$store.state.isLogin);
                         alert("ok");
-                        window.location.href = '/mypage'
+                        this.whoami();
+                        this.$router.push('/mypage');
+                        // window.location.href = '/'
                     })
                     .catch(error => {
                         console.log("login is failed");
@@ -105,7 +108,6 @@
                         this.hasError = true;
                         //todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
                     });
-                this.whoami();
 
             },
             whoami: function () {

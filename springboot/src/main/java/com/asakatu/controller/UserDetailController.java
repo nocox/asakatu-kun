@@ -3,7 +3,7 @@ package com.asakatu.controller;
 import com.asakatu.OkResponse;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
-import com.asakatu.service.S3BucketService;
+import com.asakatu.service.ProfileImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +42,7 @@ public class UserDetailController {
     }
 
     @Autowired
-    private S3BucketService s3BucketService;
+    private ProfileImageService profileImageService;
 
     @PutMapping("/user/edit/image")
     public OkResponse uploadFile(@RequestParam("file") MultipartFile file) {
@@ -50,8 +50,8 @@ public class UserDetailController {
         Optional<User> findUser = userRepository.findByUsername(authentication.getName());
         User user = findUser.orElseThrow();
 
-        String fileName = s3BucketService.storeFile(file, user);
-        user.setImagePath(s3BucketService.getObjectURL(fileName));
+        String fileName = profileImageService.storeFile(file, user);
+        user.setImagePath(profileImageService.getObjectURL(fileName));
         userRepository.save(user);
 
         return okUser(user);

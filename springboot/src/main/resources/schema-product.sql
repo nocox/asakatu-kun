@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS user
 CREATE TABLE IF NOT EXISTS event
 (
     event_id     BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    event_title  VARCHAR(255) NOT NULL,
     start_date   DATETIME,
     duration     DOUBLE,
     address      VARCHAR(255),
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS user_event_association
     event_id       BIGINT(20),
     event_canceled BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES user (user_id),
-    FOREIGN KEY (event_id) REFERENCES event (event_id)
+    FOREIGN KEY (event_id) REFERENCES event (event_id),
+    UNIQUE (user_id, event_id)
 );
 
 CREATE TABLE IF NOT EXISTS user_status_master
@@ -73,3 +75,8 @@ CREATE TABLE IF NOT EXISTS user_group_association
     FOREIGN KEY (user_id) REFERENCES user (user_id),
     FOREIGN KEY (user_group_id) REFERENCES user_group (user_group_id)
 );
+
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-meh');
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-grin-squint-tears');
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-smile');
+INSERT INTO user_status_master(user_status_content) VALUES ('far fa-dizzy');

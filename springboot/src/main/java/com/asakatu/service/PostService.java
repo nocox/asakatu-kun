@@ -10,14 +10,13 @@ import java.util.Locale;
 
 @Service
 public class PostService{
-    public String getDesignDate(Timestamp startDate, double duration) {
+    public String getDesignDate(LocalDateTime startDate, double duration) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("[]H:mm");
 
-        LocalDateTime startLocalDate = startDate.toLocalDateTime();
-        LocalDateTime endLocalDate = startLocalDate.plusHours((long) duration);
-        String dayOfWeek = startLocalDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.JAPANESE);
+        LocalDateTime endLocalDate = startDate.plusHours((long) duration);
+        String dayOfWeek = startDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.JAPANESE);
         return dayOfWeek + " "
-                + dateFormat.format(startLocalDate)
+                + dateFormat.format(startDate)
                 + " 〜 "
                 + dateFormat.format(endLocalDate);
     }

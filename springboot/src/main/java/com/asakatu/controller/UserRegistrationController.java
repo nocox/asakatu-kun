@@ -4,7 +4,7 @@ import com.asakatu.OkResponse;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.entity.User;
 import com.asakatu.exeptions.UserAlreadyExistException;
-import com.asakatu.service.S3BucketService;
+import com.asakatu.service.ProfileImageService;
 import com.asakatu.service.UserRegistrationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +18,12 @@ public class UserRegistrationController {
     private final
     UserRegistrationService userRegistrationService;
 
-    private final S3BucketService s3BucketService;
+    private final ProfileImageService profileImageService;
 
-    public UserRegistrationController(UserRepository userRepository, UserRegistrationService userRegistrationService, S3BucketService s3BucketService) {
+    public UserRegistrationController(UserRepository userRepository, UserRegistrationService userRegistrationService, ProfileImageService profileImageService) {
         this.userRegistrationService = userRegistrationService;
         this.userRepository = userRepository;
-        this.s3BucketService = s3BucketService;
+        this.profileImageService = profileImageService;
     }
 
     @PostMapping(path = "/user_registration")
@@ -47,7 +47,7 @@ public class UserRegistrationController {
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
             throw new IllegalArgumentException("パスワードが一致しません");
         }
-        user.setImagePath(s3BucketService.getDefaultImagePath());
+        user.setImagePath(profileImageService.getDefaultImagePath());
         userRegistrationService.save(user);
 
         return new OkResponse(new UserRegistrationResponse("success", user.getUsername()));

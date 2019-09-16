@@ -4,11 +4,20 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "s3")
-public class S3BucketProperties {
+@ConfigurationProperties(prefix = "s3.profile")
+public class S3ProfileImageProperties {
     private String bucket;
     private String folder;
     private String defaultImage;
+    private String region;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
     public String getDefaultImage() {
         return defaultImage;

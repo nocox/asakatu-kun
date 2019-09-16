@@ -32,6 +32,8 @@ cloud:
 
 
 s3:
-  bucket: nocox-exp57-public
-  folder: asakatu_user_profile
-  defaultImage: human-icon-big.png
+  profile:
+    bucket: nocox-exp57-public
+    folder: asakatu_user_profile
+    defaultImage: human-icon-big.png
+    region: us-east-1
