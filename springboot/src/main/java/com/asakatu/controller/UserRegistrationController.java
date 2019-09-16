@@ -1,11 +1,14 @@
 package com.asakatu.controller;
 
 import com.asakatu.OkResponse;
+import com.asakatu.entity.USER_REGISTRATION_ERROR;
+import com.asakatu.exeptions.UserRegistrationException;
 import com.asakatu.repository.UserRepository;
 import com.asakatu.entity.User;
 import com.asakatu.exeptions.UserAlreadyExistException;
 import com.asakatu.service.ProfileImageService;
 import com.asakatu.service.UserRegistrationService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -28,24 +31,24 @@ public class UserRegistrationController {
 
     @PostMapping(path = "/user_registration")
     @ResponseBody
-    public OkResponse userRegistration(@RequestBody User user) {
+    public OkResponse userRegistration(@RequestBody User user) throws JsonProcessingException {
 
         // todo nocox 0706 nullcheckが必要かも
 
         if (user.getUsername().length() < 3 || user.getUsername().length() > 50) {
-            throw new IllegalArgumentException("ユーザ名の長さが規定の範囲と違います");
+            throw new UserRegistrationException("ユーザ名の長さが規定の範囲と違います",USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR);
         }
 
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserAlreadyExistException("そのユーザ名は既に使われています");
+            throw new UserAlreadyExistException("そのユーザ名は既に使われています",USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED);
         }
 
         if (user.getPassword().length() < 6 || user.getPassword().length() > 20) {
-            throw new IllegalArgumentException("パスワードの長さが規定の範囲と違います");
+            throw new UserRegistrationException("パスワードの長さが規定の範囲と違います",USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR);
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            throw new IllegalArgumentException("パスワードが一致しません");
+            throw new UserRegistrationException("パスワードが一致しません",USER_REGISTRATION_ERROR.INCORRECT_PASSWORD);
         }
         user.setImagePath(profileImageService.getDefaultImagePath());
         userRegistrationService.save(user);

@@ -1,0 +1,8 @@
+package com.asakatu.entity;
+
+public enum USER_REGISTRATION_ERROR {
+    USER_NAME_LENGTH_ERROR,
+    USER_NAME_ALREADY_USED,
+    PASSWORD_LENGTH_ERROR,
+    INCORRECT_PASSWORD
+}
