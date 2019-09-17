@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header__backBtn"></div>
     <h1 class="header__logo"><img alt="BizSpot" src="asseets/logo.png"></h1>
-    <figure class="header__profileImg"><img alt="user profile image" src=""></figure>
+    <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}"><img alt="user profile image" v-bind:src="this.imagePath"></figure>
   </div>
 </template>
 
@@ -11,12 +11,25 @@ export default {
   name: 'Header',
   props: {
     msg: String
+  },
+  data(){
+    return{
+      imagePath : this.$store.imagePath,
+    }
+  },
+  computed : {
+    checkExistImagePath : function(){
+      return !!this.imagePath;
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.hidden{
+  visibility: collapse;
+}
 .header{
   display:flex;
   position: fixed;
