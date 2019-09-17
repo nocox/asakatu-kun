@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     public List<Event> findEventsByUserListIn(User user);
-
+    public Event findEventByEventTitle(String eventTitle);
     public Event findEventByIdAndUserListIn(Long eventId, User user);
 }

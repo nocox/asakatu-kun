@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Component
 public class FromFrontEventProperties {
-    // 本当はタイトルとかあるけどそのPRまだなので後から追加
     private String eventTitle;
 
     private LocalDateTime startDate;
