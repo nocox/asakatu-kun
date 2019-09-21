@@ -88,19 +88,6 @@
             console.log("event id : " + this.eventId);
             this.refresh();
         },
-        computed: {
-            username() {
-                return this.$store.state.username;
-            },
-            hasJoin(){
-                for(let i=0 ; i < this.users.length ; i++){
-                    if (this.users[i].username === this.username){
-                        return true;
-                    }
-                }
-                return false;
-            }
-        },
         methods: {
             refresh: function () {
                 this.getEventInfo();
@@ -144,6 +131,9 @@
                     this.$store.commit('initLogin');
                     this.$router.push('/login');
                 });
+            },
+            hasJoin(){
+                return false;
             }
         }
     }
