@@ -10,7 +10,7 @@
                     <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}</div>
                     <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加</div>
                 </div>
-                <button v-if="!this.hasJoin" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
+                <button v-if="!this.eventInfo.hasJoin" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
             </div>
             <div class="event-info_detail">
                 社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
@@ -22,7 +22,7 @@
             </div>
         </section>
 
-        <section v-if="this.hasJoin" class="reaction-change">
+        <section v-if="this.eventInfo.hasJoin" class="reaction-change">
             参加していたら、ここでリアクション変更
         </section>
 
@@ -49,7 +49,7 @@
             </div>
         </section>
 
-        <div v-if="!this.hasJoin" class="join-button uk-flex uk-flex-center">
+        <div v-if="!this.eventInfo.hasJoin" class="join-button uk-flex uk-flex-center">
             <button class="event__btn">参加</button>
         </div>
     </div>
@@ -71,7 +71,8 @@
                     address: "BOOK LAB TOKYO",
                     seatInfo: "ソファー席",
                     eventStatus: "yet", // yet,progress,fin,canceled
-                    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、...."
+                    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
+                    hasJoin: true
                 },
                 request: {
                     userId: 1,
@@ -109,6 +110,7 @@
                     this.eventInfo.address = response.data.event.address;
                     this.eventInfo.seatInfo = response.data.event.seatInfo;
                     this.eventInfo.eventStatus = response.data.event.eventStatus;
+                    this.eventInfo.hasJoin = response.data.hasJoin;
 
                     this.userStatusList = response.data.event.userStatusList;
                 }).catch(error => {
@@ -131,9 +133,6 @@
                     this.$store.commit('initLogin');
                     this.$router.push('/login');
                 });
-            },
-            hasJoin(){
-                return false;
             }
         }
     }
