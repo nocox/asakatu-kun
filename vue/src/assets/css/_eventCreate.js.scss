@@ -23,6 +23,7 @@
     &_google-api {
       float: left;
       display: inline;
+      visibility: collapse;
     }
     &_detail {
       margin-top: 1rem;
@@ -31,13 +32,11 @@
     &-map {
       font-size: small;
       color: #08c;
-      text-decoration: line-through;
     }
 
     &-add-calender {
       font-size: small;
       color: #08c;
-      text-decoration: line-through;
     }
 
     &__icon{
