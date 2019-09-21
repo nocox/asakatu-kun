@@ -6,6 +6,7 @@ import com.asakatu.entity.Event;
 public class ForFrontEvent {
     private String designDate;
     private Event event;
+    private boolean hasJoin;
 
     public String getDesignDate() {
         return designDate;
@@ -21,5 +22,13 @@ public class ForFrontEvent {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public boolean isHasJoin() {
+        return hasJoin;
+    }
+
+    public void setHasJoin(boolean hasJoin) {
+        this.hasJoin = hasJoin;
     }
 }
