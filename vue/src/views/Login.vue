@@ -1,8 +1,8 @@
 <template>
     <div id="login">
 <!--        <h2 class="login-title">login</h2>-->
-<!--        <div v-if="username">-->
-<!--            <h3>{{this.username}}</h3>-->
+<!--        <div v-if="userName">-->
+<!--            <h3>{{this.userName}}</h3>-->
 <!--        </div>-->
 
         <main>
@@ -71,7 +71,7 @@
                 },
                 errors: [],
                 // userName: ""
-                userName: this.$store.state.username
+                userName: this.$store.state.userName
             }
         },
         methods: {
@@ -103,9 +103,12 @@
                         alert("get login");
                         console.log(response);
                         console.log(this.$store.state.isLogin);
+                        this.$store.commit('getActive', true);
+                        console.log(this.$store.state.isLogin);
                         alert("ok");
                         this.whoami();
                         this.$router.push('/mypage');
+                        // window.location.href = '/'
                     })
                     .catch(error => {
                         console.log("login is failed");
@@ -124,11 +127,11 @@
                         console.log("in then");
                         console.log(response.data);
                         console.log(response.data.data);
-
-                        this.$store.commit('getUserName', response.data.data.username);
-                        this.$store.commit('getUserImage', response.data.data.imagePath);
-                        this.$store.commit('getDisplayName', response.data.data.displayName);
-                        this.$store.commit('getActive', true);
+                        console.log(response.data.data.displayName);
+                        // this.userName = response.data.data.displayName;
+                        // console.log("name--");
+                        // console.log(this.userName);
+                        this.$store.commit('getUserName', response.data.data.displayName);
                     }
                 );
                 // const getUsername = userNameResponse.data;

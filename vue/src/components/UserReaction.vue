@@ -20,7 +20,7 @@
         data() {
             return {
                 reactionList: [],
-                userName: this.$store.state.username,
+                userName: this.$store.state.userName,
                 myReaction: "",
                 checked: ""
             }
