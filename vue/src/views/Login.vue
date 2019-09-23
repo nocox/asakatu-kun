@@ -132,6 +132,7 @@
                         // console.log("name--");
                         // console.log(this.userName);
                         this.$store.commit('getUserName', response.data.data.displayName);
+                        this.$store.commit('getUserImage', response.data.data.imagePath);
                     }
                 );
                 // const getUsername = userNameResponse.data;
