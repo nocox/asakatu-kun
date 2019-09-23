@@ -248,13 +248,13 @@
                             if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED.name) {
                                 this.responseError.userNameAlreadyUsed = true;
                             }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR) {
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR.name) {
                                 this.responseError.passwordLengthError = true;
                             }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD) {
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD.name) {
                                 this.responseError.passwordConfirmError = true;
                             }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED) {
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED.name) {
                                 this.responseError.mailAddressAlreadyUsed = true;
                             }
                             alert("please retry");
