@@ -31,7 +31,7 @@
                     参加する朝活をもっと有意義にするために決意表明をして，目的とゴールを明確にしよう
                 </div>
                 <label>
-                    <textarea class="participant-modal-textlines"></textarea>
+                    <textarea v-model="request.comment" class="participant-modal-textlines"></textarea>
                 </label>
             </div>
             <div slot="footer">
@@ -123,9 +123,7 @@
                     eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、...."
                 },
                 request: {
-                    userId: 1,
-                    content: "https://4.bp.blogspot.com/-m56DCo_VDbQ/UU--ubQ1vTI/AAAAAAAAO84/CWFZIAw-zxY/s1600/kaizoku_mark.png",
-                    comment: "おしゃべりしたい！"
+                    comment: ""
                 },
                 users: [],
                 userStatusList: [],
@@ -155,10 +153,6 @@
             refresh: function () {
                 this.getEventInfo();
                 this.getUsers();
-            },
-            joinEvent: async function () {
-                await axios.post(this.eventAPI + this.eventId + '/user', this.request);
-                await this.refresh();
             },
             getEventInfo: async function () {
                 const getUserInfo = axios.get('http://localhost:8080/event/' + this.eventId, {withCredentials: true});
@@ -196,7 +190,14 @@
                 });
             },
             contract(){
-                console.log("contract");
+                const participationEvent = axios.post('http://localhost:8080/event/' + this.eventId + '/user' ,this.request ,{withCredentials: true});
+                participationEvent.then(() => {
+                    this.showModal = false;
+                    this.$router.push('/events/joined');
+                }).catch(() => {
+                    this.$store.commit('initLogin');
+                    this.$router.push('/login');
+                });
             }
         }
     }
