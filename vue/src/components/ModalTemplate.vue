@@ -74,6 +74,8 @@
     .modal-container {
         width: 80%;
         max-width: 840px;
+        height: 55%;
+        min-height: 400px;
         margin: 0 auto;
         padding: 40px 3vw 20px;
         border: 2px solid #aaa;
@@ -91,10 +93,13 @@
         font-size: 24px;
         font-weight: bold;
         text-align: left;
+        height: 10%;
     }
 
     .modal-body {
         margin: 10px 0;
+        height: 60%;
+
     }
 
     .link_area {
@@ -122,6 +127,10 @@
 
     .modal-leave-active {
         opacity: 0;
+    }
+
+    .modal-footer{
+        height: 30%;
     }
 
     .modal-enter .modal-container,

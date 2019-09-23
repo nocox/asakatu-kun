@@ -26,7 +26,7 @@
             <div slot="header">
                 やりたいことを記入
             </div>
-            <div slot="body">
+            <div slot="body" class="participant-modal-body">
                 <div class="participant-modal-detail">
                     参加する朝活をもっと有意義にするために決意表明をして，目的とゴールを明確にしよう
                 </div>
@@ -34,12 +34,34 @@
                     <textarea class="participant-modal-textlines"></textarea>
                 </label>
             </div>
-            <div class="link_area" slot="footer">
-                <button v-if="!this.hasJoin" @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
-                    確認する
-                </button>
-                <div class="participant-modal__btn-cancel" @click="showModal = false">
-                    あとにする
+            <div slot="footer">
+                <div class="participant-modal-link">
+                    <button v-if="!this.hasJoin" @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                        確認する
+                    </button>
+                    <div class="participant-modal__btn-cancel" @click="showModal = false">
+                        あとにする
+                    </div>
+                </div>
+            </div>
+        </modal-template>
+
+        <modal-template v-if="showModal === 2" @close="showModal = false" :key="1">
+            <div slot="header">
+            </div>
+            <div slot="body">
+                <div class="participant-modal-contract">
+                    明日朝絶対に起きることをここに誓います。
+                </div>
+            </div>
+            <div class="" slot="footer">
+                <div class="participant-modal-link">
+                    <button v-if="!this.hasJoin" @click="this.contract" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                        決定する
+                    </button>
+                    <div class="participant-modal__btn-cancel" @click="showModal = 1">
+                        変更する
+                    </div>
                 </div>
             </div>
         </modal-template>
@@ -172,6 +194,9 @@
                     this.$store.commit('initLogin');
                     this.$router.push('/login');
                 });
+            },
+            contract(){
+                console.log("contract");
             }
         }
     }
