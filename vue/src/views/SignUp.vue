@@ -70,7 +70,7 @@
                     <input
                             type="password"
                             name="password"
-                            v-model="hasErrors.password"
+                            v-model="request.password"
                             id="signUp__inputter--password-new">
                 </div>
                 <p
@@ -142,7 +142,6 @@
                     passwordConfirmError: false
                 };
                 this.errors = [];
-                alert("checking...");
 
                 if (!this.request.username) {
                     this.errors.push("Name required.");
@@ -155,13 +154,10 @@
                 } else if (this.request.password.length < 5) {
                     this.errors.push('password is too short. min 6');
                 }
-                alert("checking...done");
                 if (!this.errors.length) {
-                    alert("checking...ok!");
                     this.createUser();
                     e.preventDefault();
                 }
-                alert("checking...NG");
                 e.preventDefault();
             },
             createUser: async function () {
@@ -179,13 +175,11 @@
                 axiosResponse
                     .then(response => {
                             console.log(response);
-                            alert("ok");
                             window.location.href = '/events';
                         }
                     )
                     .catch(error => {
                             console.log(error);
-
                             if (error.data.message === USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR.name){
                                 this.hasErrors.userNameLengthError=true;
                                 //本当はsetUserNameLengthErrorとかメソットでtrue,false切り替える感じの事ができればいいなーとおもってやってる

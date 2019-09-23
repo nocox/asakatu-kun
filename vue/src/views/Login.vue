@@ -62,8 +62,11 @@
                     password: undefined
                 },
                 hasError: false,
-                userName: this.$store.state.userName,
-                ERRORMESSAGE: USER_REGISTRATION_ERROR
+            }
+        },
+        computed:{
+            userName(){
+                return this.$store.state.userName;
             }
         },
         methods: {
