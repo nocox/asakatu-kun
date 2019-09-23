@@ -2,6 +2,8 @@
     <div id="app">
         <Header/>
         <section class="main-body">
+
+<!--          このあたりは検証するときにあると便利なので一旦残しています。storybook導入したら不要になると思う。-->
             <!--    <div id="nav">-->
             <!--      <router-link to="/">Home</router-link> |-->
             <!--      <router-link to="/about">About</router-link> |-->
@@ -50,6 +52,7 @@
             }
         }
     }
+    /*headerの分下に下げます。*/
     .main-body{
       padding-top: 72px;
     }
