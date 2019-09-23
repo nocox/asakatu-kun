@@ -1,18 +1,31 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/sign_up" class="sign_up">Sign Up</router-link> |
-      <router-link to="/login" class="login">Login</router-link> |
-      <router-link to="/events" class="events">Events</router-link> |
-      <router-link to="/event" class="event">Event</router-link> |
-      <router-link to="/mypage" class="mypage">Mypage</router-link> |
-      <router-link to="/event/create" class="create">create</router-link>
-    </div>
+    <Header />
+<!--    <div id="nav">-->
+<!--      <router-link to="/">Home</router-link> |-->
+<!--      <router-link to="/about">About</router-link> |-->
+<!--      <router-link to="/sign_up" class="sign_up">Sign Up</router-link> |-->
+<!--      <router-link to="/login" class="login">Login</router-link> |-->
+<!--      <router-link to="/events" class="events">Events</router-link> |-->
+<!--      <router-link to="/event" class="event">Event</router-link> |-->
+<!--      <router-link to="/mypage" class="mypage">Mypage</router-link> |-->
+<!--      <router-link to="/event/create" class="create">create</router-link>-->
+<!--    </div>-->
     <router-view/>
   </div>
 </template>
+
+
+<script>
+  import Header from '@/components/Header.vue';
+
+  export default {
+    name: 'app',
+    components: {
+      Header,
+    }
+  }
+</script>
 
 <style lang="scss">
 #app {
