@@ -2,8 +2,7 @@
     <div id="sign_up">
         <main>
             <h2>新規会員登録</h2>
-            <!--            todo: vue-routerに書き換える-->
-            <p class="linkToLogin"><small><a href="login.html">ログインはこちら</a></small></p>
+            <p class="linkToLogin"><small><router-link to="/login">ログインはこちら</router-link></small></p>
 
             <form
                     id="sign-up-form"

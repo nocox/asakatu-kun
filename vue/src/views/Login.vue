@@ -12,8 +12,6 @@
                     id="login-form"
                     @submit="checkLoginForm"
             >
-                <!-- todo:fix validation-->
-
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input
@@ -43,7 +41,7 @@
                         id="login--submit"
                         value="ログイン">
             </form>
-            <p class="secondaryButton"><a href="signUp.html">アカウントを新規作成</a></p>
+            <p class="secondaryButton"><router-link to="/sign_up">アカウントを新規作成</router-link></p>
         </main>
     </div>
 </template>
