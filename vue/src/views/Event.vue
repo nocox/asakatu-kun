@@ -126,7 +126,6 @@
                     comment: ""
                 },
                 users: [],
-                userStatusList: [],
                 eventAPI: 'http://localhost:8080/event/',
                 showModal: false,
             }
@@ -155,10 +154,8 @@
                 this.getUsers();
             },
             getEventInfo: async function () {
-                const getUserInfo = axios.get('http://localhost:8080/event/' + this.eventId, {withCredentials: true});
-                getUserInfo.then(response => {
-                    console.log("ok");
-                    console.log(response.data);
+                const getEventInfo = axios.get('http://localhost:8080/event/' + this.eventId, {withCredentials: true});
+                getEventInfo.then(response => {
 
                     this.eventInfo.title = response.data.event.eventTitle;
                     this.eventInfo.eventId = response.data.event.id;
@@ -167,7 +164,6 @@
                     this.eventInfo.seatInfo = response.data.event.seatInfo;
                     this.eventInfo.eventStatus = response.data.event.eventStatus;
 
-                    this.userStatusList = response.data.event.userStatusList;
                 }).catch(error => {
                     console.error("error in get user image path");
                     console.error(error);
@@ -176,17 +172,11 @@
                 });
             },
             getUsers: async function () {
-                const getUserInfo = axios.get('http://localhost:8080/event/' + this.eventId + '/users' , {withCredentials: true});
-                getUserInfo.then(response => {
-                    console.log("ok");
-                    console.log(response.data.data);
+                const getUsers = axios.get('http://localhost:8080/event/' + this.eventId + '/users' , {withCredentials: true});
+                getUsers.then(response => {
                     this.users = response.data.data.userList;
-
                 }).catch(error => {
-                    console.error("error in get user image path");
                     console.error(error);
-                    this.$store.commit('initLogin');
-                    this.$router.push('/login');
                 });
             },
             contract(){
@@ -194,7 +184,8 @@
                 participationEvent.then(() => {
                     this.showModal = false;
                     this.$router.push('/events/joined');
-                }).catch(() => {
+                }).catch(error => {
+                    console.error(error);
                     this.$store.commit('initLogin');
                     this.$router.push('/login');
                 });
