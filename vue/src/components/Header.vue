@@ -3,7 +3,7 @@
         <div class="header__backBtn"></div>
         <h1 class="header__logo"><img alt="BizSpot" src="../static/logo.png"></h1>
         <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}"><img alt="user profile image"
-                                                                                               v-bind:src="this.imagePath">
+                                                                                               v-bind:src="this.userImagePath">
         </figure>
     </div>
 </template>
@@ -14,14 +14,12 @@
         props: {
             msg: String
         },
-        data() {
-            return {
-                imagePath: this.$store.imagePath,
-            }
-        },
         computed: {
-            checkExistImagePath: function () {
-                return !!this.imagePath;
+            checkExistImagePath() {
+                return !!this.userImagePath;
+            },
+            userImagePath() {
+                return this.$store.state.userImagePath;
             }
         }
     }
