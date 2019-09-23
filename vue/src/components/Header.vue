@@ -2,9 +2,14 @@
     <div class="header">
         <div class="header__backBtn"></div>
         <h1 class="header__logo"><img alt="BizSpot" src="../static/logo.png"></h1>
-        <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}"><img alt="user profile image"
-                                                                                               v-bind:src="this.userImagePath">
-        </figure>
+
+            <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}">
+                <router-link to="/mypage" class="header__profileImg">
+                <img alt="user profile image"
+                     v-bind:src="this.userImagePath">
+                </router-link>
+            </figure>
+
     </div>
 </template>
 
@@ -27,6 +32,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+    //reset CSS fot UIkit
+    figure {
+        margin-right: 10vw;
+    }
+
     .hidden {
         visibility: collapse;
     }
@@ -42,6 +52,13 @@
         align-items: center;
         justify-content: space-between;
         filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+
+        /*&__icon {*/
+        /*    &-box {*/
+        /*        height: 34px;*/
+        /*        width: 34px;*/
+        /*    }*/
+        /*}*/
 
         &__backBtn {
             position: relative;
