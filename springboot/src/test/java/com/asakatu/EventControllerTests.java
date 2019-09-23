@@ -56,7 +56,7 @@ public class EventControllerTests extends AbstractTest{
 	}
 
 	@Test
-    @WithMockUser
+    @WithMockUser(username = "doiiii")
     public void getEventsList() throws Exception {
 		String uri = "/events";
 		MvcResult mvcResult = mvc.perform(get(uri)

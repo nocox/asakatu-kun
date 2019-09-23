@@ -10,7 +10,7 @@
                     <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}</div>
                     <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加</div>
                 </div>
-                <button v-if="!this.hasJoin" @click="showModal = 1" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
+                <button v-if="!this.eventInfo.hasJoin" @click="showModal = 1" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
             </div>
             <div class="event-info_detail">
                 社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
@@ -36,7 +36,7 @@
             </div>
             <div slot="footer">
                 <div class="participant-modal-link">
-                    <button v-if="!this.hasJoin" @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                    <button @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
                         確認する
                     </button>
                     <div class="participant-modal__btn-cancel" @click="showModal = false">
@@ -56,7 +56,7 @@
             </div>
             <div class="" slot="footer">
                 <div class="participant-modal-link">
-                    <button v-if="!this.hasJoin" @click="this.contract" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                    <button @click="this.contract" class="uk-button uk-button-default uk-button-small participant-modal__btn">
                         決定する
                     </button>
                     <div class="participant-modal__btn-cancel" @click="showModal = 1">
@@ -66,7 +66,7 @@
             </div>
         </modal-template>
 
-        <section v-if="this.hasJoin" class="reaction-change">
+        <section v-if="this.eventInfo.hasJoin" class="reaction-change">
             参加していたら、ここでリアクション変更
         </section>
 
@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <div v-if="!this.hasJoin" class="join-button uk-flex uk-flex-center">
+        <div v-if="!this.eventInfo.hasJoin" class="join-button uk-flex uk-flex-center">
             <button @click="showModal = 1" class="event__btn">参加</button>
         </div>
     </div>
@@ -120,7 +120,8 @@
                     address: "BOOK LAB TOKYO",
                     seatInfo: "ソファー席",
                     eventStatus: "yet", // yet,progress,fin,canceled
-                    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、...."
+                    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
+                    hasJoin: true
                 },
                 request: {
                     comment: ""
@@ -134,19 +135,6 @@
             this.eventId = Number(this.$route.params.eventId);
             console.log("event id : " + this.eventId);
             this.refresh();
-        },
-        computed: {
-            username() {
-                return this.$store.state.username;
-            },
-            hasJoin(){
-                for(let i=0 ; i < this.users.length ; i++){
-                    if (this.users[i].username === this.username){
-                        return true;
-                    }
-                }
-                return false;
-            }
         },
         methods: {
             refresh: function () {
@@ -163,6 +151,7 @@
                     this.eventInfo.address = response.data.event.address;
                     this.eventInfo.seatInfo = response.data.event.seatInfo;
                     this.eventInfo.eventStatus = response.data.event.eventStatus;
+                    this.eventInfo.hasJoin = response.data.hasJoin;
 
                 }).catch(error => {
                     console.error("error in get user image path");
