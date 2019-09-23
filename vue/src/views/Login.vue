@@ -34,6 +34,7 @@
                 </div>
 
                 <p v-if="hasError"><strong>メールアドレスまたはパスワードが違います</strong></p>
+                <p v-if="errors.length > 0"><strong>メールアドレス,パスワードは必須です。</strong></p>
 
                 <input
                         class="primaryButton"
@@ -60,6 +61,7 @@
                     password: undefined
                 },
                 hasError: false,
+                errors:[]
             }
         },
         computed:{

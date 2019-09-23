@@ -26,7 +26,7 @@
 
                     <p
                             class="cautionMessage"
-                            v-if="InputErrors.mailAddressIsRequired"
+                            v-if="inputErrors.mailAddressIsRequired"
                     >
                         <strong>メールアドレスの入力は必須です</strong>
                     </p>
@@ -60,7 +60,7 @@
                     </p>
                     <p
                             class="cautionMessage"
-                            v-if="InputErrors.userNameIsRequired"
+                            v-if="inputErrors.userNameIsRequired"
                     >
                         <strong>ユーザーIDは必須です。</strong>
                     </p>
@@ -88,13 +88,13 @@
                 </div>
                 <p
                         class="cautionMessage"
-                        v-if="responseError.passwordLengthError || InputErrors.passwordLengthError"
+                        v-if="responseError.passwordLengthError || inputErrors.passwordLengthError"
                 >
                     <strong>パスワードの長さが違います</strong>
                 </p>
                 <p
                         class="cautionMessage"
-                        v-if="InputErrors.passwordIsRequired"
+                        v-if="inputErrors.passwordIsRequired"
                 >
                     <strong>パスワードは必須です。</strong>
                 </p>
@@ -107,13 +107,13 @@
                             id="signUp__inputter--password-confirm">
                     <p
                             class="cautionMessage cautionMessage--confirmPassword"
-                            v-if="responseError.passwordConfirmError || InputErrors.passwordIsNotSame"
+                            v-if="responseError.passwordConfirmError || inputErrors.passwordIsNotSame"
                     >
                         <strong>新しいパスワードと一致しません。</strong>
                     </p>
                     <p
                             class="cautionMessage"
-                            v-if="InputErrors.passwordConfIsRequired"
+                            v-if="inputErrors.passwordConfIsRequired"
                     >
                         <strong>パスワードは必須です。</strong>
                     </p>
@@ -153,7 +153,7 @@
                     passwordLengthError: false,
                     passwordConfirmError: false
                 },
-                InputErrors: {
+                inputErrors: {
                     idIsRequired: false,
                     mailAddressIsRequired: false,
                     userNameIsRequired: false,
@@ -176,7 +176,7 @@
                     passwordLengthError: false,
                     passwordConfirmError: false
                 };
-                this.InputErrors = {
+                this.inputErrors = {
                     idIsRequired: false,
                     mailAddressIsRequired: false,
                     userNameIsRequired: false,
@@ -188,23 +188,23 @@
                 };
 
                 if (!this.request.username) {
-                    this.InputErrors.userNameIsRequired = true;
+                    this.inputErrors.userNameIsRequired = true;
                 }
                 if (!this.request.email) {
-                    this.InputErrors.mailAddressIsRequired = true;
+                    this.inputErrors.mailAddressIsRequired = true;
                 }
                 if (!this.request.password) {
-                    this.InputErrors.passwordIsRequired = true;
+                    this.inputErrors.passwordIsRequired = true;
                 } else if (this.request.password.length < 5) {
-                    this.InputErrors.passwordLengthError = true;
+                    this.inputErrors.passwordLengthError = true;
                 }
                 if (!this.request.passwordConfirm) {
-                    this.InputErrors.passwordConfIsRequired = true;
+                    this.inputErrors.passwordConfIsRequired = true;
                 }
                 if (this.request.password !== this.request.passwordConfirm) {
-                    this.InputErrors.passwordIsNotSame = true;
+                    this.inputErrors.passwordIsNotSame = true;
                 }
-                if (!(convertToArray(this.InputErrors).indexOf(true) > 0)) {
+                if (!(convertToArray(this.inputErrors).indexOf(true) > 0)) {
                     this.createUser();
                     e.preventDefault();
                 }
