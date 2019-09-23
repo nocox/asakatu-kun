@@ -2,7 +2,9 @@
     <div id="sign_up">
         <main>
             <h2>新規会員登録</h2>
-            <p class="linkToLogin"><small><router-link to="/login">ログインはこちら</router-link></small></p>
+            <p class="linkToLogin"><small>
+                <router-link to="/login">ログインはこちら</router-link>
+            </small></p>
 
             <form
                     id="sign-up-form"
@@ -18,9 +20,15 @@
                     >
                     <p
                             class="cautionMessage"
-                            v-if="hasErrors.mailAddressAlreadyUsed"
+                            v-if="responseError.mailAddressAlreadyUsed"
                     >
                         <strong>そのメールアドレスはすでに使われています</strong>
+
+                    <p
+                            class="cautionMessage"
+                            v-if="InputErrors.mailAddressIsRequired"
+                    >
+                        <strong>メールアドレスの入力は必須です</strong>
                     </p>
                 </div>
 
@@ -40,15 +48,21 @@
                     >
                     <p
                             class="cautionMessage"
-                            v-if="hasErrors.userNameAlreadyUsed"
+                            v-if="responseError.userNameAlreadyUsed"
                     >
                         <strong>そのユーザーIDはすでに使われています</strong>
                     </p>
                     <p
                             class="cautionMessage"
-                            v-if="hasErrors.userNameLengthError"
+                            v-if="responseError.userNameLengthError"
                     >
                         <strong>そのユーザーIDの長さが違います</strong>
+                    </p>
+                    <p
+                            class="cautionMessage"
+                            v-if="InputErrors.userNameIsRequired"
+                    >
+                        <strong>ユーザーIDは必須です。</strong>
                     </p>
 
                 </div>
@@ -74,9 +88,15 @@
                 </div>
                 <p
                         class="cautionMessage"
-                        v-if="hasErrors.passwordLengthError"
+                        v-if="responseError.passwordLengthError || InputErrors.passwordLengthError"
                 >
                     <strong>パスワードの長さが違います</strong>
+                </p>
+                <p
+                        class="cautionMessage"
+                        v-if="InputErrors.passwordIsRequired"
+                >
+                    <strong>パスワードは必須です。</strong>
                 </p>
                 <div class="form-part">
                     <label for="signUp__inputter--password-confirm">パスワードの再入力</label>
@@ -87,9 +107,15 @@
                             id="signUp__inputter--password-confirm">
                     <p
                             class="cautionMessage cautionMessage--confirmPassword"
-                            v-if="hasErrors.passwordConfirmError"
+                            v-if="responseError.passwordConfirmError || InputErrors.passwordIsNotSame"
                     >
                         <strong>新しいパスワードと一致しません。</strong>
+                    </p>
+                    <p
+                            class="cautionMessage"
+                            v-if="InputErrors.passwordConfIsRequired"
+                    >
+                        <strong>パスワードは必須です。</strong>
                     </p>
                 </div>
 
@@ -120,44 +146,81 @@
                     displayName: undefined,
                     passwordConfirm: undefined
                 },
-                hasErrors: {
+                responseError: {
                     mailAddressAlreadyUsed: false,
                     userNameLengthError: false,
                     userNameAlreadyUsed: false,
                     passwordLengthError: false,
                     passwordConfirmError: false
                 },
-                errors: [],
+                InputErrors: {
+                    idIsRequired: false,
+                    mailAddressIsRequired: false,
+                    userNameIsRequired: false,
+                    passwordIsRequired: false,
+                    passwordConfIsRequired: false,
+                    passwordIsNotSame: false,
+                    passwordLengthError: false,
+                    userNameLengthError: false,
+                    //todo: どこまでフロントでもバリデーションを書くか。
+                },
             }
         },
         methods: {
             checkSignUpForm: function (e) {
                 //init errors
-                this.hasErrors = {
+                this.responseError = {
                     mailAddressAlreadyUsed: false,
                     userNameLengthError: false,
                     userNameAlreadyUsed: false,
                     passwordLengthError: false,
                     passwordConfirmError: false
                 };
-                this.errors = [];
+                this.InputErrors = {
+                    idIsRequired: false,
+                    mailAddressIsRequired: false,
+                    userNameIsRequired: false,
+                    passwordIsRequired: false,
+                    passwordConfIsRequired: false,
+                    passwordIsNotSame: false,
+                    passwordLengthError: false,
+                    userNameLengthError: false,
+                };
 
                 if (!this.request.username) {
-                    this.errors.push("Name required.");
+                    this.InputErrors.userNameIsRequired = true;
                 }
                 if (!this.request.email) {
-                    this.errors.push('Email required.');
+                    this.InputErrors.mailAddressIsRequired = true;
                 }
                 if (!this.request.password) {
-                    this.errors.push('password required.');
+                    this.InputErrors.passwordIsRequired = true;
                 } else if (this.request.password.length < 5) {
-                    this.errors.push('password is too short. min 6');
+                    this.InputErrors.passwordLengthError = true;
                 }
-                if (!this.errors.length) {
+                if (!this.request.passwordConfirm) {
+                    this.InputErrors.passwordConfIsRequired = true;
+                }
+                if (this.request.password !== this.request.passwordConfirm) {
+                    this.InputErrors.passwordIsNotSame = true;
+                }
+                if (!(convertToArray(this.InputErrors).indexOf(true) > 0)) {
                     this.createUser();
                     e.preventDefault();
                 }
+                alert("please retry");
                 e.preventDefault();
+
+                function convertToArray(hash) {
+                    const hashObject = Object.assign({}, hash);
+                    let convertArray = [];
+                    for (let key in hashObject) {
+                        if (hashObject.hasOwnProperty(key)) {
+                            convertArray.push(hashObject[key]);
+                        }
+                    }
+                    return convertArray;
+                }
             },
             createUser: async function () {
                 console.log("request");
@@ -178,22 +241,21 @@
                         }
                     )
                     .catch(error => {
-                            console.log(error);
-                            if (error.data.message === USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR.name){
-                                this.hasErrors.userNameLengthError=true;
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR.name) {
+                                this.responseError.userNameLengthError = true;
                                 //本当はsetUserNameLengthErrorとかメソットでtrue,false切り替える感じの事ができればいいなーとおもってやってる
                             }
-                            if (error.data.message === USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED.name){
-                                this.hasErrors.userNameAlreadyUsed=true;
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED.name) {
+                                this.responseError.userNameAlreadyUsed = true;
                             }
-                            if (error.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR){
-                                this.hasErrors.passwordLengthError=true;
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR) {
+                                this.responseError.passwordLengthError = true;
                             }
-                            if (error.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD){
-                                this.hasErrors.passwordConfirmError=true;
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD) {
+                                this.responseError.passwordConfirmError = true;
                             }
-                            if (error.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED){
-                                this.hasErrors.mailAddressAlreadyUsed=true;
+                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED) {
+                                this.responseError.mailAddressAlreadyUsed = true;
                             }
                             alert("please retry");
                         }
@@ -209,27 +271,27 @@
         USER_NAME_LENGTH_ERROR: {
             eVal: "1",
             text: "ユーザー名の長さは3文字以上50文字以下で入力してください。",
-            name:"USER_NAME_LENGTH_ERROR"
+            name: "USER_NAME_LENGTH_ERROR"
         },
         USER_NAME_ALREADY_USED: {
             eVal: "2",
             text: "ユーザー名はすでに使われています。",
-            name:"USER_NAME_ALREADY_USED"
+            name: "USER_NAME_ALREADY_USED"
         },
         PASSWORD_LENGTH_ERROR: {
             eVal: "3",
             text: "パスワードは6文字以上20文字以下で入力してください",
-            name:"PASSWORD_LENGTH_ERROR"
+            name: "PASSWORD_LENGTH_ERROR"
         },
         INCORRECT_PASSWORD: {
             eVal: "5",
             text: "パスワードまたはユーザー名が違います。",
-            name:"INCORRECT_PASSWORD"
+            name: "INCORRECT_PASSWORD"
         },
         MAIL_ADDRESS_ALREADY_USED: {
             eVal: "7",
             text: "メールアドレスはすでに使用されています。",
-            name:"MAIL_ADDRESS_ALREADY_USED"
+            name: "MAIL_ADDRESS_ALREADY_USED"
         }
     }
 </script>
