@@ -1,87 +1,97 @@
 <template>
-  <div class="header">
-    <div class="header__backBtn"></div>
-    <h1 class="header__logo"><img alt="BizSpot" src="asseets/logo.png"></h1>
-    <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}"><img alt="user profile image" v-bind:src="this.imagePath"></figure>
-  </div>
+    <div class="header">
+        <div class="header__backBtn"></div>
+        <h1 class="header__logo"><img alt="BizSpot" src="asseets/logo.png"></h1>
+        <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}"><img alt="user profile image"
+                                                                                               v-bind:src="this.imagePath">
+        </figure>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'Header',
-  props: {
-    msg: String
-  },
-  data(){
-    return{
-      imagePath : this.$store.imagePath,
+    export default {
+        name: 'Header',
+        props: {
+            msg: String
+        },
+        data() {
+            return {
+                imagePath: this.$store.imagePath,
+            }
+        },
+        computed: {
+            checkExistImagePath: function () {
+                return !!this.imagePath;
+            }
+        }
     }
-  },
-  computed : {
-    checkExistImagePath : function(){
-      return !!this.imagePath;
-    }
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.hidden{
-  visibility: collapse;
-}
-.header{
-  display:flex;
-  position: fixed;
-  width: 100%;
-  height: 72px;
-  background: #FFF;
-  z-index: 100000;
-  padding: 0 16px;
-  align-items: center;
-  justify-content: space-between;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4));
-  &__backBtn{
-    position:relative;
-    &::before{
-      content:"";
-      display:block;
-      height:3px;
-      width:16px;
-      background: #707070;
-      transform: rotate(-45deg);
-      position: absolute;
-      top:-5px;
-      left:-25%;
+    .hidden {
+        visibility: collapse;
     }
-    &::after{
-      content:"";
-      display:block;
-      height:3px;
-      width:16px;
-      background: #707070;
-      transform: rotate(45deg);
-      position: absolute;
-      top:5px;
-      left:-25%;
+
+    .header {
+        display: flex;
+        position: fixed;
+        width: 100%;
+        height: 72px;
+        background: #FFF;
+        z-index: 100000;
+        padding: 0 16px;
+        align-items: center;
+        justify-content: space-between;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+
+        &__backBtn {
+            position: relative;
+
+            &::before {
+                content: "";
+                display: block;
+                height: 3px;
+                width: 16px;
+                background: #707070;
+                transform: rotate(-45deg);
+                position: absolute;
+                top: -5px;
+                left: -25%;
+            }
+
+            &::after {
+                content: "";
+                display: block;
+                height: 3px;
+                width: 16px;
+                background: #707070;
+                transform: rotate(45deg);
+                position: absolute;
+                top: 5px;
+                left: -25%;
+            }
+        }
+
+        &__logo {
+            height: 40px;
+
+            > img {
+                height: 100%;
+            }
+        }
+
+        &__profileImg {
+            height: 34px;
+            width: 34px;
+
+            > img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
     }
-  }
-  &__logo{
-    height: 40px;
-    >img{
-      height:100%;
-    }
-  }
-  &__profileImg{
-    height:34px;
-    width: 34px;
-    >img{
-      height:100%;
-      width: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-  }
-}
 
 </style>
