@@ -30,6 +30,12 @@
                     >
                         <strong>メールアドレスの入力は必須です</strong>
                     </p>
+                    <p
+                            class="cautionMessage"
+                            v-if="inputErrors.mailAddressFormatError"
+                    >
+                        <strong>メールアドレスの形式が不正です。</strong>
+                    </p>
                 </div>
 
                 <div class="form-part">
@@ -162,6 +168,7 @@
                     passwordIsNotSame: false,
                     passwordLengthError: false,
                     userNameLengthError: false,
+                    mailAddressFormatError: false
                     //todo: どこまでフロントでもバリデーションを書くか。
                 },
             }
@@ -185,6 +192,7 @@
                     passwordIsNotSame: false,
                     passwordLengthError: false,
                     userNameLengthError: false,
+                    mailAddressFormatError: false
                 };
 
                 if (!this.request.username) {
@@ -192,6 +200,9 @@
                 }
                 if (!this.request.email) {
                     this.inputErrors.mailAddressIsRequired = true;
+                }
+                if (!this.request.email.match(/^[\!\#\$\%\&\'\*\+\\\-\.\/\=\?\^\_\`\{\|\}\~\[\]0-9a-zA-Z]+@[a-z0-9-_]+(\.[a-z0-9-_]+)+$/)) {
+                    this.inputErrors.mailAddressFormatError =true;
                 }
                 if (!this.request.password) {
                     this.inputErrors.passwordIsRequired = true;
