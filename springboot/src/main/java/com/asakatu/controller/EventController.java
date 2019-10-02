@@ -7,16 +7,16 @@ import com.asakatu.entity.UserStatus;
 import com.asakatu.repository.EventRepository;
 import com.asakatu.property.FromFrontEventProperties;
 import com.asakatu.repository.UserRepository;
+import com.asakatu.repository.UserStatusMasterRepository;
 import com.asakatu.repository.UserStatusRepository;
 import com.asakatu.response.ForFrontEvent;
 import com.asakatu.response.GetEventsListResponse;
 import com.asakatu.service.PostService;
-import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -34,12 +34,15 @@ public class EventController {
 
     private final PostService postService;
 
-	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository, PostService postService) {
+    private final UserStatusMasterRepository userStatusMasterRepository;
+
+	public EventController(EventRepository eventRepository, UserStatusRepository userStatusRepository, UserRepository userRepository, PostService postService, UserStatusMasterRepository userStatusMasterRepository) {
 		this.eventRepository = eventRepository;
 		this.userStatusRepository = userStatusRepository;
 		this.userRepository = userRepository;
 		this.postService = postService;
-	}
+        this.userStatusMasterRepository = userStatusMasterRepository;
+    }
 
 	@RequestMapping("/events")
 	public OkResponse getEventsList() {
@@ -58,24 +61,16 @@ public class EventController {
     }
 
     private List<ForFrontEvent> getEventsList(List<Event> entityEventsList) {
-        List<ForFrontEvent> noSortedEventsList = new ArrayList<>();
-        for (Event event : entityEventsList) {
-            ForFrontEvent forFrontEvent = new ForFrontEvent();
-            forFrontEvent.setDesignDate(postService.getDesignDate(event.getStartDate(), event.getDuration()));
-            forFrontEvent.setEvent(event);
-            noSortedEventsList.add(forFrontEvent);
-        }
-        List<ForFrontEvent> eventsList = noSortedEventsList.stream()
+        return entityEventsList.stream()
+                .map(postService::convertEventForFront)
                 .sorted(Comparator.comparing(event -> event.getEvent().getStartDate()))
                 .collect(Collectors.toList());
-
-        return eventsList;
     }
 
 	@RequestMapping("/event/{eventId}")
-	public OkResponse getEvent(@PathVariable Long eventId) {
+	public ForFrontEvent getEvent(@PathVariable Long eventId) {
 		Event event = eventRepository.findById(eventId).orElseThrow();
-		return new OkResponse(new EventResponse("success", event));
+		return postService.convertEventForFront(event);
 	}
 
 	@RequestMapping("/event/new")
@@ -122,13 +117,15 @@ public class EventController {
         List<JoinedUserInfo> result = new ArrayList<>();
         JoinedUserInfo user;
         // 全部だとパスワードとかも入っちゃうので厳選
-        for (User jounedUser : eventJoinedUsersList) {
+        for (User joinedUser : eventJoinedUsersList) {
             user = new JoinedUserInfo();
-            user.setDisplayName(jounedUser.getDisplayName());
-            user.setId(jounedUser.getId());
-            user.setImagePath(jounedUser.getImagePath());
-            String comment = userStatusRepository.findUserStatusByEventAndUserIs(event, jounedUser).getComment();
-            user.setComment(comment);
+            user.setDisplayName(joinedUser.getDisplayName());
+            user.setId(joinedUser.getId());
+            user.setUsername(joinedUser.getUsername());
+            user.setImagePath(joinedUser.getImagePath());
+            UserStatus userStatus = userStatusRepository.findUserStatusByEventAndUserIs(event, joinedUser);
+            user.setComment(userStatus.getComment());
+            user.setReaction(userStatusMasterRepository.findById(userStatus.getMasterId()).orElseThrow().getUserStatusContent());
             result.add(user);
         }
         return new OkResponse(new EventJoinedResponse("success", result));
@@ -207,11 +204,31 @@ class EventOnlyCommentResponse {
 class JoinedUserInfo {
     private Long id;
 
+    private String username;
+
     private String displayName;
 
     private String imagePath;
 
     private String comment;
+
+    private String reaction;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getReaction() {
+        return reaction;
+    }
+
+    public void setReaction(String reaction) {
+        this.reaction = reaction;
+    }
 
     public Long getId() {
         return id;
