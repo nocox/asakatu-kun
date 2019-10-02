@@ -154,10 +154,9 @@
                     this.eventInfo.hasJoin = response.data.hasJoin;
 
                 }).catch(error => {
-                    console.error("error in get user image path");
                     console.error(error);
-                    this.$store.commit('initLogin');
-                    this.$router.push('/login');
+                    alert('サーバからのデータ取得に失敗しました');
+                    // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
             },
             getUsers: async function () {
@@ -175,8 +174,8 @@
                     this.$router.push('/events/joined');
                 }).catch(error => {
                     console.error(error);
-                    this.$store.commit('initLogin');
-                    this.$router.push('/login');
+                    alert('サーバからのデータ取得に失敗しました');
+                    // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
             }
         }
