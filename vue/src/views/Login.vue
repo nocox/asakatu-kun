@@ -1,27 +1,17 @@
 <template>
     <div id="login">
-<!--        <h2 class="login-title">login</h2>-->
-<!--        <div v-if="userName">-->
-<!--            <h3>{{this.userName}}</h3>-->
-<!--        </div>-->
+        <!--        <h2 class="login-title">login</h2>-->
+        <!--        <div v-if="userName">-->
+        <!--            <h3>{{this.userName}}</h3>-->
+        <!--        </div>-->
 
         <main>
             <h2>ログイン</h2>
 
-<!--            <form action="" method="post">-->
-            <form id="login-form" @submit="checkLoginForm">
-
-
-                <!-- todo:fix validation function -->
-
-                <!--            <div v-if="errors.length">-->
-                <!--                <p>Please correct the following error(s):</p>-->
-                <!--                <ul>-->
-                <!--                    <li v-for="error in errors" :key="error">{{ error }}</li>-->
-                <!--                </ul>-->
-                <!--            </div>-->
-
-
+            <form
+                    id="login-form"
+                    @submit="checkLoginForm"
+            >
                 <div class="form-part">
                     <label for="login__inputter--userName">ユーザーID</label>
                     <input
@@ -43,7 +33,8 @@
                     <p hidden>パスワードをお忘れの場合はこちら</p>
                 </div>
 
-                <p hidden><strong>メールアドレスまたはパスワードが違います</strong></p>
+                <p v-if="hasError"><strong>メールアドレスまたはパスワードが違います</strong></p>
+                <p v-if="errors.length > 0"><strong>メールアドレス,パスワードは必須です。</strong></p>
 
                 <input
                         class="primaryButton"
@@ -51,7 +42,7 @@
                         id="login--submit"
                         value="ログイン">
             </form>
-            <p class="secondaryButton"><a href="signUp.html">アカウントを新規作成</a></p>
+            <p class="secondaryButton"><router-link to="/sign_up">アカウントを新規作成</router-link></p>
         </main>
     </div>
 </template>
@@ -69,14 +60,19 @@
                     name: undefined,
                     password: undefined
                 },
-                errors: [],
-                // userName: ""
-                userName: this.$store.state.userName
+                hasError: false,
+                errors:[]
+            }
+        },
+        computed:{
+            userName(){
+                return this.$store.state.userName;
             }
         },
         methods: {
             checkLoginForm: function (e) {
                 this.errors = [];
+                this.hasError = false;
 
                 if (!this.request.name) {
                     this.errors.push("Name required.");
@@ -87,13 +83,12 @@
                 if (!this.errors.length) {
                     this.getLogin();
                     e.preventDefault();
-
                     return true;
                 }
                 e.preventDefault();
             },
             getLogin: async function () {
-                var params = new URLSearchParams();
+                const params = new URLSearchParams();
                 params.append('username', this.request.name);
                 params.append('password', this.request.password);
                 console.log(this.request);
@@ -113,35 +108,18 @@
                     .catch(error => {
                         console.log("login is failed");
                         console.log(error);
-                        alert("please retry");
-                        // this.$route.router.go('/login');
+                        this.hasError = true;
+                        //todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
                     });
 
             },
             whoami: function () {
                 const userNameResponse = axios.get('http://localhost:8080/login_user', {withCredentials: true});
-                console.log(userNameResponse);
-                // const getUsername = userNameResponse.data.displayName;
-
                 userNameResponse.then(response => {
-                        console.log("in then");
-                        console.log(response.data);
-                        console.log(response.data.data);
-                        console.log(response.data.data.displayName);
-                        // this.userName = response.data.data.displayName;
-                        // console.log("name--");
-                        // console.log(this.userName);
                         this.$store.commit('getUserName', response.data.data.displayName);
                         this.$store.commit('getUserImage', response.data.data.imagePath);
                     }
                 );
-                // const getUsername = userNameResponse.data;
-                //it also conclude name, imagepath  and so on.
-
-                // this.userName = getUsername;
-                // console.log("check username");
-                // console.log(getUsername);
-                // console.log(this.userName);
             }
         }
     }
@@ -154,4 +132,3 @@
 
 </style>
 
-<!--curl -X POST -H "Content-Type: application/json" -d '{"username":"ito", "password":"aabbcc", "displayName":"itoFumiki", "email":"aaaaaa@bbbb.com", "passwordConfirm":"aabbcc"}' -i localhost:8080/user_registration-->

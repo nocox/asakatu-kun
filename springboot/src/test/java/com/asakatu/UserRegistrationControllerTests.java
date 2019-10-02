@@ -1,8 +1,10 @@
 package com.asakatu;
 
+import com.asakatu.entity.USER_REGISTRATION_ERROR;
 import com.asakatu.entity.User;
 import com.asakatu.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.bytebuddy.utility.RandomString;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,7 +46,7 @@ public class UserRegistrationControllerTests {
         testUser.setUsername("hogehoge");
         testUser.setPassword("takatakataka");
         testUser.setPasswordConfirm("takatakataka");
-        testUser.setEmail("doi@aaa.com");
+        testUser.setEmail("hogehoge@aaa.com");
         testUser.setDisplayName("nocox");
         return testUser;
     }
@@ -53,6 +55,8 @@ public class UserRegistrationControllerTests {
     public void userRegistration() throws Exception {
         User testUser = createTestUser();
         testUser.setUsername("registrationTester");
+        testUser.setEmail("registrationTester@aaa.com");
+
         this.mockMvc.perform(
                 post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
@@ -73,7 +77,7 @@ public class UserRegistrationControllerTests {
     public void shortUserNameException() throws Exception {
 
         User testUser = createTestUser();
-        testUser.setUsername("shortNameUser");
+        testUser.setEmail("shortNameUser@aaa.com");
         testUser.setUsername("aa");
 
         this.mockMvc.perform(
@@ -81,7 +85,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("ユーザ名の長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(String.valueOf(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR)));
         ;
     }
 
@@ -89,7 +93,7 @@ public class UserRegistrationControllerTests {
     public void longUserNameException() throws Exception {
 
         User testUser = createTestUser();
-        testUser.setUsername("longNameUser");
+        testUser.setEmail("longNameUser@aaa.com");
         testUser.setUsername("abababababababababababababababababababababababababa");
 
         this.mockMvc.perform(
@@ -97,7 +101,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("ユーザ名の長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR));
     }
 
     @Test
@@ -105,6 +109,7 @@ public class UserRegistrationControllerTests {
 
         User testUser = createTestUser();
         testUser.setUsername("alreadyUser");
+        testUser.setEmail("alreadyUser@aaa.com");
 
         this.mockMvc.perform(
                 post("/user_registration")
@@ -115,13 +120,14 @@ public class UserRegistrationControllerTests {
 
         ;
 
+        testUser.setEmail("alreadyUser2@aaa.com");
 
         this.mockMvc.perform(
                 post("/user_registration")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("そのユーザ名は既に使われています"));
+                .andExpect(jsonPath("$.data.message").value(String.valueOf(USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED)));
 
     }
 
@@ -130,6 +136,7 @@ public class UserRegistrationControllerTests {
 
         User testUser = createTestUser();
         testUser.setUsername("shortPasswordUser");
+        testUser.setEmail("shortPasswordUser@aaa.com");
         testUser.setPassword("aabbc");
 
         this.mockMvc.perform(
@@ -137,7 +144,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("パスワードの長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(String.valueOf(USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR)));
 
     }
 
@@ -146,6 +153,7 @@ public class UserRegistrationControllerTests {
 
         User testUser = createTestUser();
         testUser.setUsername("longPasswordUser");
+        testUser.setEmail("longPasswordUser@aaa.com");
         testUser.setPassword("aaaaaaaaabbbbbbbbbbbcc");
 
         this.mockMvc.perform(
@@ -153,7 +161,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("パスワードの長さが規定の範囲と違います"));
+                .andExpect(jsonPath("$.data.message").value(String.valueOf(USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR)));
 
     }
 
@@ -163,6 +171,7 @@ public class UserRegistrationControllerTests {
 
         User testUser = createTestUser();
         testUser.setUsername("passwordNotMatchUser");
+        testUser.setEmail("passwordNotMatchUser@aaa.com");
         testUser.setPasswordConfirm("aaaaaaaaa");
 
         this.mockMvc.perform(
@@ -170,7 +179,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value("パスワードが一致しません"));
+                .andExpect(jsonPath("$.data.message").value(String.valueOf(USER_REGISTRATION_ERROR.INCORRECT_PASSWORD)));
 
     }
 
