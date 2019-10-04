@@ -46,6 +46,14 @@
   }
 }
 
+.reaction{
+  &-change{
+    margin: auto;
+    padding: 15px;
+    border: 2px black solid;
+  }
+}
+
 .participant{
   &-list{
     margin: 0 auto;
@@ -73,6 +81,7 @@
       color: #555;
       background: #FFDE95;
       border-radius: 10px;
+      text-align: center;
     }
 
     &-balloon1:before {
@@ -88,6 +97,63 @@
     &-balloon1 p {
       margin: 0;
       padding: 0;
+    }
+  }
+
+  &-label{
+    width: auto;
+  }
+
+  &-modal{
+    &__btn{
+      background-color: #FFB100;
+      border-radius: 22px;
+      border-color: white;
+      width: 30vw;
+      height: 5vh;
+      color: white;
+
+      &-cancel{
+        font-size: small;
+        color: #08c;
+        margin-top: 10px;
+      }
+    }
+
+    &-body{
+      height: inherit;
+    }
+
+    &-textlines{
+      border: 1px solid #707070;  /* 枠線 */
+      border-radius: 8px;         /* 角丸 */
+      padding: 5%;              /* 内側の余白量 */
+      width: 90%;           /* 横幅 */
+      height: 100%;              /* 高さ */
+      font-size: 1em;             /* 文字サイズ */
+      line-height: 1.2;           /* 行の高さ */
+      resize: none;
+    }
+
+    &-detail{
+      color: #707070;
+      font-size: 13px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    &-contract{
+      font-size: 23px;
+      text-align: left;
+    }
+
+    &-link{
+      padding-top: 20px;
+    }
+
+    &-space{
+      height: 120px;
+      visibility: hidden;
     }
   }
 

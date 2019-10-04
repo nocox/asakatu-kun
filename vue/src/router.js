@@ -41,7 +41,7 @@ const router = new Router({
 
     },
     {
-      path: '/event/:eventId',
+      path: '/event/detail/:eventId',
       name: 'event',
       component: () => import('./views/Event.vue')
     },
