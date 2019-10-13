@@ -26,6 +26,9 @@ public class Event {
 	@Column(name = "address")
 	private String address;
 
+	@Column(name = "store_name")
+	private String storeName;
+
 	@Column(name = "seat_info")
 	private String seatInfo;
 
@@ -95,6 +98,14 @@ public class Event {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 	public String getSeatInfo() {
