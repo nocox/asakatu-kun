@@ -38,8 +38,7 @@ const loginState = new Vuex.Store({
   },
   plugins: [createPersistedState({
     key: 'asakatsukun',
-    paths: ['isLogin','userName','userImagePath'],
-    storage: window.sessionStorage
+    paths: ['isLogin','userName','userImagePath']
   })]
 });
 
