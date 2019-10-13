@@ -124,6 +124,7 @@ public class EventControllerTests extends AbstractTest{
 						.content(mapper.writeValueAsBytes(getTestEventProperties())))
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$.data.event.eventTitle").value("作成テストイベント"))
+				.andExpect(jsonPath("$.data.event.eventDetail").value("作成テストイベントの詳細説明"))
 				.andExpect(jsonPath("$.data.event.address").value("テスト街テスト市1-2-3"))
 				.andExpect(jsonPath("$.data.event.seatInfo").value("席情報"))
 				.andExpect(jsonPath("$.data.event.eventStatus").value("yet"))
