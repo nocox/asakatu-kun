@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 public class FromFrontEventProperties {
     private String eventTitle;
 
+    private String eventDetail;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
@@ -22,6 +24,14 @@ public class FromFrontEventProperties {
 
     public void setEventTitle(String eventTitle) {
         this.eventTitle = eventTitle;
+    }
+
+    public String getEventDetail() {
+        return eventDetail;
+    }
+
+    public void setEventDetail(String eventDetail) {
+        this.eventDetail = eventDetail;
     }
 
     public LocalDateTime getStartDate() {

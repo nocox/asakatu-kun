@@ -107,6 +107,7 @@ public class EventControllerTests extends AbstractTest{
 	private FromFrontEventProperties getTestEventProperties() {
 		FromFrontEventProperties eventProperties = new FromFrontEventProperties();
 		eventProperties.setEventTitle("作成テストイベント");
+		eventProperties.setEventDetail("作成テストイベントの詳細説明");
 		eventProperties.setAddress("テスト街テスト市1-2-3");
 		eventProperties.setSeatInfo("席情報");
 		eventProperties.setStartDate(LocalDateTime.of(2019, 10, 31, 9, 0));
