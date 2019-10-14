@@ -1,4 +1,7 @@
 import Vuex from "vuex";
+// todo: yukikoma ここあとでapiまとめる。
+// import user from "../../../api/user"
+// import login from "../../../api/login"
 
 const userInfo = new Vuex.Store({
     state: {
