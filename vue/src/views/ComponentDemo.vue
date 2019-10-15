@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UserReaction from '../components/UserReaction.vue';
+import UserReaction from '../components/eventDetail/UserReaction.vue';
 export default {
   name: 'demo',
   data() {
