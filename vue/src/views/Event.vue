@@ -101,7 +101,7 @@
 
 <script>
     import axios from 'axios';
-    import ModalTemplate from "../components/eventDetail/ModalTemplate";
+    import ModalTemplate from "../components/ModalTemplate";
 
     export default {
         name: "Event",

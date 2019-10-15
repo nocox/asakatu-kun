@@ -38,6 +38,6 @@ a {
   color: #42b983;
 }
 
-@import "../../assets/css/login-signup";
+@import "../assets/css/login-signup";
 
 </style>
