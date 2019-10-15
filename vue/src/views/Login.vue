@@ -50,6 +50,7 @@
 <script>
 
     import axios from 'axios'
+    import {mapState} from "vuex";
 
     export default {
         name: "login",
@@ -61,13 +62,15 @@
                     password: undefined
                 },
                 hasError: false,
-                errors:[]
+                errors:[],
+                apiURL:process.env.VUE_APP_API_URL_BASE
+
             }
         },
         computed:{
-            userName(){
-                return this.$store.state.userName;
-            }
+            ...mapState({
+                userName: state => state.userInfo.userName
+            })
         },
         methods: {
             checkLoginForm: function (e) {
@@ -92,7 +95,7 @@
                 params.append('username', this.request.name);
                 params.append('password', this.request.password);
                 console.log(this.request);
-                const loginResponse = axios.post('http://localhost:8080/login', params, {withCredentials: true});
+                const loginResponse = axios.post(this.apiURL + '/login', params, {withCredentials: true});
                 await loginResponse
                     .then(response => {
                         alert("get login");

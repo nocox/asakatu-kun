@@ -38,11 +38,11 @@
             return {}
         },
         computed: {
-            ...mapState({})
+            // ...mapState({})
         },
         methods: {
-            ...mapMutations({}),
-            ...mapActions({})
+            // ...mapMutations({}),
+            // ...mapActions({})
 
         }
     }

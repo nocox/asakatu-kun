@@ -127,8 +127,8 @@
                     comment: ""
                 },
                 users: [],
-                eventAPI: 'http://localhost:8080/event/',
                 showModal: false,
+                apiURL:process.env.VUE_APP_API_URL_BASE
             }
         },
         mounted: function () {
@@ -142,7 +142,7 @@
                 this.getUsers();
             },
             getEventInfo: async function () {
-                const getEventInfo = axios.get('http://localhost:8080/event/' + this.eventId, {withCredentials: true});
+                const getEventInfo = axios.get(this.apiURL +  '/event/' + this.eventId, {withCredentials: true});
                 getEventInfo.then(response => {
 
                     this.eventInfo.title = response.data.event.eventTitle;
@@ -160,7 +160,7 @@
                 });
             },
             getUsers: async function () {
-                const getUsers = axios.get('http://localhost:8080/event/' + this.eventId + '/users' , {withCredentials: true});
+                const getUsers = axios.get(this.apiURL +  '/event/' + this.eventId + '/users' , {withCredentials: true});
                 getUsers.then(response => {
                     this.users = response.data.data.userList;
                 }).catch(error => {
@@ -168,7 +168,7 @@
                 });
             },
             contract(){
-                const participationEvent = axios.post('http://localhost:8080/event/' + this.eventId + '/user' ,this.request ,{withCredentials: true});
+                const participationEvent = axios.post(this.apiURL + '/event/' + this.eventId + '/user' ,this.request ,{withCredentials: true});
                 participationEvent.then(() => {
                     this.showModal = false;
                     this.$router.push('/events/joined');

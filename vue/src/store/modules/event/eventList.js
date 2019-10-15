@@ -1,15 +1,15 @@
-import Vuex from "vuex";
+// todo: yukikoma
+// import event from "../../../api/event";
 
-const eventList = new Vuex.Store({
-    state:{
+const state = {};
 
-    },
-    mutations:{
+const actions = {};
 
-    },
-    actions:{
+const mutations = {};
 
-    },
-});
-
-export default eventList;
+export default {
+    namespaced: true,
+    state,
+    actions,
+    mutations
+}

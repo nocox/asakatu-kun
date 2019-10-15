@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from "vue";
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 import userInfo from "./modules/user/userInfo";
@@ -7,7 +7,7 @@ import eventDetails from "./modules/event/eventDetail"
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     modules: {
         userInfo,
         eventList,
@@ -21,4 +21,6 @@ export default new Vuex.Store({
             'userInfo.userImagePath'
         ]
     })]
-})
+});
+
+export default store;

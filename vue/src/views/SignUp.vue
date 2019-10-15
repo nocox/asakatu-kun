@@ -171,6 +171,7 @@
                     mailAddressFormatError: false
                     //todo: どこまでフロントでもバリデーションを書くか。
                 },
+                apiURL:process.env.VUE_APP_API_URL_BASE
             }
         },
         methods: {
@@ -236,7 +237,7 @@
             createUser: async function () {
                 console.log("request");
                 console.log(this.request);
-                const axiosResponse = axios.post('http://localhost:8080/user_registration',
+                const axiosResponse = await axios.post(this.apiURL + '/user_registration',
                     JSON.stringify(this.request),
                     {
                         withCredentials: true,

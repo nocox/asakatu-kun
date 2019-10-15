@@ -113,6 +113,7 @@
                 endTime: "",
                 eventDetail: "",
                 errors: [],
+                apiURL:process.env.VUE_APP_API_URL_BASE
             }
         },
         methods: {
@@ -137,7 +138,7 @@
             },
             createEvent: async function () {
                 console.log(this.request);
-                const axiosResponse = await axios.post('http://localhost:8080/event/new', this.request,{withCredentials:true});
+                const axiosResponse = await axios.post(this.apiURL + '/event/new', this.request,{withCredentials:true});
                 if (axiosResponse.status === 200 || axiosResponse.status === 201) {
                     console.log("ok");
                     console.log(axiosResponse);
