@@ -39,7 +39,6 @@
 
     .hidden {
         visibility: collapse;
-        margin:0;
     }
 
     .header {
@@ -91,7 +90,6 @@
 
         &__logo {
             height: 40px;
-            margin: 0;
 
             > img {
                 height: 100%;
