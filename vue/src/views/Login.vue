@@ -102,7 +102,7 @@
                         console.log(this.$store.state.isLogin);
                         alert("ok");
                         this.whoami();
-                        this.$router.push('/mypage');
+                        this.$router.push('/events');
                         // window.location.href = '/'
                     })
                     .catch(error => {
@@ -131,4 +131,3 @@
     @import "../assets/css/login-signup";
 
 </style>
-
