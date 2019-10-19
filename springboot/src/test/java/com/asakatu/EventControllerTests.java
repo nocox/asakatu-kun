@@ -108,6 +108,7 @@ public class EventControllerTests extends AbstractTest{
 		FromFrontEventProperties eventProperties = new FromFrontEventProperties();
 		eventProperties.setEventTitle("作成テストイベント");
 		eventProperties.setAddress("テスト街テスト市1-2-3");
+		eventProperties.setStoreName("テストカフェテスト店");
 		eventProperties.setSeatInfo("席情報");
 		eventProperties.setStartDate(LocalDateTime.of(2019, 10, 31, 9, 0));
 		eventProperties.setEndDate(LocalDateTime.of(2019, 10, 31, 12, 0));
@@ -124,6 +125,7 @@ public class EventControllerTests extends AbstractTest{
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$.data.event.eventTitle").value("作成テストイベント"))
 				.andExpect(jsonPath("$.data.event.address").value("テスト街テスト市1-2-3"))
+				.andExpect(jsonPath("$.data.event.storeName").value("テストカフェテスト店"))
 				.andExpect(jsonPath("$.data.event.seatInfo").value("席情報"))
 				.andExpect(jsonPath("$.data.event.eventStatus").value("yet"))
 				// 時刻はUTCなので9時間マイナスになる。取得の時直す方針
