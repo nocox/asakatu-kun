@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="header__backBtn"></div>
-        <h1 class="header__logo"><img alt="BizSpot" src="../static/logo.png"></h1>
+        <h1 class="header__logo"><img alt="BizSpot" src="../../static/logo.png"></h1>
             <figure class="header__profileImg" v-bind:class="{hidden : !checkExistImagePath}">
                 <!--router-linkに余計なスタイルがついているので、一旦同じclassつけてます。-->
                 <router-link to="/mypage" class="header__profileImg">
@@ -39,7 +39,6 @@
 
     .hidden {
         visibility: collapse;
-        margin: 0;
     }
 
     .header {
@@ -91,7 +90,6 @@
 
         &__logo {
             height: 40px;
-            margin: 0;
 
             > img {
                 height: 100%;

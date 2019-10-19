@@ -31,11 +31,11 @@ const router = new Router({
       children: [
           {
             path: '',
-            component: () => import('./components/AllEventList.vue'),
+            component: () => import('./components/eventList/AllEventList.vue'),
           },
           {
             path: 'joined',
-            component: () => import('./components/JoinedEventList.vue'),
+            component: () => import('./components/eventList/JoinedEventList.vue'),
           }
         ]
 
