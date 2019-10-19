@@ -101,7 +101,7 @@ public class UserRegistrationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsBytes(testUser)))
                 .andDo(print()).andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.data.message").value(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR));
+                .andExpect(jsonPath("$.data.message").value(String.valueOf(USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR)));
     }
 
     @Test
