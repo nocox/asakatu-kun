@@ -16,6 +16,8 @@ public class FromFrontEventProperties {
 
     private String address;
 
+    private String storeName;
+
     private String seatInfo;
 
     public String getEventTitle() {
@@ -56,6 +58,14 @@ public class FromFrontEventProperties {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
     public String getSeatInfo() {

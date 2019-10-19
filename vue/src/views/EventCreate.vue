@@ -66,6 +66,15 @@
                 >
             </p>
             <p>
+                <label for="storeName">store name</label>
+                <input
+                        id="storeName"
+                        v-model="request.storeName"
+                        type="text"
+                        name="storeName"
+                >
+            </p>
+            <p>
                 <label for="seatInfo">seat info</label>
                 <input
                         id="seatInfo"
@@ -108,6 +117,7 @@
                     startDate: "",
                     endDate: "",
                     address: "",
+                    storeName: "",
                     seatInfo: "",
                 },
                 startTime: "",

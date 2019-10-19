@@ -81,6 +81,7 @@ public class EventController {
         event.setStartDate(eventProperty.getStartDate());
         event.setDuration(ChronoUnit.HOURS.between(eventProperty.getStartDate(), eventProperty.getEndDate()));
         event.setAddress(eventProperty.getAddress());
+        event.setStoreName(eventProperty.getStoreName());
         event.setSeatInfo(eventProperty.getSeatInfo());
         event.setEventStatus("yet");
         event.setCreatedAt(new Timestamp(System.currentTimeMillis()));

@@ -16,10 +16,11 @@ CREATE TABLE IF NOT EXISTS event
 (
     event_id     BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     event_title  VARCHAR(255) NOT NULL,
-    event_detail  VARCHAR(255) NOT NULL,
+    event_detail VARCHAR(255) NOT NULL,
     start_date   DATETIME,
     duration     DOUBLE,
     address      VARCHAR(255),
+    store_name   VARCHAR(255),
     seat_info    VARCHAR(255),
     event_status ENUM ('yet', 'fin', 'canceled', 'progress'),
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
