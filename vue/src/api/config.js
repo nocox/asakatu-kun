@@ -1,5 +1,4 @@
 export const API_URL = process.env.VUE_APP_API_URL_BASE;
-export default API_URL;
 
 import Vue from "vue";
 import axios from "axios";

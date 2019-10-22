@@ -46,7 +46,6 @@
 
 <script>
 
-    import axios from 'axios'
     import {mapActions, mapState} from "vuex";
 
     export default {
