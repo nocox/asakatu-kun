@@ -96,8 +96,8 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
 
-    import axios from 'axios';
     export default {
         name: "EventCreate",
         data() {
@@ -113,7 +113,7 @@
                 endTime: "",
                 eventDetail: "",
                 errors: [],
-                apiURL:process.env.VUE_APP_API_URL_BASE
+                apiURL: process.env.VUE_APP_API_URL_BASE
             }
         },
         methods: {
@@ -131,25 +131,14 @@
                 this.request.endDate += "T" + this.endTime;
 
                 if (!this.errors.length) {
-                    this.createEvent();
+                    this.createEvent(this.request);
                     e.preventDefault();
                 }
                 e.preventDefault();
             },
-            createEvent: async function () {
-                console.log(this.request);
-                const axiosResponse = await axios.post(this.apiURL + '/event/new', this.request,{withCredentials:true});
-                if (axiosResponse.status === 200 || axiosResponse.status === 201) {
-                    console.log("ok");
-                    console.log(axiosResponse);
-                    this.$router.push('/events');
-                } else {
-                    console.log("error");
-                    console.log(axiosResponse);
-                    this.$store.commit('initLogin');
-                    this.$router.push('/login');
-                }
-            }
+            ...mapActions([
+                'createEvent'
+            ])
         }
     }
 </script>

@@ -7,10 +7,14 @@
             <div class="event-info-place">ここが足りない {{eventInfo.seatInfo}}</div>
             <div class="event-info-function clearfix">
                 <div class="event-info_google-api">
-                    <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}</div>
-                    <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加</div>
+                    <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}
+                    </div>
+                    <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加
+                    </div>
                 </div>
-                <button v-if="!this.eventInfo.hasJoin" @click="showModal = 1" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
+                <button v-if="!this.eventInfo.hasJoin" @click="showModal = 1"
+                        class="uk-button uk-button-default uk-button-small event__btn">参加
+                </button>
             </div>
             <div class="event-info_detail">
                 社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
@@ -36,7 +40,8 @@
             </div>
             <div slot="footer">
                 <div class="participant-modal-link">
-                    <button @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                    <button @click="showModal = 2"
+                            class="uk-button uk-button-default uk-button-small participant-modal__btn">
                         確認する
                     </button>
                     <div class="participant-modal__btn-cancel" @click="showModal = false">
@@ -56,7 +61,8 @@
             </div>
             <div class="" slot="footer">
                 <div class="participant-modal-link">
-                    <button @click="this.contract" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                    <button @click="this.contract"
+                            class="uk-button uk-button-default uk-button-small participant-modal__btn">
                         決定する
                     </button>
                     <div class="participant-modal__btn-cancel" @click="showModal = 1">
@@ -72,8 +78,8 @@
 
         <section class="event-participant section-margin">
             <h3 class="participant-title">参加メンバー</h3>
-            <div  class="participant-list">
-                <div class="participant-element" v-for="user in users" v-bind:key="user.id" >
+            <div class="participant-list">
+                <div class="participant-element" v-for="user in users" v-bind:key="user.id">
                     <div class="participant-reaction-balloon1">
                         <i v-bind:class="user.reaction" class="participant-reaction"></i>
                     </div>
@@ -100,8 +106,8 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import ModalTemplate from "../components/eventDetail/ModalTemplate";
+    import {mapActions, mapState} from "vuex";
 
     export default {
         name: "Event",
@@ -111,25 +117,31 @@
         template: '<modal-template></modal-template>',
         data() {
             return {
-                eventInfo: {
-                    eventId: 1,
-                    title: "ちょっぴり遅めの朝活くんvol.２",
-                    startDate: "2019-07-28T09:00:00Z",
-                    date: "a",
-                    duration: 3,
-                    address: "BOOK LAB TOKYO",
-                    seatInfo: "ソファー席",
-                    eventStatus: "yet", // yet,progress,fin,canceled
-                    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
-                    hasJoin: true
-                },
                 request: {
                     comment: ""
                 },
-                users: [],
                 showModal: false,
-                apiURL:process.env.VUE_APP_API_URL_BASE
             }
+        },
+        computed: {
+            eventInfo: {
+                ...mapState({
+                    eventId: state => state.eventDetail.eventId,
+                    title: state => state.eventDetail.title,
+                    startDate: state => state.eventDetail.startDate,
+                    date: state => state.eventDetail.date,
+                    duration: state => state.eventDetail.duration,
+                    address: state => state.eventDetail.address,
+                    seatInfo: state => state.eventDetail.seatInfo,
+                    eventStatus: state => state.eventDetail.eventStatus,
+                    eventDetail: state => state.eventDetail.eventDetail,
+                    hasJoin: state => state.eventDetail.hasJoin,
+                }),
+            },
+            ...mapState({
+                users:state => state.eventDetail.users,
+            })
+
         },
         mounted: function () {
             this.eventId = Number(this.$route.params.eventId);
@@ -138,37 +150,11 @@
         },
         methods: {
             refresh: function () {
-                this.getEventInfo();
-                this.getUsers();
+                this.getEventInfo(this.eventId);
+                this.getUsers(this.eventId);
             },
-            getEventInfo: async function () {
-                const getEventInfo = axios.get(this.apiURL +  '/event/' + this.eventId, {withCredentials: true});
-                getEventInfo.then(response => {
-
-                    this.eventInfo.title = response.data.event.eventTitle;
-                    this.eventInfo.eventId = response.data.event.id;
-                    this.eventInfo.date = response.data.designDate;
-                    this.eventInfo.address = response.data.event.address;
-                    this.eventInfo.seatInfo = response.data.event.seatInfo;
-                    this.eventInfo.eventStatus = response.data.event.eventStatus;
-                    this.eventInfo.hasJoin = response.data.hasJoin;
-
-                }).catch(error => {
-                    console.error(error);
-                    alert('サーバからのデータ取得に失敗しました');
-                    // TODO nocox エラーハンドリングが必要かも (2019/10/02)
-                });
-            },
-            getUsers: async function () {
-                const getUsers = axios.get(this.apiURL +  '/event/' + this.eventId + '/users' , {withCredentials: true});
-                getUsers.then(response => {
-                    this.users = response.data.data.userList;
-                }).catch(error => {
-                    console.error(error);
-                });
-            },
-            contract(){
-                const participationEvent = axios.post(this.apiURL + '/event/' + this.eventId + '/user' ,this.request ,{withCredentials: true});
+            contract() {
+                const participationEvent = this.contract(this.eventId, this.request);
                 participationEvent.then(() => {
                     this.showModal = false;
                     this.$router.push('/events/joined');
@@ -177,7 +163,12 @@
                     alert('サーバからのデータ取得に失敗しました');
                     // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
-            }
+            },
+            ...mapActions([
+                'getEventInfo',
+                'getUsers',
+                'contract'
+            ])
         }
     }
 </script>

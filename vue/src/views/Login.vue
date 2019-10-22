@@ -1,10 +1,5 @@
 <template>
     <div id="login">
-        <!--        <h2 class="login-title">login</h2>-->
-        <!--        <div v-if="userName">-->
-        <!--            <h3>{{this.userName}}</h3>-->
-        <!--        </div>-->
-
         <main>
             <h2>ログイン</h2>
 
@@ -42,7 +37,9 @@
                         id="login--submit"
                         value="ログイン">
             </form>
-            <p class="secondaryButton"><router-link to="/sign_up">アカウントを新規作成</router-link></p>
+            <p class="secondaryButton">
+                <router-link to="/sign_up">アカウントを新規作成</router-link>
+            </p>
         </main>
     </div>
 </template>
@@ -50,7 +47,7 @@
 <script>
 
     import axios from 'axios'
-    import {mapState} from "vuex";
+    import {mapActions, mapState} from "vuex";
 
     export default {
         name: "login",
@@ -62,12 +59,11 @@
                     password: undefined
                 },
                 hasError: false,
-                errors:[],
-                apiURL:process.env.VUE_APP_API_URL_BASE
-
+                errors: [],
+                apiURL: process.env.VUE_APP_API_URL_BASE
             }
         },
-        computed:{
+        computed: {
             ...mapState({
                 userName: state => state.userInfo.userName
             })
@@ -84,46 +80,15 @@
                     this.errors.push('password required.');
                 }
                 if (!this.errors.length) {
-                    this.getLogin();
+                    this.hasError = this.getLogin(this.request);
                     e.preventDefault();
                     return true;
                 }
                 e.preventDefault();
             },
-            getLogin: async function () {
-                const params = new URLSearchParams();
-                params.append('username', this.request.name);
-                params.append('password', this.request.password);
-                console.log(this.request);
-                const loginResponse = axios.post(this.apiURL + '/login', params, {withCredentials: true});
-                await loginResponse
-                    .then(response => {
-                        alert("get login");
-                        console.log(response);
-                        console.log(this.$store.state.isLogin);
-                        this.$store.commit('getActive', true);
-                        console.log(this.$store.state.isLogin);
-                        alert("ok");
-                        this.whoami();
-                        this.$router.push('/mypage');
-                        // window.location.href = '/'
-                    })
-                    .catch(error => {
-                        console.log("login is failed");
-                        console.log(error);
-                        this.hasError = true;
-                        //todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
-                    });
-
-            },
-            whoami: function () {
-                const userNameResponse = axios.get('http://localhost:8080/login_user', {withCredentials: true});
-                userNameResponse.then(response => {
-                        this.$store.commit('getUserName', response.data.data.displayName);
-                        this.$store.commit('getUserImage', response.data.data.imagePath);
-                    }
-                );
-            }
+            ...mapActions([
+                'getLogin'
+            ])
         }
     }
 </script>

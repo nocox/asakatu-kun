@@ -139,6 +139,7 @@
 
 <script>
     import axios from 'axios'
+    import {mapActions} from "vuex";
 
     export default {
         name: "signUp",
@@ -171,7 +172,6 @@
                     mailAddressFormatError: false
                     //todo: どこまでフロントでもバリデーションを書くか。
                 },
-                apiURL:process.env.VUE_APP_API_URL_BASE
             }
         },
         methods: {
@@ -203,7 +203,7 @@
                     this.inputErrors.mailAddressIsRequired = true;
                 }
                 if (!this.request.email.match(/^[\!\#\$\%\&\'\*\+\\\-\.\/\=\?\^\_\`\{\|\}\~\[\]0-9a-zA-Z]+@[a-z0-9-_]+(\.[a-z0-9-_]+)+$/)) {
-                    this.inputErrors.mailAddressFormatError =true;
+                    this.inputErrors.mailAddressFormatError = true;
                 }
                 if (!this.request.password) {
                     this.inputErrors.passwordIsRequired = true;
@@ -217,7 +217,7 @@
                     this.inputErrors.passwordIsNotSame = true;
                 }
                 if (!(convertToArray(this.inputErrors).indexOf(true) > 0)) {
-                    this.createUser();
+                    this.createUser(this.request);
                     e.preventDefault();
                 }
                 alert("please retry");
@@ -234,76 +234,9 @@
                     return convertArray;
                 }
             },
-            createUser: async function () {
-                console.log("request");
-                console.log(this.request);
-                const axiosResponse = await axios.post(this.apiURL + '/user_registration',
-                    JSON.stringify(this.request),
-                    {
-                        withCredentials: true,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                axiosResponse
-                    .then(response => {
-                            console.log(response);
-                            window.location.href = '/events';
-                        }
-                    )
-                    .catch(error => {
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR.name) {
-                                this.responseError.userNameLengthError = true;
-                                //本当はsetUserNameLengthErrorとかメソットでtrue,false切り替える感じの事ができればいいなーとおもってやってる
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED.name) {
-                                this.responseError.userNameAlreadyUsed = true;
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR.name) {
-                                this.responseError.passwordLengthError = true;
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD.name) {
-                                this.responseError.passwordConfirmError = true;
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED.name) {
-                                this.responseError.mailAddressAlreadyUsed = true;
-                            }
-                            alert("please retry");
-                        }
-                    )
-            },
-        }
-    }
-
-    export const USER_REGISTRATION_ERROR = {
-        //todo: vue jsでenum使うの案外面倒だったので、TSにしたいなーーーーと思った。
-        //ここのメッセージはこういう制約あったわ。って思い出せるように。ユーザーに見せてもよい想定で書きます。
-        //response をstringで返すことにしたので、一旦細かいことはきにしなくてもOK
-        USER_NAME_LENGTH_ERROR: {
-            eVal: "1",
-            text: "ユーザー名の長さは3文字以上50文字以下で入力してください。",
-            name: "USER_NAME_LENGTH_ERROR"
-        },
-        USER_NAME_ALREADY_USED: {
-            eVal: "2",
-            text: "ユーザー名はすでに使われています。",
-            name: "USER_NAME_ALREADY_USED"
-        },
-        PASSWORD_LENGTH_ERROR: {
-            eVal: "3",
-            text: "パスワードは6文字以上20文字以下で入力してください",
-            name: "PASSWORD_LENGTH_ERROR"
-        },
-        INCORRECT_PASSWORD: {
-            eVal: "5",
-            text: "パスワードまたはユーザー名が違います。",
-            name: "INCORRECT_PASSWORD"
-        },
-        MAIL_ADDRESS_ALREADY_USED: {
-            eVal: "7",
-            text: "メールアドレスはすでに使用されています。",
-            name: "MAIL_ADDRESS_ALREADY_USED"
+            ...mapActions([
+                'createUser'
+            ])
         }
     }
 </script>
