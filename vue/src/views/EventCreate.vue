@@ -1,5 +1,5 @@
 <template>
-    <div class="event-create">
+    <main class="event-create">
         <h2>イベントを作成</h2>
         <form
                 id="event-create-form"
@@ -99,7 +99,7 @@
                     class="primaryButton"
             >
         </form>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -168,7 +168,7 @@
       margin: 48px 16px;
 
       .primaryButton {
-        margin-top: 0;
+        margin-top: 2rem;
       }
 
       h2 {
