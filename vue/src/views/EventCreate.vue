@@ -21,7 +21,7 @@
                 >
                 </label>
             </p>
-            <p class="event-create-form__start">
+            <p class="form__start">
                 <label for="startDate"> 開始日時
                   <div class="event-create-form--twoColumn">
                     <input
@@ -40,10 +40,10 @@
 
                 </label>
             </p>
-            <p class="event-create-form__end">
-                  <label for="endDate">終了日時
-                    <div class="event-create-form--twoColumn">
-                      <input
+            <p>
+                <label for="endDate">終了日時
+                  <div class="event-create-form--twoColumn">
+                    <input
                               id="endDate"
                               v-model="request.endDate"
                               type="date"
@@ -165,8 +165,7 @@
     @import "../assets/css/button";
 
     .event-create {
-      margin: 0 16px;
-      margin-bottom: 48px;
+      margin: 48px 16px;
 
       .primaryButton {
         margin-top: 0;
@@ -181,17 +180,18 @@
       }
 
       p {
-        margin-top: 1rem;
+        margin-top: 1.4rem;
 
         label {
           display: block;
-          font-size: 0.75rem;
+          font-size: 0.85rem;
           width:100%;
         }
 
         input , textarea {
           box-sizing: border-box;
-          margin-top: 0.25rem;
+          min-height: 44px;
+          margin-top: 0.3rem;
           font-size:1rem;
           border: 1px solid #FFB100;
           padding:0.5rem;
