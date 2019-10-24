@@ -70,7 +70,7 @@
                 </label>
             </p>
             <p>
-                <label for="seatInfo">席情報
+                <label for="seatInfo">開催場所のどこらへんに集合するか
                 <input
                         id="seatInfo"
                         v-model="request.seatInfo"
