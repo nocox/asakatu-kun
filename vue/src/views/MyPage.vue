@@ -12,11 +12,6 @@
 
     export default {
         name: "MyPage",
-        data() {
-            return {
-                apiURL:process.env.VUE_APP_API_URL_BASE
-            }
-        },
         created: function () {
             this.setUserImage();
         },

@@ -122,8 +122,7 @@
                 startTime: "",
                 endTime: "",
                 eventDetail: "",
-                errors: [],
-                apiURL: process.env.VUE_APP_API_URL_BASE
+                errors: []
             }
         },
         methods: {

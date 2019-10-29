@@ -1,4 +1,3 @@
-// todo: yukikoma
 import event from "../../../api/event";
 
 const state = {

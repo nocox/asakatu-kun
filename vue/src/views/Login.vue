@@ -58,8 +58,7 @@
                     password: undefined
                 },
                 hasError: false,
-                errors: [],
-                apiURL: process.env.VUE_APP_API_URL_BASE
+                errors: []
             }
         },
         computed: {
