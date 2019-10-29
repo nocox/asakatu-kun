@@ -60,12 +60,22 @@
             </p>
 
             <p>
-                <label for="address">開催場所
+                <label for="address">開催住所
                 <input
                         id="address"
                         v-model="request.address"
                         type="text"
                         name="address"
+                >
+                </label>
+            </p>
+            <p>
+                <label for="storeName">店名
+                <input
+                        id="storeName"
+                        v-model="request.storeName"
+                        type="text"
+                        name="storeName"
                 >
                 </label>
             </p>
@@ -86,7 +96,7 @@
                         id="eventDetail"
                         cols="30"
                         rows="10"
-                        v-model="eventDetail"
+                        v-model="request.eventDetail"
                         placeholder="イベント内容を入力してください"
                 >
               </textarea>
@@ -111,9 +121,11 @@
             return {
                 request: {
                     eventTitle: "",
+                    eventDetail: "",
                     startDate: "",
                     endDate: "",
                     address: "",
+                    storeName: "",
                     seatInfo: "",
                 },
                 startTime: "",
@@ -127,6 +139,9 @@
                 this.errors = [];
                 if (!this.request.eventTitle) {
                     this.errors.push("Name required.");
+                }
+                if (!this.request.eventDetail) {
+                    this.errors.push("Detail required.");
                 }
                 if (!this.request.startDate) {
                     this.errors.push('start date required.');
@@ -212,6 +227,4 @@
         }
       }
     }
-
-
 </style>

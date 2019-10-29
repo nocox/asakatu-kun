@@ -17,6 +17,9 @@ public class Event {
 	@Column(name = "event_title")
 	private String eventTitle;
 
+	@Column(name = "event_detail")
+	private String eventDetail;
+
 	@Column(name = "start_date")
 	private LocalDateTime startDate;
 
@@ -25,6 +28,9 @@ public class Event {
 
 	@Column(name = "address")
 	private String address;
+
+	@Column(name = "store_name")
+	private String storeName;
 
 	@Column(name = "seat_info")
 	private String seatInfo;
@@ -69,6 +75,14 @@ public class Event {
 		this.eventTitle = eventTitle;
 	}
 
+	public String getEventDetail() {
+		return eventDetail;
+	}
+
+	public void setEventDetail(String eventDetail) {
+		this.eventDetail = eventDetail;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -95,6 +109,14 @@ public class Event {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 	public String getSeatInfo() {
