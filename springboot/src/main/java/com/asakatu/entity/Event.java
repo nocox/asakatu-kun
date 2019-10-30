@@ -17,6 +17,9 @@ public class Event {
 	@Column(name = "event_title")
 	private String eventTitle;
 
+	@Column(name = "event_detail")
+	private String eventDetail;
+
 	@Column(name = "start_date")
 	private LocalDateTime startDate;
 
@@ -70,6 +73,14 @@ public class Event {
 
 	public void setEventTitle(String eventTitle) {
 		this.eventTitle = eventTitle;
+	}
+
+	public String getEventDetail() {
+		return eventDetail;
+	}
+
+	public void setEventDetail(String eventDetail) {
+		this.eventDetail = eventDetail;
 	}
 
 	public void setId(Long id) {

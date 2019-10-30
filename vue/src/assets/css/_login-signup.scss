@@ -91,37 +91,3 @@ label::after{
   content:"\A";
   white-space: pre;
 }
-
-.primaryButton{
-  margin-top: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  height:62px;
-  color: #ffffff;
-  width: 100%;
-  padding:0 40px;
-  border-radius: 4px;
-  background-color: #FFB100;
-  font-weight:400;
-  cursor: pointer;
-  filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.2));
-  text-decoration: none;
-  line-height:62px;
-}
-
-.primaryButton:hover{
-  opacity: 0.95;
-  filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.4));
-}
-
-.secondaryButton{
-  margin-top: 24px;
-  text-align: center;
-  font-size: 0.8em;
-
-}
-.secondaryButton > a{
-  text-decoration: none;
-}
