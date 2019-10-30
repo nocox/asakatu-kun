@@ -47,6 +47,7 @@
 <script>
 
     import {mapActions, mapState} from "vuex";
+    import userInfo from "../store/modules/user/userInfo";
 
     export default {
         name: "login",
@@ -84,9 +85,7 @@
                 }
                 e.preventDefault();
             },
-            ...mapActions([
-                'getLogin'
-            ])
+            ...mapActions(userInfo, ["getLogin"])
         }
     }
 </script>
@@ -95,5 +94,5 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
     @import "../assets/css/login-signup";
-    @import "../assets/css/button"; 
+    @import "../assets/css/button";
 </style>
