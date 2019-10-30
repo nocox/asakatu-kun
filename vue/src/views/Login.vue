@@ -47,7 +47,6 @@
 <script>
 
     import {mapActions, mapState} from "vuex";
-    import userInfo from "../store/modules/user/userInfo";
 
     export default {
         name: "login",
@@ -85,7 +84,9 @@
                 }
                 e.preventDefault();
             },
-            ...mapActions(userInfo, ["getLogin"])
+            ...mapActions('userInfo', {
+                getLogin :'getLogin'
+                })
         }
     }
 </script>

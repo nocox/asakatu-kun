@@ -41,4 +41,5 @@ const ApiService = {
     }
 };
 
+ApiService.init()
 export default ApiService;

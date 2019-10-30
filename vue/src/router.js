@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import store from './store';
+import userInfo from "./store/modules/user/userInfo";
 
 Vue.use(Router);
 
@@ -73,7 +73,7 @@ export default router;
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/sign_up', '/', '/top'];
   const authRequired = !publicPages.includes(to.path);
-  const isLoggedIn = store.state.isLogin;
+  const isLoggedIn = userInfo.state.isLogin;
 
   if (authRequired && !isLoggedIn) {
     return next('/login');
