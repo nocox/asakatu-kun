@@ -4,7 +4,7 @@
         <section class="event-info">
             <h2 class="event-info-title">{{title}}</h2>
             <h3 class="event-info-datetime">{{date}}</h3>
-            <div class="event-info-place">{{storeName}} {{seatInfo}}</div>
+            <div class="event-info-place">{{storeName}} ({{seatInfo}})</div>
             <div class="event-info-function clearfix">
                 <div class="event-info_google-api">
                     <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{address}}
