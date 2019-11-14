@@ -136,7 +136,6 @@
         },
         mounted: function () {
             this.eventId = Number(this.$route.params.eventId);
-            console.log("event id : " + this.eventId);
             this.refresh();
         },
         methods: {
@@ -157,7 +156,6 @@
             getEventInfo(eventId) {
                 event.getEventInfo(eventId)
                     .then(response => {
-                        console.log("response: ", response);
                         this.mapEventInfo(response);
                     })
                     .catch(error => {
