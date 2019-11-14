@@ -2,27 +2,22 @@
     <div class="event" id="event-detail">
 
         <section class="event-info">
-            <h2 class="event-info-title">{{eventInfo.title}}</h2>
-            <h3 class="event-info-datetime">{{eventInfo.date}}</h3>
-            <div class="event-info-place">ここが足りない {{eventInfo.seatInfo}}</div>
+            <h2 class="event-info-title">{{title}}</h2>
+            <h3 class="event-info-datetime">{{date}}</h3>
+            <div class="event-info-place">{{storeName}} {{seatInfo}}</div>
             <div class="event-info-function clearfix">
                 <div class="event-info_google-api">
-                    <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}
+                    <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{address}}
                     </div>
                     <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加
                     </div>
                 </div>
-                <button v-if="!this.eventInfo.hasJoin" @click="showModal = 1"
+                <button v-if="!this.hasJoin" @click="showModal = 1"
                         class="uk-button uk-button-default uk-button-small event__btn">参加
                 </button>
             </div>
             <div class="event-info_detail">
-                社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
-                もっと有意義に使いたい、もっと学びたい、
-                会社外の人たちと交流を持ちたいという20代～30代の社会人が集まって、
-                共に考えたり、学んだり。
-                休日、ちょっと早起きをして、暮らし、
-                人生をより豊かにするきっかけにしていきませんか？
+                {{eventDetail}}
             </div>
         </section>
 
@@ -72,8 +67,8 @@
             </div>
         </modal-template>
 
-        <section v-if="this.eventInfo.hasJoin" class="reaction-change">
-            参加していたら、ここでリアクション変更
+        <section v-if="this.hasJoin" class="reaction-change">
+            ここでリアクション変更
         </section>
 
         <section class="event-participant section-margin">
@@ -99,7 +94,7 @@
             </div>
         </section>
 
-        <div v-if="!this.eventInfo.hasJoin" class="join-button uk-flex uk-flex-center">
+        <div v-if="!this.hasJoin" class="join-button uk-flex uk-flex-center">
             <button @click="showModal = 1" class="event__btn">参加</button>
         </div>
     </div>
@@ -107,7 +102,7 @@
 
 <script>
     import ModalTemplate from "../components/eventDetail/ModalTemplate";
-    import {mapActions, mapState} from "vuex";
+    import event from "../api/event";
 
     export default {
         name: "Event",
@@ -117,31 +112,27 @@
         template: '<modal-template></modal-template>',
         data() {
             return {
+                eventId: 1,
+                title: "ちょっぴり遅めの朝活くんvol.２",
+                startDate: "2019-07-28T09:00:00Z",
+                date: "a",
+                duration: 3,
+                address: "BOOK LAB TOKYO",
+                storeName: "コメダ",
+                seatInfo: "ソファー席",
+                eventStatus: "yet", // yet,progress,fin,canceled
+                eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
+                hasJoin: true,
+                users: [{
+                    imgePath:"",
+                    displayName:"",
+                    reaction:""
+                }],
                 request: {
                     comment: ""
                 },
                 showModal: false,
             }
-        },
-        computed: {
-            eventInfo: {
-                ...mapState({
-                    eventId: state => state.eventDetail.eventId,
-                    title: state => state.eventDetail.title,
-                    startDate: state => state.eventDetail.startDate,
-                    date: state => state.eventDetail.date,
-                    duration: state => state.eventDetail.duration,
-                    address: state => state.eventDetail.address,
-                    seatInfo: state => state.eventDetail.seatInfo,
-                    eventStatus: state => state.eventDetail.eventStatus,
-                    eventDetail: state => state.eventDetail.eventDetail,
-                    hasJoin: state => state.eventDetail.hasJoin,
-                }),
-            },
-            ...mapState({
-                users:state => state.eventDetail.users,
-            })
-
         },
         mounted: function () {
             this.eventId = Number(this.$route.params.eventId);
@@ -151,10 +142,9 @@
         methods: {
             refresh: function () {
                 this.getEventInfo(this.eventId);
-                this.getUsers(this.eventId);
             },
             contract() {
-                const participationEvent = this.contract(this.eventId, this.request);
+                const participationEvent = event.contract(this.eventId, this.request);
                 participationEvent.then(() => {
                     this.showModal = false;
                     this.$router.push('/events/joined');
@@ -164,11 +154,43 @@
                     // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
             },
-            ...mapActions([
-                'getEventInfo',
-                'getUsers',
-                'contract'
-            ])
+            getEventInfo(eventId) {
+                event.getEventInfo(eventId)
+                    .then(response => {
+                        console.log("response: ", response);
+                        this.mapEventInfo(response);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('サーバからのデータ取得に失敗しました');
+                        // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+                    });
+                event.getUsers(eventId)
+                    .then(response => {
+                        this.mapEventUsers(response);
+                    })
+                    .catch(error =>{
+                        console.error(error);
+                    });
+            },
+            mapEventInfo(response){
+                const data = response.data;
+                this.eventId = data.event.id;
+                this.title = data.event.eventTitle;
+                this.startDate = data.event.startDate;
+                this.date = data.designDate;
+                this.duration = data.event.duration;
+                this.address = data.event.address;
+                this.seatInfo = data.event.seatInfo;
+                this.eventStatus = data.event.eventStatus;
+                this.eventDetail = data.event.eventDetail;
+                this.hasJoin = data.hasJoin;
+                this.storeName = data.event.storeName;
+            },
+            mapEventUsers(response){
+                const data = response.data.data;
+                this.users = data.userList;
+            }
         }
     }
 </script>
