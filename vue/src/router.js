@@ -73,7 +73,7 @@ export default router;
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/sign_up', '/', '/top'];
   const authRequired = !publicPages.includes(to.path);
-  const isLoggedIn = store.state.isLogin;
+  const isLoggedIn = store.state.userInfo.isLogin;
 
   if (authRequired && !isLoggedIn) {
     return next('/login');

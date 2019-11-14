@@ -16,7 +16,7 @@
             this.setUserImage();
         },
         methods: {
-           ...mapActions([
+           ...mapActions('userInfo',[
                'setUserImage'
            ])
         },

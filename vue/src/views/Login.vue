@@ -84,7 +84,7 @@
                 }
                 e.preventDefault();
             },
-            ...mapActions([
+            ...mapActions('userInfo', [
                 'getLogin'
             ])
         }
