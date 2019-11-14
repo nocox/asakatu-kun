@@ -113,7 +113,8 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import event from "../api/event";
+
 
     export default {
         name: "EventCreate",
@@ -136,6 +137,7 @@
         },
         methods: {
             checkEventCreateForm: function (e) {
+                e.preventDefault();
                 this.errors = [];
                 if (!this.request.eventTitle) {
                     this.errors.push("Name required.");
@@ -153,13 +155,18 @@
 
                 if (!this.errors.length) {
                     this.createEvent(this.request);
-                    e.preventDefault();
                 }
-                e.preventDefault();
             },
-            ...mapActions([
-                'createEvent'
-            ])
+            createEvent(request) {
+                event.createEvent(request)
+                    .then(() => {
+                        this.$router.push('/events');
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("some thing is error");
+                    })
+            }
         }
     }
 </script>
