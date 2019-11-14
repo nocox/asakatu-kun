@@ -41,20 +41,19 @@ const actions = {
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
     },
-    getLogin(commit, request) {
+    getLogin({commit}, request) {
         const params = new URLSearchParams();
         params.append('username', request.name);
         params.append('password', request.password);
-        user.getLogin(request)
+        user.getLogin(params)
             .then(() => {
                     commit('getActive', true);
                     user.whoAmI()
                         .then((response) => {
                             commit('getUserName', response.data.data.displayName);
-                            commit('getUserImage', response.data.data.imagePath);
+                            commit('setUserImage', response.data.data.imagePath);
+                            return false;
                         });
-                    this.$router.push('/mypage');
-                    return false;
                 }
             )
             .catch(

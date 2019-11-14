@@ -67,7 +67,8 @@
             })
         },
         methods: {
-            checkLoginForm: function (e) {
+            checkLoginForm: async function (e) {
+                e.preventDefault();
                 this.errors = [];
                 this.hasError = false;
 
@@ -78,11 +79,10 @@
                     this.errors.push('password required.');
                 }
                 if (!this.errors.length) {
-                    this.hasError = this.getLogin(this.request);
-                    e.preventDefault();
-                    return true;
+                    this.hasError = await this.getLogin(this.request);
+                    if (this.hasError) return true;
+                    this.$router.push('/mypage');
                 }
-                e.preventDefault();
             },
             ...mapActions('userInfo', [
                 'getLogin'
