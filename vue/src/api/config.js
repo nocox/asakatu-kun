@@ -20,8 +20,8 @@ const ApiService = {
         });
     },
 
-    post(resource, params) {
-        return Vue.axios.post(`${resource}`, params,{withCredentials:true});
+    post(resource, params, config = {withCredentials:true}) {
+        return Vue.axios.post(`${resource}`, params, config);
     },
 
     update(resource, slug, params) {
