@@ -2,23 +2,22 @@
     <div class="event" id="event-detail">
 
         <section class="event-info">
-            <h2 class="event-info-title">{{eventInfo.title}}</h2>
-            <h3 class="event-info-datetime">{{eventInfo.date}}</h3>
-            <div class="event-info-place">ここが足りない {{eventInfo.seatInfo}}</div>
+            <h2 class="event-info-title">{{title}}</h2>
+            <h3 class="event-info-datetime">{{date}}</h3>
+            <div class="event-info-place">{{storeName}} ({{seatInfo}})</div>
             <div class="event-info-function clearfix">
                 <div class="event-info_google-api">
-                    <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{eventInfo.address}}</div>
-                    <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加</div>
+                    <div class="event-info-map"><i class="fas fa-map-marker-alt event-info__icon"></i>{{address}}
+                    </div>
+                    <div class="event-info-add-calender"><i class="far fa-calendar-alt event-info__icon"></i>カレンダーに追加
+                    </div>
                 </div>
-                <button v-if="!this.eventInfo.hasJoin" @click="showModal = 1" class="uk-button uk-button-default uk-button-small event__btn">参加</button>
+                <button v-if="!this.hasJoin" @click="showModal = 1"
+                        class="uk-button uk-button-default uk-button-small event__btn">参加
+                </button>
             </div>
             <div class="event-info_detail">
-                社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、
-                もっと有意義に使いたい、もっと学びたい、
-                会社外の人たちと交流を持ちたいという20代～30代の社会人が集まって、
-                共に考えたり、学んだり。
-                休日、ちょっと早起きをして、暮らし、
-                人生をより豊かにするきっかけにしていきませんか？
+                {{eventDetail}}
             </div>
         </section>
 
@@ -36,7 +35,8 @@
             </div>
             <div slot="footer">
                 <div class="participant-modal-link">
-                    <button @click="showModal = 2" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                    <button @click="showModal = 2"
+                            class="uk-button uk-button-default uk-button-small participant-modal__btn">
                         確認する
                     </button>
                     <div class="participant-modal__btn-cancel" @click="showModal = false">
@@ -56,7 +56,8 @@
             </div>
             <div class="" slot="footer">
                 <div class="participant-modal-link">
-                    <button @click="this.contract" class="uk-button uk-button-default uk-button-small participant-modal__btn">
+                    <button @click="this.contract"
+                            class="uk-button uk-button-default uk-button-small participant-modal__btn">
                         決定する
                     </button>
                     <div class="participant-modal__btn-cancel" @click="showModal = 1">
@@ -66,14 +67,14 @@
             </div>
         </modal-template>
 
-        <section v-if="this.eventInfo.hasJoin" class="reaction-change">
-            参加していたら、ここでリアクション変更
+        <section v-if="this.hasJoin" class="reaction-change">
+            ここでリアクション変更
         </section>
 
         <section class="event-participant section-margin">
             <h3 class="participant-title">参加メンバー</h3>
-            <div  class="participant-list">
-                <div class="participant-element" v-for="user in users" v-bind:key="user.id" >
+            <div class="participant-list">
+                <div class="participant-element" v-for="user in users" v-bind:key="user.id">
                     <div class="participant-reaction-balloon1">
                         <i v-bind:class="user.reaction" class="participant-reaction"></i>
                     </div>
@@ -93,15 +94,15 @@
             </div>
         </section>
 
-        <div v-if="!this.eventInfo.hasJoin" class="join-button uk-flex uk-flex-center">
+        <div v-if="!this.hasJoin" class="join-button uk-flex uk-flex-center">
             <button @click="showModal = 1" class="event__btn">参加</button>
         </div>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
-    import ModalTemplate from "../components/ModalTemplate";
+    import ModalTemplate from "../components/eventDetail/ModalTemplate";
+    import event from "../api/event";
 
     export default {
         name: "Event",
@@ -111,64 +112,38 @@
         template: '<modal-template></modal-template>',
         data() {
             return {
-                eventInfo: {
-                    eventId: 1,
-                    title: "ちょっぴり遅めの朝活くんvol.２",
-                    startDate: "2019-07-28T09:00:00Z",
-                    date: "a",
-                    duration: 3,
-                    address: "BOOK LAB TOKYO",
-                    seatInfo: "ソファー席",
-                    eventStatus: "yet", // yet,progress,fin,canceled
-                    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
-                    hasJoin: true
-                },
+                eventId: 1,
+                title: "ちょっぴり遅めの朝活くんvol.２",
+                startDate: "2019-07-28T09:00:00Z",
+                date: "a",
+                duration: 3,
+                address: "BOOK LAB TOKYO",
+                storeName: "コメダ",
+                seatInfo: "ソファー席",
+                eventStatus: "yet", // yet,progress,fin,canceled
+                eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
+                hasJoin: true,
+                users: [{
+                    imgePath:"",
+                    displayName:"",
+                    reaction:""
+                }],
                 request: {
                     comment: ""
                 },
-                users: [],
-                eventAPI: 'http://localhost:8080/event/',
                 showModal: false,
             }
         },
         mounted: function () {
             this.eventId = Number(this.$route.params.eventId);
-            console.log("event id : " + this.eventId);
             this.refresh();
         },
         methods: {
             refresh: function () {
-                this.getEventInfo();
-                this.getUsers();
+                this.getEventInfo(this.eventId);
             },
-            getEventInfo: async function () {
-                const getEventInfo = axios.get('http://localhost:8080/event/' + this.eventId, {withCredentials: true});
-                getEventInfo.then(response => {
-
-                    this.eventInfo.title = response.data.event.eventTitle;
-                    this.eventInfo.eventId = response.data.event.id;
-                    this.eventInfo.date = response.data.designDate;
-                    this.eventInfo.address = response.data.event.address;
-                    this.eventInfo.seatInfo = response.data.event.seatInfo;
-                    this.eventInfo.eventStatus = response.data.event.eventStatus;
-                    this.eventInfo.hasJoin = response.data.hasJoin;
-
-                }).catch(error => {
-                    console.error(error);
-                    alert('サーバからのデータ取得に失敗しました');
-                    // TODO nocox エラーハンドリングが必要かも (2019/10/02)
-                });
-            },
-            getUsers: async function () {
-                const getUsers = axios.get('http://localhost:8080/event/' + this.eventId + '/users' , {withCredentials: true});
-                getUsers.then(response => {
-                    this.users = response.data.data.userList;
-                }).catch(error => {
-                    console.error(error);
-                });
-            },
-            contract(){
-                const participationEvent = axios.post('http://localhost:8080/event/' + this.eventId + '/user' ,this.request ,{withCredentials: true});
+            contract() {
+                const participationEvent = event.contract(this.eventId, this.request);
                 participationEvent.then(() => {
                     this.showModal = false;
                     this.$router.push('/events/joined');
@@ -177,6 +152,42 @@
                     alert('サーバからのデータ取得に失敗しました');
                     // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
+            },
+            getEventInfo(eventId) {
+                event.getEventInfo(eventId)
+                    .then(response => {
+                        this.mapEventInfo(response);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('サーバからのデータ取得に失敗しました');
+                        // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+                    });
+                event.getUsers(eventId)
+                    .then(response => {
+                        this.mapEventUsers(response);
+                    })
+                    .catch(error =>{
+                        console.error(error);
+                    });
+            },
+            mapEventInfo(response){
+                const data = response.data;
+                this.eventId = data.event.id;
+                this.title = data.event.eventTitle;
+                this.startDate = data.event.startDate;
+                this.date = data.designDate;
+                this.duration = data.event.duration;
+                this.address = data.event.address;
+                this.seatInfo = data.event.seatInfo;
+                this.eventStatus = data.event.eventStatus;
+                this.eventDetail = data.event.eventDetail;
+                this.hasJoin = data.hasJoin;
+                this.storeName = data.event.storeName;
+            },
+            mapEventUsers(response){
+                const data = response.data.data;
+                this.users = data.userList;
             }
         }
     }

@@ -113,8 +113,9 @@
 </template>
 
 <script>
+    import event from "../api/event";
 
-    import axios from 'axios';
+
     export default {
         name: "EventCreate",
         data() {
@@ -131,11 +132,12 @@
                 startTime: "",
                 endTime: "",
                 eventDetail: "",
-                errors: [],
+                errors: []
             }
         },
         methods: {
             checkEventCreateForm: function (e) {
+                e.preventDefault();
                 this.errors = [];
                 if (!this.request.eventTitle) {
                     this.errors.push("Name required.");
@@ -152,24 +154,18 @@
                 this.request.endDate += "T" + this.endTime;
 
                 if (!this.errors.length) {
-                    this.createEvent();
-                    e.preventDefault();
+                    this.createEvent(this.request);
                 }
-                e.preventDefault();
             },
-            createEvent: async function () {
-                console.log(this.request);
-                const axiosResponse = await axios.post('http://localhost:8080/event/new', this.request,{withCredentials:true});
-                if (axiosResponse.status === 200 || axiosResponse.status === 201) {
-                    console.log("ok");
-                    console.log(axiosResponse);
-                    this.$router.push('/events');
-                } else {
-                    console.log("error");
-                    console.log(axiosResponse);
-                    this.$store.commit('initLogin');
-                    this.$router.push('/login');
-                }
+            createEvent(request) {
+                event.createEvent(request)
+                    .then(() => {
+                        this.$router.push('/events');
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("some thing is error");
+                    })
             }
         }
     }

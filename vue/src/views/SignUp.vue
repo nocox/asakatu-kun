@@ -138,7 +138,8 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import user from "../api/user";
+    import {USER_REGISTRATION_ERROR} from "../models/USER_REGISTRATION_ERROR";
 
     export default {
         name: "signUp",
@@ -175,6 +176,7 @@
         },
         methods: {
             checkSignUpForm: function (e) {
+                e.preventDefault();
                 //init errors
                 this.responseError = {
                     mailAddressAlreadyUsed: false,
@@ -201,9 +203,11 @@
                 if (!this.request.email) {
                     this.inputErrors.mailAddressIsRequired = true;
                 }
-                if (!this.request.email.match(/^[\!\#\$\%\&\'\*\+\\\-\.\/\=\?\^\_\`\{\|\}\~\[\]0-9a-zA-Z]+@[a-z0-9-_]+(\.[a-z0-9-_]+)+$/)) {
-                    this.inputErrors.mailAddressFormatError =true;
+
+                if (this.request.email && !this.request.email.match(/^[\!\#\$\%\&\'\*\+\\\-\.\/\=\?\^\_\`\{\|\}\~\[\]0-9a-zA-Z]+@[a-z0-9-_]+(\.[a-z0-9-_]+)+$/)) {
+                    this.inputErrors.mailAddressFormatError = true;
                 }
+
                 if (!this.request.password) {
                     this.inputErrors.passwordIsRequired = true;
                 } else if (this.request.password.length < 5) {
@@ -216,11 +220,29 @@
                     this.inputErrors.passwordIsNotSame = true;
                 }
                 if (!(convertToArray(this.inputErrors).indexOf(true) > 0)) {
-                    this.createUser();
-                    e.preventDefault();
+                    user.createUser(this.request).then(() => {
+                        this.$router.push('/events');
+                    }).catch(error => {
+                        if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR.name) {
+                            this.responseError.userNameLengthError = true;
+                            //本当はsetUserNameLengthErrorとかメソットでtrue,false切り替える感じの事ができればいいなーとおもってやってる
+                        }
+                        if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED.name) {
+                            this.responseError.userNameAlreadyUsed = true;
+                        }
+                        if (error.response.data.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR.name) {
+                            this.responseError.passwordLengthError = true;
+                        }
+                        if (error.response.data.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD.name) {
+                            this.responseError.passwordConfirmError = true;
+                        }
+                        if (error.response.data.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED.name) {
+                            this.responseError.mailAddressAlreadyUsed = true;
+                        }
+                    });
+                }else{
+                    alert("please retry");
                 }
-                alert("please retry");
-                e.preventDefault();
 
                 function convertToArray(hash) {
                     const hashObject = Object.assign({}, hash);
@@ -232,77 +254,7 @@
                     }
                     return convertArray;
                 }
-            },
-            createUser: async function () {
-                console.log("request");
-                console.log(this.request);
-                const axiosResponse = axios.post('http://localhost:8080/user_registration',
-                    JSON.stringify(this.request),
-                    {
-                        withCredentials: true,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                axiosResponse
-                    .then(response => {
-                            console.log(response);
-                            window.location.href = '/events';
-                        }
-                    )
-                    .catch(error => {
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_LENGTH_ERROR.name) {
-                                this.responseError.userNameLengthError = true;
-                                //本当はsetUserNameLengthErrorとかメソットでtrue,false切り替える感じの事ができればいいなーとおもってやってる
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.USER_NAME_ALREADY_USED.name) {
-                                this.responseError.userNameAlreadyUsed = true;
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.PASSWORD_LENGTH_ERROR.name) {
-                                this.responseError.passwordLengthError = true;
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.INCORRECT_PASSWORD.name) {
-                                this.responseError.passwordConfirmError = true;
-                            }
-                            if (error.response.data.data.message === USER_REGISTRATION_ERROR.MAIL_ADDRESS_ALREADY_USED.name) {
-                                this.responseError.mailAddressAlreadyUsed = true;
-                            }
-                            alert("please retry");
-                        }
-                    )
-            },
-        }
-    }
-
-    export const USER_REGISTRATION_ERROR = {
-        //todo: vue jsでenum使うの案外面倒だったので、TSにしたいなーーーーと思った。
-        //ここのメッセージはこういう制約あったわ。って思い出せるように。ユーザーに見せてもよい想定で書きます。
-        //response をstringで返すことにしたので、一旦細かいことはきにしなくてもOK
-        USER_NAME_LENGTH_ERROR: {
-            eVal: "1",
-            text: "ユーザー名の長さは3文字以上50文字以下で入力してください。",
-            name: "USER_NAME_LENGTH_ERROR"
-        },
-        USER_NAME_ALREADY_USED: {
-            eVal: "2",
-            text: "ユーザー名はすでに使われています。",
-            name: "USER_NAME_ALREADY_USED"
-        },
-        PASSWORD_LENGTH_ERROR: {
-            eVal: "3",
-            text: "パスワードは6文字以上20文字以下で入力してください",
-            name: "PASSWORD_LENGTH_ERROR"
-        },
-        INCORRECT_PASSWORD: {
-            eVal: "5",
-            text: "パスワードまたはユーザー名が違います。",
-            name: "INCORRECT_PASSWORD"
-        },
-        MAIL_ADDRESS_ALREADY_USED: {
-            eVal: "7",
-            text: "メールアドレスはすでに使用されています。",
-            name: "MAIL_ADDRESS_ALREADY_USED"
+            }
         }
     }
 </script>

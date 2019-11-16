@@ -17,4 +17,4 @@ README.html
 .idea
 *.DS_Store
 .DS_Store
-.env
+/.env
