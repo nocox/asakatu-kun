@@ -45,14 +45,18 @@ const actions = {
         const params = new URLSearchParams();
         params.append('username', request.name);
         params.append('password', request.password);
-        user.getLogin(params)
+        return user.getLogin(params)
             .then(() => {
                     commit('getActive', true);
-                    user.whoAmI()
+                    return user.whoAmI()
                         .then((response) => {
                             commit('getUserName', response.data.data.displayName);
                             commit('setUserImage', response.data.data.imagePath);
                             return false;
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            return true;
                         });
                 }
             )
@@ -90,7 +94,6 @@ const actions = {
                     alert("please retry");
                 }
             )
-
     },
 };
 
