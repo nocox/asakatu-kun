@@ -31,6 +31,7 @@
 
     }
     .event-list-switch {
+        padding-top: 20px;
         display: flex;
         background-color: #ffffff;
     }
