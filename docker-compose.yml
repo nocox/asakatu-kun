@@ -30,3 +30,12 @@ services:
       - ./mysql/sqls:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+  vue:
+    build:
+      context: ./vue
+      dockerfile: Dockerfile-dev
+    container_name: asakatu-kun-front
+    ports:
+      - "9000:80"
+    env_file: .env
+    # command: nginx -g daemon off
