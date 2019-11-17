@@ -34,8 +34,16 @@ services:
     build:
       context: ./vue
       dockerfile: Dockerfile-dev
-    container_name: asakatu-kun-front
+    container_name: asakatu-kun-vue-build
+    command: npm run build
+    env_file: .env
+    volumes:
+      - ./vue:/app
+      - /app/node_modules
+  nginx:
+    image: nginx:stable-alpine
+    container_name: asakatu-kun-nginx
     ports:
       - "9000:80"
-    env_file: .env
-    # command: nginx -g daemon off
+    volumes:
+      - ./vue/dist:/usr/share/nginx/html
