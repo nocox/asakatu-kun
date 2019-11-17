@@ -1,5 +1,6 @@
 <template>
     <div id="events" class="event-list">
+        <Header/>
         <section>
             <div class="event-list-switch clearfix">
                     <router-link to="/events" class="event-list-switch-button">ホーム</router-link>
@@ -13,9 +14,15 @@
     </div>
 </template>
 
+
 <script>
+    import Header from '@/components/common/Header.vue';
+    
     export default {
         name: "Events",
+        components: {
+          Header
+        },
         data() {
             return {}
         },

@@ -32,7 +32,9 @@
         },
         methods: {
           back: function () {
-            this.$router.push(`${this.before}`)
+            if (typeof this.before !== 'undefined') {
+              this.$router.push(`${this.before}`)
+            }
           }
         }
     }
@@ -51,7 +53,6 @@
 
     .header {
         display: flex;
-        position: fixed;
         width: 100%;
         height: 72px;
         background: #FFF;

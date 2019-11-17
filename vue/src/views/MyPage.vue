@@ -1,5 +1,6 @@
 <template>
     <section class="mypage">
+        <Header/>
         <div class="user-info">
             <h2 class="user-info__name">{{userName}}</h2>
             <img class="user-info__image" :src="userImage" alt="user image ">
@@ -7,11 +8,16 @@
     </section>
 </template>
 
+
 <script>
     import {mapActions, mapState} from 'vuex'
+    import Header from '@/components/common/Header.vue';
 
     export default {
         name: "MyPage",
+        components: {
+          Header
+        },
         created: function () {
             this.setUserImage();
         },
