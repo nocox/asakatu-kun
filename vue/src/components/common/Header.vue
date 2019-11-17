@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <a class="header__backBtn" @click="back"></a>
+        <a class="header__backBtn" @click="back" v-bind:class="{ hidden: typeof this.before === 'undefined' }"></a>
         <router-link to="/events" class="header__profileImg">
             <h1 class="header__logo"><img alt="BizSpot" src="../../static/logo.png"></h1>
         </router-link>
