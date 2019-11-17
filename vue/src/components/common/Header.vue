@@ -60,19 +60,8 @@
         justify-content: space-between;
         filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
 
-        /*&__icon {*/
-        /*    &-box {*/
-        /*        height: 34px;*/
-        /*        width: 34px;*/
-        /*    }*/
-        /*}*/
-
         &__backBtn {
-            position: relative;
-            height: 30px;
-            width: 30px;
-            margin-top: 30px;
-            margin-left: 20px;
+            position: absolute;
 
             &::before {
                 content: "";
@@ -104,6 +93,7 @@
 
             > img {
                 height: 100%;
+                margin: 0px 34vw;
             }
         }
 
