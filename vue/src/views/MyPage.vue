@@ -1,6 +1,8 @@
 <template>
     <section class="mypage">
-        <Header/>
+        <Header
+          before = "/events"
+        />
         <div class="user-info">
             <h2 class="user-info__name">{{userName}}</h2>
             <img class="user-info__image" :src="userImage" alt="user image ">

@@ -1,6 +1,8 @@
 <template>
     <main>
-      <Header/>
+      <Header
+        before = "/events"
+      />
       <div class="event" id="event-detail">
           <section class="event-info">
               <h2 class="event-info-title">{{title}}</h2>

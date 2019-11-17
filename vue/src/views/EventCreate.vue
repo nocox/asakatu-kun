@@ -1,6 +1,8 @@
 <template>
     <main>
-      <Header/>
+      <Header
+        before = "/events"
+      />
       <div class="event-create">
           <h2>イベントを作成</h2>
           <form
@@ -112,7 +114,7 @@
               >
           </form>
       </div>
-  </main>    
+  </main>
 </template>
 
 <script>
