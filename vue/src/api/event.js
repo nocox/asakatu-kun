@@ -7,6 +7,9 @@ const EventService = {
     getEventInfo(eventId) {
         return ApiService.get('/event/' + eventId);
     },
+    getEventList() {
+        return ApiService.get('/events');
+    },
     getUsers(eventId) {
         return ApiService.get('/event/' + eventId + '/users');
     },

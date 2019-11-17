@@ -1,12 +1,15 @@
 <template>
     <div>
-        すべてのイベントリスト
+        すべてのイベントリスト{{a}}
     </div>
 </template>
 
 <script>
     export default {
-        name: "AllEventList"
+        name: "AllEventList",
+        props: {
+            a: String
+        },
     }
 </script>
 

@@ -7,19 +7,44 @@
             </div>
 
             <div class="event-list-content">
-                <router-view/>
+                {{userName}}
+                <router-view
+                  :a = "userName"
+                />
             </div>
         </section>
     </div>
 </template>
 
 <script>
+    import {mapActions, mapState} from 'vuex'
     export default {
         name: "Events",
+
         data() {
             return {}
         },
-        methods: {}
+        created: function () {
+            this.setUserImage();
+            this.getEventList();
+        },
+
+        methods: {
+           ...mapActions('userInfo',[
+               'setUserImage'
+           ]),
+           ...mapActions('eventList',[
+               'getEventList'
+           ])
+
+        },
+        computed: {
+            ...mapState({
+                userName: state => state.userInfo.userName,
+                userImage: state => state.userInfo.userImagePath,
+                eventList: state => state.eventList,
+            }),
+        }
     }
 </script>
 
