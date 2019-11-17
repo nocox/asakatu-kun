@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="header__backBtn"></div>
+        <a class="header__backBtn" @click="back"></a>
         <router-link to="/events" class="header__profileImg">
             <h1 class="header__logo"><img alt="BizSpot" src="../../static/logo.png"></h1>
         </router-link>
@@ -19,7 +19,8 @@
     export default {
         name: 'Header',
         props: {
-            msg: String
+            msg: String,
+            before: String,
         },
         computed: {
             checkExistImagePath() {
@@ -28,6 +29,11 @@
             userImagePath() {
                 return this.$store.state.userImagePath;
             }
+        },
+        methods: {
+          back: function () {
+            this.$router.push(`${this.before}`)
+          }
         }
     }
 </script>
@@ -64,6 +70,10 @@
 
         &__backBtn {
             position: relative;
+            height: 30px;
+            width: 30px;
+            margin-top: 30px;
+            margin-left: 20px;
 
             &::before {
                 content: "";
