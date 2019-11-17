@@ -2,16 +2,16 @@ import event from "../../../api/event";
 
 const state = {
   eventList: [{
-    eventId: 1,
-    title: "ちょっぴり遅めの朝活くんvol.２",
-    startDate: "2019-07-28T09:00:00Z",
-    date: "a",
-    duration: 3,
-    address: "BOOK LAB TOKYO",
-    seatInfo: "ソファー席",
-    eventStatus: "yet", // yet,progress,fin,canceled
-    eventDetail: "社会人にとって、休日は貴重な自由時間。その休日の朝の時間を、....",
-    hasJoin: true,
+    eventId: 0,
+    title: "",
+    startDate: "",
+    date: "",
+    duration: 0,
+    address: "",
+    seatInfo: "",
+    eventStatus: "",
+    eventDetail: "",
+    hasJoin: false,
     users: [{
         imgePath:"",
         displayName:"",
