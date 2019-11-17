@@ -7,7 +7,9 @@
             </div>
 
             <div class="event-list-content">
-                <router-view />
+                <router-view
+                  :eventList="eventList"
+                 />
             </div>
         </section>
     </div>
@@ -21,8 +23,8 @@
         data() {
             return {}
         },
-        async created() {
-            await this.getEventList();
+        created() {
+            this.getEventList();
         },
 
         methods: {
