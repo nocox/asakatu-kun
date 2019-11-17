@@ -7,10 +7,7 @@
             </div>
 
             <div class="event-list-content">
-                {{userName}}
-                <router-view
-                  :a = "userName"
-                />
+                <router-view />
             </div>
         </section>
     </div>
@@ -24,15 +21,11 @@
         data() {
             return {}
         },
-        created: function () {
-            this.setUserImage();
-            this.getEventList();
+        async created() {
+            await this.getEventList();
         },
 
         methods: {
-           ...mapActions('userInfo',[
-               'setUserImage'
-           ]),
            ...mapActions('eventList',[
                'getEventList'
            ])
@@ -40,9 +33,7 @@
         },
         computed: {
             ...mapState({
-                userName: state => state.userInfo.userName,
-                userImage: state => state.userInfo.userImagePath,
-                eventList: state => state.eventList,
+                eventList: state => state.eventList.eventList,
             }),
         }
     }

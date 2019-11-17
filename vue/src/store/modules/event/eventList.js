@@ -22,10 +22,9 @@ const state = {
 };
 
 const actions = {
-  getEventList() {
+  getEventList({commit}) {
       event.getEventList()
           .then(response => {
-              console.log(response);
               commit('setEventList', response);
           })
           .catch(error => {
@@ -37,8 +36,7 @@ const actions = {
 
 const mutations = {
   setEventList(state, eventList) {
-      console.log("aaaaaaaaaaaa")
-      state.eventList = eventList;
+      state.eventList = eventList.data.data.eventsList;
   }
 };
 
