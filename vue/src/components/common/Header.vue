@@ -32,9 +32,7 @@
         },
         methods: {
           back: function () {
-            if (typeof this.before !== 'undefined') {
-              this.$router.push(`${this.before}`)
-            }
+            this.$router.push(`${this.before}`)
           }
         }
     }
