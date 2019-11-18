@@ -165,7 +165,7 @@ public class EventControllerTests extends AbstractTest{
                 .andExpect(jsonPath("$.data.userList",hasSize(4)))
                 .andExpect(jsonPath("$.data.userList[0].id").value(1))
                 .andExpect(jsonPath("$.data.userList[0].displayName").value("きしー"))
-                .andExpect(jsonPath("$.data.userList[0].imagePath").value("/images/profile/2u1e0h30x38.jpg"));
+                .andExpect(jsonPath("$.data.userList[0].imagePath").value("https://user-images.githubusercontent.com/18584908/69044408-36ad6100-0a38-11ea-9e36-604b6c344b2a.jpeg"));
     }
 }
 
