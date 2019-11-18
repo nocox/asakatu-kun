@@ -1,11 +1,11 @@
 <template>
     <div>
-      <div v-for="event in eventList">
+      <div v-for="event in eventList" :key="event">
         <p>{{ event.designDate }}</p>
         <p>{{ event.event.address }}</p>
         <p>{{ event.event.eventTitle }}</p>
         <p>{{ event.event.eventDetail }}</p>
-        <div v-for="user in event.event.userStatusList">
+        <div v-for="user in event.event.userStatusList" :key="user">
           <p>{{user.id}}</p>
         </div>
         <p>-----------------------------</p>
