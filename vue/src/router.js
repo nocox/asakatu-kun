@@ -27,17 +27,6 @@ const router = new Router({
       path: '/events',
       name: 'events',
       component: () => import('./views/Events.vue'),
-      children: [
-          {
-            path: '',
-            component: () => import('./components/eventList/AllEventList.vue'),
-          },
-          {
-            path: 'joined',
-            component: () => import('./components/eventList/JoinedEventList.vue'),
-          }
-        ]
-
     },
     {
       path: '/event/detail/:eventId',

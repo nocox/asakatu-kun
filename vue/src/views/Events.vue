@@ -2,12 +2,12 @@
     <div id="events" class="event-list">
         <section>
             <div class="event-list-switch clearfix">
-                    <router-link to="/events" class="event-list-switch-button">ホーム</router-link>
-                    <router-link to="/events/joined" class="event-list-switch-button">参加イベント</router-link>
+                    <div :class="{ active: isAll }" @click="all" class="event-list-switch-button">ホーム</div>
+                    <div :class="{ active: !isAll }" @click="join" class="event-list-switch-button">参加イベント</div>
             </div>
 
             <div class="event-list-content">
-                <router-view
+                <EventList
                   :eventList="eventList"
                  />
             </div>
@@ -17,11 +17,17 @@
 
 <script>
     import {mapActions, mapState} from 'vuex'
+    import EventList from '@/components/eventList/EventList.vue';
+
     export default {
         name: "Events",
-
+        components: {
+            EventList
+        },
         data() {
-            return {}
+            return {
+                isAll: true
+            }
         },
         created() {
             this.getEventList();
@@ -30,8 +36,13 @@
         methods: {
            ...mapActions('eventList',[
                'getEventList'
-           ])
-
+           ]),
+           all: function () {
+              this.isAll = true
+           },
+           join: function () {
+              this.isAll = false
+           }
         },
         computed: {
             ...mapState({
@@ -66,11 +77,11 @@
         text-decoration: none;
     }
 
-    .router-link-exact-active {
+    .active {
         border-bottom: grey 4px solid;
     }
 
-    .event-list-content{
+    .event-list-content {
         margin-top: 1rem;
         height: max-content;
         padding: 2em 1em 1em;
