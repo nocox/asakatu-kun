@@ -14,13 +14,9 @@
 </template>
 
 <script>
-    import eventCard from '@/components/eventList/detail/eventCard'
 
     export default {
         name: "EventList",
-        components: {
-            eventCard,
-        },
         props: {
             eventList: Array
         },

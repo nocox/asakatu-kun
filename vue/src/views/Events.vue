@@ -6,9 +6,14 @@
                     <div :class="{ active: !isAll }" @click="join" class="event-list-switch-button">参加イベント</div>
             </div>
 
-            <div class="event-list-content">
+            <div class="event-list-content" v-if="isAll">
                 <EventList
                   :eventList="eventList"
+                 />
+            </div>
+            <div v-else class="event-list-content">
+                <EventList
+                  :eventList="joinedEventList"
                  />
             </div>
         </section>
@@ -31,11 +36,13 @@
         },
         created() {
             this.getEventList();
+            this.getJoinedEventList();
         },
 
         methods: {
            ...mapActions('eventList',[
-               'getEventList'
+               'getEventList',
+               'getJoinedEventList',
            ]),
            all: function () {
               this.isAll = true
@@ -47,6 +54,7 @@
         computed: {
             ...mapState({
                 eventList: state => state.eventList.eventList,
+                joinedEventList: state => state.joinedEventList.eventList,
             }),
         }
     }
