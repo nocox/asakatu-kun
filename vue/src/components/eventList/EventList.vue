@@ -12,7 +12,7 @@
     import eventCard from '@/components/eventList/detail/eventCard'
 
     export default {
-        name: "AllEventList",
+        name: "EventList",
         components: {
             eventCard,
         },

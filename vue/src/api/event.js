@@ -10,6 +10,9 @@ const EventService = {
     getEventList() {
         return ApiService.get('/events');
     },
+    getjoinedEventList() {
+        return ApiService.get('/joinevents');
+    },
     getUsers(eventId) {
         return ApiService.get('/event/' + eventId + '/users');
     },
