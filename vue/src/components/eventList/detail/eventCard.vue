@@ -2,14 +2,14 @@
     <div class="event-card">
         <div class="left-container">
             <div class="Date-info">
-                <p class="startMonth">{{designDate}}</p>
+                <p class="startMonth">{{ designDate.split("日")[0] }}</p>
             </div>
         </div>
         <div class="right-container">
             <div class="info">
                 <p class="info-dateTime">
-                    <span class="weekDay">{{}}</span>
-                    <span class="Time">{{}}</span>
+                    <span class="weekDay">{{ designDate.split("(")[1].split(")")[0] }}曜日</span>
+                    <span class="Time">{{ designDate.split(")")[1] }}</span>
                 </p>
                 <p class="address">{{address}}</p>
             </div>
