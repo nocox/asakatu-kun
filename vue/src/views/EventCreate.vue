@@ -148,7 +148,6 @@
                 if (!this.request.startDate) {
                     this.errors.push('start date required.');
                 }
-                console.log(this.startTime);
 
                 this.request.startDate += "T" + this.startTime;
                 this.request.endDate += "T" + this.endTime;
@@ -163,7 +162,6 @@
                         this.$router.push('/events');
                     })
                     .catch(error => {
-                        console.error(error);
                         alert("some thing is error");
                     })
             }

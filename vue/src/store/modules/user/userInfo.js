@@ -15,7 +15,6 @@ const mutations = {
     },
     getActive(state, activation) {
         state.isLogin = activation;
-        console.log("getActive")
     },
     getUserName(state, username) {
         state.userName = username;
@@ -37,7 +36,7 @@ const actions = {
                 commit('setUserImage', userImagePath)
             })
             .catch(error => {
-                console.error(error);
+                alert('サーバからのデータ取得に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
     },
@@ -55,14 +54,12 @@ const actions = {
                             return false;
                         })
                         .catch(error => {
-                            console.error(error);
                             return true;
                         });
                 }
             )
             .catch(
                 error => {
-                    console.error(error);
                     return true;
                     // todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
                 })
@@ -103,4 +100,3 @@ export default {
     actions,
     mutations
 }
-

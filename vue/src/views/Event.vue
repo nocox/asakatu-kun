@@ -148,7 +148,6 @@
                     this.showModal = false;
                     this.$router.push('/events/joined');
                 }).catch(error => {
-                    console.error(error);
                     alert('サーバからのデータ取得に失敗しました');
                     // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
@@ -159,7 +158,6 @@
                         this.mapEventInfo(response);
                     })
                     .catch(error => {
-                        console.error(error);
                         alert('サーバからのデータ取得に失敗しました');
                         // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                     });
@@ -168,7 +166,7 @@
                         this.mapEventUsers(response);
                     })
                     .catch(error =>{
-                        console.error(error);
+                        alert('サーバからのデータ取得に失敗しました');
                     });
             },
             mapEventInfo(response){
