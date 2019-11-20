@@ -2,8 +2,7 @@
     <div class="event-card">
         <div class="left-container">
             <div class="Date-info">
-                <p class="startMonth">{{props.designDate}}</p>
-                <p class="startDate">{{}}</p>
+                <p class="startMonth">{{designDate}}</p>
             </div>
         </div>
         <div class="right-container">
@@ -12,16 +11,16 @@
                     <span class="weekDay">{{}}</span>
                     <span class="Time">{{}}</span>
                 </p>
-                <p class="address">{{props.address}}</p>
+                <p class="address">{{address}}</p>
             </div>
             <div class="detail-container">
                 <h2 class="event-title">
-                    {{props.eventTitle}}
+                    {{eventTitle}}
                 </h2>
                 <p class="description">
-                    {{props.eventDetail}}
+                    {{eventDetail}}
                 </p>
-                <div class="participant" v-for="user in props.joinedUserInfo" :key="user.id">
+                <div class="participant" v-for="user in joinedUserInfo" :key="user.id">
                     <img :src="user.imagePath" alt="user image" >
                 </div>
             </div>
@@ -33,22 +32,11 @@
     export default {
         name: "eventCard",
         props: {
-            designDate: Date,
+            designDate: String,
             address: String,
             eventTitle: String,
             eventDetail: String,
-            joinedUserInfo: [{id: Number,imagePath:String}],
-        },
-        data() {
-            return {}
-        },
-        computed: {
-            // ...mapState({})
-        },
-        methods: {
-            // ...mapMutations({}),
-            // ...mapActions({})
-
+            joinedUserInfo: Array,
         }
     }
 </script>
