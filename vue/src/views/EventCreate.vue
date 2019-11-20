@@ -1,123 +1,131 @@
 <template>
-    <main class="event-create">
-        <h2>イベントを作成</h2>
-        <form
-                id="event-create-form"
-                @submit="checkEventCreateForm"
-        >
-            <div v-if="errors.length">
-                <p>Please correct the following error(s):</p>
-                <ul>
-                    <li v-for="error in errors" :key="error">{{ error }}</li>
-                </ul>
-            </div>
-            <p>
-                <label for="name">イベント名
-                <input
-                        id="name"
-                        v-model="request.eventTitle"
-                        type="text"
-                        name="name"
-                >
-                </label>
-            </p>
-            <p class="form__start">
-                <label for="startDate"> 開始日時
-                  <div class="event-create-form--twoColumn">
-                    <input
-                            id="startDate"
-                            v-model="request.startDate"
-                            type="date"
-                            name="startDate"
-                    >
-                    <input
-                            id="startTime"
-                            v-model="startTime"
-                            type="time"
-                            name="startTime"
-                    >
-                  </div>
-
-                </label>
-            </p>
-            <p>
-                <label for="endDate">終了日時
-                  <div class="event-create-form--twoColumn">
-                    <input
-                              id="endDate"
-                              v-model="request.endDate"
+    <main>
+      <Header
+        before = "/events"
+      />
+      <div class="event-create">
+          <h2>イベントを作成</h2>
+          <form
+                  id="event-create-form"
+                  @submit="checkEventCreateForm"
+          >
+              <div v-if="errors.length">
+                  <p>Please correct the following error(s):</p>
+                  <ul>
+                      <li v-for="error in errors" :key="error">{{ error }}</li>
+                  </ul>
+              </div>
+              <p>
+                  <label for="name">イベント名
+                  <input
+                          id="name"
+                          v-model="request.eventTitle"
+                          type="text"
+                          name="name"
+                  >
+                  </label>
+              </p>
+              <p class="form__start">
+                  <label for="startDate"> 開始日時
+                    <div class="event-create-form--twoColumn">
+                      <input
+                              id="startDate"
+                              v-model="request.startDate"
                               type="date"
-                              name="endDate"
+                              name="startDate"
                       >
                       <input
-                              id="endTime"
-                              v-model="endTime"
+                              id="startTime"
+                              v-model="startTime"
                               type="time"
-                              name="endTime"
+                              name="startTime"
                       >
                     </div>
-                    </label>
-            </p>
 
-            <p>
-                <label for="address">開催住所
-                <input
-                        id="address"
-                        v-model="request.address"
-                        type="text"
-                        name="address"
-                >
+                  </label>
+              </p>
+              <p>
+                  <label for="endDate">終了日時
+                    <div class="event-create-form--twoColumn">
+                      <input
+                                id="endDate"
+                                v-model="request.endDate"
+                                type="date"
+                                name="endDate"
+                        >
+                        <input
+                                id="endTime"
+                                v-model="endTime"
+                                type="time"
+                                name="endTime"
+                        >
+                      </div>
+                      </label>
+              </p>
+
+              <p>
+                  <label for="address">開催住所
+                  <input
+                          id="address"
+                          v-model="request.address"
+                          type="text"
+                          name="address"
+                  >
+                  </label>
+              </p>
+              <p>
+                  <label for="storeName">店名
+                  <input
+                          id="storeName"
+                          v-model="request.storeName"
+                          type="text"
+                          name="storeName"
+                  >
+                  </label>
+              </p>
+              <p>
+                  <label for="seatInfo">開催場所のどこらへんに集合するか
+                  <input
+                          id="seatInfo"
+                          v-model="request.seatInfo"
+                          type="text"
+                          name="seatInfo"
+                  >
+                  </label>
+              </p>
+              <p>
+                  <label for="eventDetail">イベント詳細
+                  <textarea
+                          name="eventDetail"
+                          id="eventDetail"
+                          cols="30"
+                          rows="10"
+                          v-model="request.eventDetail"
+                          placeholder="イベント内容を入力してください"
+                  >
+                </textarea>
                 </label>
-            </p>
-            <p>
-                <label for="storeName">店名
-                <input
-                        id="storeName"
-                        v-model="request.storeName"
-                        type="text"
-                        name="storeName"
-                >
-                </label>
-            </p>
-            <p>
-                <label for="seatInfo">開催場所のどこらへんに集合するか
-                <input
-                        id="seatInfo"
-                        v-model="request.seatInfo"
-                        type="text"
-                        name="seatInfo"
-                >
-                </label>
-            </p>
-            <p>
-                <label for="eventDetail">イベント詳細
-                <textarea
-                        name="eventDetail"
-                        id="eventDetail"
-                        cols="30"
-                        rows="10"
-                        v-model="request.eventDetail"
-                        placeholder="イベント内容を入力してください"
-                >
-              </textarea>
-              </label>
-            </p>
-            <input
-                    type="submit"
-                    value="Submit"
-                    id="event_create--submit"
-                    class="primaryButton"
-            >
-        </form>
-    </main>
+              </p>
+              <input
+                      type="submit"
+                      value="Submit"
+                      id="event_create--submit"
+                      class="primaryButton"
+              >
+          </form>
+      </div>
+  </main>
 </template>
 
 <script>
     import event from "../api/event";
-
+    import Header from '@/components/common/Header.vue';
 
     export default {
         name: "EventCreate",
+        components: {
+          Header
+        },
         data() {
             return {
                 request: {
