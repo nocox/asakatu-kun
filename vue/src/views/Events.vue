@@ -1,5 +1,6 @@
 <template>
     <div id="events" class="event-list">
+        <Header/>
         <section>
             <div class="event-list-switch clearfix">
                     <div :class="{ active: isAll }" @click="all" class="event-list-switch-button">ホーム</div>
@@ -23,11 +24,13 @@
 <script>
     import {mapActions, mapState} from 'vuex'
     import EventList from '@/components/eventList/EventList.vue';
+    import Header from '@/components/common/Header.vue';
 
     export default {
         name: "Events",
         components: {
-            EventList
+            EventList,
+            Header
         },
         data() {
             return {

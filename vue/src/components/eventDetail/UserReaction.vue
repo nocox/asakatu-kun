@@ -30,34 +30,28 @@
             getReactionList: function(){
                 const reactionListResponse = axios.get('http://localhost:8080/reaction/list', {withCredentials: true});
                 reactionListResponse.then(response => {
-                        console.log("response.data");
-                        console.log(response.data);
                         this.reactionList =  response.data;
                     }
                 ).catch(function (error) {
-                  console.log(error);
+                  alert('サーバとの通信に失敗しました');
                 });
             },
             getMyReaction: function () {
                 const reactionListResponse = axios.get('http://localhost:8080/reaction/myself/' + this.eventId, {withCredentials: true});
                 reactionListResponse.then(response => {
-                        console.log("response.data");
-                        console.log(response.data);
                         this.myReaction =  response.data;
                     }
                 ).catch(function (error) {
-                    console.log(error);
+                    alert('サーバとの通信に失敗しました');
                 });
             },
             changeMyReaction: function (reactionId) {
                 const reactionListResponse = axios.put('http://localhost:8080/reaction/change/' + this.eventId + '/' + reactionId ,new FormData() ,{withCredentials: true});
                 reactionListResponse.then(response => {
-                        console.log("response.data");
-                        console.log(response.data);
                         this.myReaction =  response.data;
                     }
                 ).catch(function (error) {
-                    console.log(error);
+                    alert('サーバとの通信に失敗しました');
                 });
             }
         },

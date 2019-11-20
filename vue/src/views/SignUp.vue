@@ -1,5 +1,6 @@
 <template>
     <div id="sign_up">
+      <Header/>
         <main>
             <h2>新規会員登録</h2>
             <p class="linkToLogin"><small>
@@ -140,10 +141,14 @@
 <script>
     import user from "../api/user";
     import {USER_REGISTRATION_ERROR} from "../models/USER_REGISTRATION_ERROR";
+    import Header from '@/components/common/Header.vue';
+
 
     export default {
         name: "signUp",
-
+        components: {
+          Header
+        },
         data() {
             return {
                 request: {
@@ -263,5 +268,5 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
     @import "../assets/css/login-signup";
-    @import "../assets/css/button"; 
+    @import "../assets/css/button";
 </style>

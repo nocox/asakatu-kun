@@ -1,5 +1,6 @@
 <template>
     <div id="login">
+      <Header/>
         <main>
             <h2>ログイン</h2>
 
@@ -45,12 +46,14 @@
 </template>
 
 <script>
-
     import {mapActions, mapState} from "vuex";
+    import Header from '@/components/common/Header.vue';
 
     export default {
         name: "login",
-
+        components: {
+          Header
+        },
         data() {
             return {
                 request: {
@@ -95,5 +98,5 @@
     @import "../assets/css/base";
     @import "../assets/css/sign_up";
     @import "../assets/css/login-signup";
-    @import "../assets/css/button"; 
+    @import "../assets/css/button";
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="header__backBtn"></div>
+        <a class="header__backBtn" @click="back" v-bind:class="{ hidden: typeof this.before === 'undefined' }"></a>
         <router-link to="/events" class="header__profileImg">
             <h1 class="header__logo"><img alt="BizSpot" src="../../static/logo.png"></h1>
         </router-link>
@@ -19,7 +19,8 @@
     export default {
         name: 'Header',
         props: {
-            msg: String
+            msg: String,
+            before: String,
         },
         computed: {
             checkExistImagePath() {
@@ -28,6 +29,11 @@
             userImagePath() {
                 return this.$store.state.userImagePath;
             }
+        },
+        methods: {
+          back: function () {
+            this.$router.push(`${this.before}`)
+          }
         }
     }
 </script>
@@ -45,7 +51,6 @@
 
     .header {
         display: flex;
-        position: fixed;
         width: 100%;
         height: 72px;
         background: #FFF;
@@ -55,15 +60,8 @@
         justify-content: space-between;
         filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
 
-        /*&__icon {*/
-        /*    &-box {*/
-        /*        height: 34px;*/
-        /*        width: 34px;*/
-        /*    }*/
-        /*}*/
-
         &__backBtn {
-            position: relative;
+            position: absolute;
 
             &::before {
                 content: "";
@@ -95,6 +93,7 @@
 
             > img {
                 height: 100%;
+                margin: 0px 34vw;
             }
         }
 
