@@ -54,7 +54,7 @@
         computed: {
             ...mapState({
                 eventList: state => state.eventList.eventList,
-                joinedEventList: state => state.joinedEventList.eventList,
+                joinedEventList: state => state.eventList.joinedEventList,
             }),
         }
     }
