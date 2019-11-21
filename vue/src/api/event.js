@@ -7,6 +7,12 @@ const EventService = {
     getEventInfo(eventId) {
         return ApiService.get('/event/' + eventId);
     },
+    getEventList() {
+        return ApiService.get('/events');
+    },
+    getJoinedEventList() {
+        return ApiService.get('/joinevents');
+    },
     getUsers(eventId) {
         return ApiService.get('/event/' + eventId + '/users');
     },

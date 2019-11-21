@@ -2,28 +2,28 @@
     <div class="event-card">
         <div class="left-container">
             <div class="Date-info">
-                <p class="startMonth">{{}}</p>
-                <p class="startDate">{{}}</p>
+                <p class="startMonth">{{ designDate.split("日")[0] }}</p>
             </div>
         </div>
         <div class="right-container">
             <div class="info">
                 <p class="info-dateTime">
-                    <span class="weekDay">{{}}</span>
-                    <span class="Time">{{}}</span>
+                    <span class="weekDay">{{ designDate.split("(")[1].split(")")[0] }}曜日</span>
+                    <span class="Time">{{ designDate.split(")")[1] }}</span>
                 </p>
-                <p class="address">{{}}</p>
+                <p class="address">{{address}}</p>
             </div>
             <div class="detail-container">
                 <h2 class="event-title">
-                    {{}}
+                    {{eventTitle}}
                 </h2>
                 <p class="description">
-                    {{}}
+                    {{eventDetail}}
                 </p>
-                <img src="" alt="" class="participant">
+                <div class="participant" v-for="user in joinedUserInfo" :key="user.id">
+                    <img :src="user.imagePath" alt="user image" >
+                </div>
             </div>
-            <router-link to="/event/1"> aa</router-link>
         </div>
     </div>
 </template>
@@ -32,18 +32,11 @@
     export default {
         name: "eventCard",
         props: {
-            eventId: Number
-        },
-        data() {
-            return {}
-        },
-        computed: {
-            // ...mapState({})
-        },
-        methods: {
-            // ...mapMutations({}),
-            // ...mapActions({})
-
+            designDate: String,
+            address: String,
+            eventTitle: String,
+            eventDetail: String,
+            joinedUserInfo: Array,
         }
     }
 </script>
