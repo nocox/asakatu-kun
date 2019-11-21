@@ -4,8 +4,10 @@
           before = "/events"
         />
         <div class="user-info">
-            <h2 class="user-info__name">{{userName}}</h2>
             <img class="user-info__image" :src="userImage" alt="user image ">
+            <p class="user-info__name">{{displayName}}</p>
+            <p class="user-info__name">{{userName}}</p>
+            <p class="user-info__name">{{email}}</p>
         </div>
     </section>
 </template>
@@ -22,16 +24,20 @@
         },
         created: function () {
             this.setUserImage();
+            this.whoAmI();
         },
         methods: {
            ...mapActions('userInfo',[
-               'setUserImage'
+               'setUserImage',
+               'whoAmI'
            ])
         },
         computed: {
             ...mapState({
                 userName: state => state.userInfo.userName,
-                userImage: state => state.userInfo.userImagePath
+                userImage: state => state.userInfo.userImagePath,
+                displayName: state => state.userInfo.displayName,
+                email: state => state.userInfo.email
             }),
         }
     }
