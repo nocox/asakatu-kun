@@ -35,11 +35,13 @@ class SimpleUserResponse{
     private String username;
     private String imagePath;
     private String displayName;
+    private String email;
 
     public SimpleUserResponse(User user) {
         this.username = user.getUsername();
         this.imagePath = user.getImagePath();
         this.displayName = user.getDisplayName();
+        this.email = user.getEmail();
     }
 
     public String getUsername() {
@@ -64,5 +66,13 @@ class SimpleUserResponse{
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
