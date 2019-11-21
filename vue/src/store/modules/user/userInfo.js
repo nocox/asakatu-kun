@@ -66,6 +66,7 @@ const actions = {
                 commit('whoAmI', user)
             })
             .catch(error => {
+                console.log(error)
                 alert('名前の更新処理に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })

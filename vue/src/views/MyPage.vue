@@ -9,6 +9,18 @@
             <p class="user-info__name">{{userName}}</p>
             <p class="user-info__name">{{email}}</p>
         </div>
+
+        <form @submit="edit">
+            <p>
+                <input
+                        v-model="request.displayName"
+                        type="text"
+                        name="displayName"
+                >
+            </p>
+            <input type="submit" value="完了">
+        </form>
+
     </section>
 </template>
 
@@ -22,6 +34,13 @@
         components: {
           Header
         },
+        data() {
+          return {
+              request: {
+                  displayName: '',
+              }
+          }
+        },
         created: function () {
             this.setUserImage();
             this.whoAmI();
@@ -29,8 +48,13 @@
         methods: {
            ...mapActions('userInfo',[
                'setUserImage',
-               'whoAmI'
-           ])
+               'whoAmI',
+               'editDisplayName'
+           ]),
+           edit: function (){
+              this.editDisplayName(this.request);
+              console.log(this.request)
+           }
         },
         computed: {
             ...mapState({
