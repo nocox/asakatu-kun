@@ -59,6 +59,28 @@ const actions = {
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
     },
+    editDisplayName({commit}) {
+        user.editDisplayName()
+            .then(response => {
+                const user = response.data.data;
+                commit('whoAmI', user)
+            })
+            .catch(error => {
+                alert('名前の更新処理に失敗しました');
+                // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+            })
+    },
+    editImage({commit}) {
+        user.editImage()
+            .then(response => {
+                const user = response.data.data;
+                commit('whoAmI', user)
+            })
+            .catch(error => {
+                alert('名前の更新処理に失敗しました');
+                // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+            })
+    },
     getLogin({commit}, request) {
         const params = new URLSearchParams();
         params.append('username', request.name);
