@@ -10,13 +10,20 @@
             <p class="user-info__name">{{email}}</p>
         </div>
 
-        <form @submit="edit">
+        <form @submit="edit" enctype="multipart/form-data" method=GET>
             <p>
                 <input
                         v-model="request.displayName"
                         type="text"
                         name="displayName"
-                >
+                />
+            </p>
+            <p>
+                <input
+                        @change ="onFileChange"
+                        type="file"
+                        name="file"
+                />
             </p>
             <input type="submit" value="完了">
         </form>
@@ -38,6 +45,7 @@
           return {
               request: {
                   displayName: '',
+                  file: '',
               }
           }
         },
@@ -49,13 +57,17 @@
            ...mapActions('userInfo',[
                'setUserImage',
                'whoAmI',
-               'editDisplayName'
+               'userInfo'
            ]),
            edit: function (){
               console.log(this.request)
-              this.editDisplayName(this.request);
-              console.log(this.request)
-           }
+              this.userInfo(this.request);
+           },
+           onFileChange(e) {
+              let files = e.target.files;
+              this.file = files[0];
+              console.log(this.file)
+           },
         },
         computed: {
             ...mapState({
