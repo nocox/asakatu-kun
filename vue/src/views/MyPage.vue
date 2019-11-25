@@ -52,6 +52,7 @@
                'editDisplayName'
            ]),
            edit: function (){
+              console.log(this.request)
               this.editDisplayName(this.request);
               console.log(this.request)
            }

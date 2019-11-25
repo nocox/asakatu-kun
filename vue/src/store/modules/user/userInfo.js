@@ -59,8 +59,11 @@ const actions = {
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
     },
-    editDisplayName({commit}) {
-        user.editDisplayName()
+    editDisplayName({commit}, request) {
+        console.log(request)
+        const params = new URLSearchParams();
+        params.append('displayName', request.displayName);
+        user.editDisplayName(params)
             .then(response => {
                 const user = response.data.data;
                 commit('whoAmI', user)
