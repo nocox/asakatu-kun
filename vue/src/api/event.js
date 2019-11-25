@@ -18,8 +18,10 @@ const EventService = {
     },
     contract(eventId, request) {
         return ApiService.post('/event/' + eventId + '/user', request)
+    },
+    getUserReaction(eventId, userId){
+     return ApiService.get('/event/' + eventId + '/user' + userId)
     }
-
 };
 
 export default EventService;
