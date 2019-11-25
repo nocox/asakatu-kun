@@ -43,7 +43,7 @@ const actions = {
                 const userImagePath = response.data.data.imagePath;
                 commit('setUserImage', userImagePath)
             })
-            .catch(error => {
+            .catch(function() {
                 alert('サーバからのデータ取得に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
@@ -54,7 +54,7 @@ const actions = {
                 const user = response.data.data;
                 commit('whoAmI', user)
             })
-            .catch(error => {
+            .catch(function() {
                 alert('サーバからのデータ取得に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
@@ -80,7 +80,7 @@ const actions = {
                 const user = response.data.data;
                 commit('whoAmI', user)
             })
-            .catch(error => {
+            .catch(function() {
                 alert('名前の更新処理に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
@@ -98,17 +98,15 @@ const actions = {
                             commit('setUserImage', response.data.data.imagePath);
                             return false;
                         })
-                        .catch(error => {
+                        .catch(function (){
                             return true;
                         });
                 }
             )
-            .catch(
-                error => {
+            .catch(function (){
                     return true;
                     // todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
                 })
-
 
     },
     createUser(commit, request) {

@@ -24,7 +24,7 @@ const actions = {
             .then(() => {
                 this.$router.push('/events');
             })
-            .catch(error => {
+            .catch(function() {
                 alert("some thing is error");
             })
     },
@@ -33,7 +33,7 @@ const actions = {
             .then(response => {
                 commit('setEventInfo', response);
             })
-            .catch(error => {
+            .catch(function() {
                 alert('サーバからのデータ取得に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             });
@@ -41,7 +41,7 @@ const actions = {
             .then(users => {
                 commit('setEventUsers', users);
             })
-            .catch(error =>{
+            .catch(function() {
                 alert('サーバからのデータ取得に失敗しました');
             });
     },

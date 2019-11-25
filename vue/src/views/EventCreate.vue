@@ -169,7 +169,7 @@
                     .then(() => {
                         this.$router.push('/events');
                     })
-                    .catch(error => {
+                    .catch(function () {
                         alert("some thing is error");
                     })
             }
