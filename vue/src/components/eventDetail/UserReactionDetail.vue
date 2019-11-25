@@ -8,6 +8,9 @@
 </template>
 
 <script>
+
+    import event from "../../../api/event"
+
     export default {
         name: "UserReactionDetail",
         props:{
@@ -23,14 +26,18 @@
             }
         },
         methods:{
-            // GET /event/{eventId}/user/{userId}
-            // レスポンスめも
-            //"statusId": 1,
-            // "userName": "asakatu-kun",
-            // "displayName": "朝活くん",
-            // "imagePath": "https://avatars0.githubusercontent.com/u/50159106",
-            // "content": "https://4.bp.blogspot.com/-m56DCo_VDbQ/UU--ubQ1vTI/AAAAAAAAO84/CWFZIAw-zxY/s1600/kaizoku_mark.png",
-            // "comment": "おしゃべりしたい！"
+            getUserReaction:function (eventId, userId) {
+                event.getUserReaction(eventId,userId)
+                    .then( data =>{
+                        this.displayName = data.data.displayName;
+                        this.imagePath = data.data.imagePath;
+                        this.content = data.data.content;
+                        this.comment = data.data.comment;
+                    })
+                    .catch(()=>{
+                        alert('something is error, please retry later');
+                    })
+            }
         }
     }
 </script>
