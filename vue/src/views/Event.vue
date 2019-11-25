@@ -70,9 +70,7 @@
               </div>
           </modal-template>
 
-          <section v-if="this.hasJoin" class="reaction-change">
-              ここでリアクション変更
-          </section>
+          <user-reaction v-if="this.hasJoin" v-bind:eventId="eventId"/>
 
           <section class="event-participant section-margin">
               <h3 class="participant-title">参加メンバー</h3>
@@ -108,13 +106,14 @@
     import ModalTemplate from "../components/eventDetail/ModalTemplate";
     import event from "../api/event";
     import Header from '@/components/common/Header.vue';
+    import UserReaction from "@/components/eventDetail/UserReaction";
 
     export default {
         name: "Event",
         components: {
             ModalTemplate,
-            Header
-
+            Header,
+            UserReaction
         },
         template: '<modal-template></modal-template>',
         data() {
