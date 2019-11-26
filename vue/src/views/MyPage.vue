@@ -19,9 +19,9 @@
         </p>
         <p>
             <input
-                    @change ="onFileChange"
                     type="file"
                     name="file"
+                    ref="file"
             />
         </p>
         <input type="submit" @click="edit" value="完了">
@@ -42,7 +42,6 @@
           return {
               request: {
                   displayName: '',
-                  file: Object,
               }
           }
         },
@@ -54,17 +53,14 @@
            ...mapActions('userInfo',[
                'setUserImage',
                'whoAmI',
-               'userInfo'
+               'editDisplayName',
+               'editImage'
            ]),
            edit: function (){
-              console.log(this.request)
-              this.userInfo(this.request);
-           },
-           onFileChange(e) {
-              let files = e.target.files;
-              this.file = files[0];
-              console.log(this.file)
-           },
+              this.editDisplayName(this.request);
+              this.editImage(this.$refs.file.files[0]);
+              this.$router.push('/mypage');
+           }
         },
         computed: {
             ...mapState({
