@@ -154,7 +154,7 @@
                 participationEvent.then(() => {
                     this.showModal = false;
                     this.$router.push('/events/joined');
-                }).catch(error => {
+                }).catch(function () {
                     alert('サーバからのデータ取得に失敗しました');
                     // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                 });
@@ -164,7 +164,7 @@
                     .then(response => {
                         this.mapEventInfo(response);
                     })
-                    .catch(error => {
+                    .catch(function () {
                         alert('サーバからのデータ取得に失敗しました');
                         // TODO nocox エラーハンドリングが必要かも (2019/10/02)
                     });
@@ -172,7 +172,7 @@
                     .then(response => {
                         this.mapEventUsers(response);
                     })
-                    .catch(error =>{
+                    .catch(function () {
                         alert('サーバからのデータ取得に失敗しました');
                     });
             },

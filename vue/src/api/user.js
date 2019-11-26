@@ -20,5 +20,12 @@ import ApiService from "./config";
                 }
             });
      },
+     editDisplayName(request){
+        return ApiService.put('/user/edit/display_name', request);
+     },
+     editImage(request){
+        return ApiService.put('/user/edit/image', request);
+     },
+
  };
 export default UserService;

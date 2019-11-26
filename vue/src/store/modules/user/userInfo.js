@@ -4,7 +4,9 @@ import {USER_REGISTRATION_ERROR} from "../../../models/USER_REGISTRATION_ERROR";
 const state = {
     isLogin: false,
     userName: "",
-    userImagePath: ""
+    userImagePath: "",
+    displayName: "",
+    email: ""
 };
 
 const mutations = {
@@ -12,6 +14,8 @@ const mutations = {
         state.isLogin = false;
         state.userName = "";
         state.userImagePath = "";
+        state.displayName = "";
+        state.email = "";
     },
     getActive(state, activation) {
         state.isLogin = activation;
@@ -22,6 +26,10 @@ const mutations = {
     },
     setUserImage(state, imagePath) {
         state.userImagePath = imagePath;
+    },
+    whoAmI(state, user) {
+        state.displayName = user.displayName;
+        state.email = user.email;
     },
     getUserAllInfo(state, username, imagePath) {
         state.userName = username;
@@ -35,8 +43,46 @@ const actions = {
                 const userImagePath = response.data.data.imagePath;
                 commit('setUserImage', userImagePath)
             })
-            .catch(error => {
+            .catch(function() {
                 alert('サーバからのデータ取得に失敗しました');
+                // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+            })
+    },
+    whoAmI({commit}) {
+        user.whoAmI()
+            .then(response => {
+                const user = response.data.data;
+                commit('whoAmI', user)
+            })
+            .catch(function() {
+                alert('サーバからのデータ取得に失敗しました');
+                // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+            })
+    },
+    editDisplayName({commit}, request) {
+        const params = new URLSearchParams();
+        params.append('displayName', request.displayName);
+        user.editDisplayName(params)
+            .then(response => {
+                const user = response.data.data;
+                commit('whoAmI', user)
+            })
+            .catch(error => {
+                alert('名前の更新処理に失敗しました');
+                // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+            })
+    },
+    editImage({commit}, request) {
+        const params = new FormData();
+        params.append('file', request);
+        user.editImage(params)
+            .then(response => {
+                const user = response.data.data;
+                commit('whoAmI', user)
+                alert('成功したっぴ');
+            })
+            .catch(error => {
+                alert('画像の更新処理に失敗しました');
                 // TODO nocox エラーハンドリングが必要かも (2019/10/02)
             })
     },
@@ -49,21 +95,19 @@ const actions = {
                     commit('getActive', true);
                     return user.whoAmI()
                         .then((response) => {
-                            commit('getUserName', response.data.data.displayName);
+                            commit('getUserName', response.data.data.username);
                             commit('setUserImage', response.data.data.imagePath);
                             return false;
                         })
-                        .catch(error => {
+                        .catch(function (){
                             return true;
                         });
                 }
             )
-            .catch(
-                error => {
+            .catch(function (){
                     return true;
                     // todo: とりあえずエラー帰ってきたら間違ってますよ。と表示しているので、ステータスによって分岐する処理を書きたい。
                 })
-
 
     },
     createUser(commit, request) {

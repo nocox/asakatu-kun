@@ -32,7 +32,7 @@
                 reactionListResponse.then(response => {
                         this.reactionList =  response.data;
                     }
-                ).catch(function (error) {
+                ).catch(function () {
                   alert('サーバとの通信に失敗しました');
                 });
             },
@@ -41,7 +41,7 @@
                 reactionListResponse.then(response => {
                         this.myReaction =  response.data;
                     }
-                ).catch(function (error) {
+                ).catch(function () {
                     alert('サーバとの通信に失敗しました');
                 });
             },
@@ -50,7 +50,7 @@
                 reactionListResponse.then(response => {
                         this.myReaction =  response.data;
                     }
-                ).catch(function (error) {
+                ).catch(function () {
                     alert('サーバとの通信に失敗しました');
                 });
             }
