@@ -10,24 +10,21 @@
             <p class="user-info__name">{{email}}</p>
         </div>
 
-        <form @submit="edit" enctype="multipart/form-data" method=GET>
-            <p>
-                <input
-                        v-model="request.displayName"
-                        type="text"
-                        name="displayName"
-                />
-            </p>
-            <p>
-                <input
-                        @change ="onFileChange"
-                        type="file"
-                        name="file"
-                />
-            </p>
-            <input type="submit" value="完了">
-        </form>
-
+        <p>
+            <input
+                    v-model="request.displayName"
+                    type="text"
+                    name="displayName"
+            />
+        </p>
+        <p>
+            <input
+                    @change ="onFileChange"
+                    type="file"
+                    name="file"
+            />
+        </p>
+        <input type="submit" @click="edit" value="完了">
     </section>
 </template>
 
@@ -45,7 +42,7 @@
           return {
               request: {
                   displayName: '',
-                  file: '',
+                  file: Object,
               }
           }
         },

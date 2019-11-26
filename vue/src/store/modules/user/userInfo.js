@@ -61,18 +61,18 @@ const actions = {
     },
     userInfo({commit}, request) {
         console.log(request.file)
-        const params2 = new URLSearchParams();
-        params2.append('file', request.file);
-        user.editImage(params2)
-            .then(response => {
-                const user = response.data.data;
-                commit('whoAmI', user)
-            })
-            .catch(error => {
-                console.log(error)
-                alert('画像の更新処理に失敗しました');
-                // TODO nocox エラーハンドリングが必要かも (2019/10/02)
-            })
+        // const params2 = new FormData();
+        // params2.append('file', request.file);
+        // user.editImage(params2)
+        //     .then(response => {
+        //         const user = response.data.data;
+        //         commit('whoAmI', user)
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //         alert('画像の更新処理に失敗しました');
+        //         // TODO nocox エラーハンドリングが必要かも (2019/10/02)
+        //     })
         const params = new URLSearchParams();
         params.append('displayName', request.displayName);
         user.editDisplayName(params)
