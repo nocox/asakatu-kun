@@ -1,10 +1,9 @@
-
 CREATE TABLE IF NOT EXISTS user
 (
     user_id       BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     username      VARCHAR(50)  NOT NULL UNIQUE,
     email         VARCHAR(255) NOT NULL,
-    password      VARCHAR(255)  NOT NULL,
+    password      VARCHAR(255) NOT NULL,
     display_name  VARCHAR(50)  NOT NULL,
     image_path    VARCHAR(255),
     created_event BOOLEAN,
@@ -23,8 +22,8 @@ CREATE TABLE IF NOT EXISTS event
     store_name   VARCHAR(255),
     seat_info    VARCHAR(255),
     event_status ENUM ('yet', 'fin', 'canceled', 'progress'),
-    created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS user_event_association
@@ -78,7 +77,18 @@ CREATE TABLE IF NOT EXISTS user_group_association
     FOREIGN KEY (user_group_id) REFERENCES user_group (user_group_id)
 );
 
-INSERT INTO user_status_master(user_status_content) VALUES ('far fa-meh');
-INSERT INTO user_status_master(user_status_content) VALUES ('far fa-grin-squint-tears');
-INSERT INTO user_status_master(user_status_content) VALUES ('far fa-smile');
-INSERT INTO user_status_master(user_status_content) VALUES ('far fa-dizzy');
+INSERT INTO user_status_master(user_status_master_id, user_status_content)
+VALUES (1, 'far fa-meh')
+ON DUPLICATE KEY UPDATE user_status_master_id=1;
+
+INSERT INTO user_status_master(user_status_master_id, user_status_content)
+VALUES (2, 'far fa-grin-squint-tears')
+ON DUPLICATE KEY UPDATE user_status_master_id=2;
+
+INSERT INTO user_status_master(user_status_master_id, user_status_content)
+VALUES (3, 'far fa-smile')
+ON DUPLICATE KEY UPDATE user_status_master_id=3;
+
+INSERT INTO user_status_master(user_status_master_id, user_status_content)
+VALUES (4, 'far fa-dizzy')
+ON DUPLICATE KEY UPDATE user_status_master_id=4;
