@@ -25,7 +25,7 @@
                   >
                   </label>
               </p>
-              <p class="form__start">
+              <p>
                   <label for="startDate"> 開催日
                     <div class="event-create-form--twoColumn">
                       <input
