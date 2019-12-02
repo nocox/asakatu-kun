@@ -25,8 +25,8 @@
                   >
                   </label>
               </p>
-              <p class="form__start">
-                  <label for="startDate"> 開始日時
+              <p>
+                  <label for="startDate"> 開催日
                     <div class="event-create-form--twoColumn">
                       <input
                               id="startDate"
@@ -34,25 +34,26 @@
                               type="date"
                               name="startDate"
                       >
-                      <input
-                              id="startTime"
-                              v-model="startTime"
-                              type="time"
-                              name="startTime"
-                      >
                     </div>
 
                   </label>
               </p>
               <p>
-                  <label for="endDate">終了日時
+                  <label>イベント時間
                     <div class="event-create-form--twoColumn">
-                      <input
+                      <!-- <input
                                 id="endDate"
                                 v-model="request.endDate"
                                 type="date"
                                 name="endDate"
+                        > -->
+                        <input
+                                id="startTime"
+                                v-model="startTime"
+                                type="time"
+                                name="startTime"
                         >
+                        <span class="duration">~</span>
                         <input
                                 id="endTime"
                                 v-model="endTime"
@@ -62,19 +63,8 @@
                       </div>
                       </label>
               </p>
-
               <p>
-                  <label for="address">開催住所
-                  <input
-                          id="address"
-                          v-model="request.address"
-                          type="text"
-                          name="address"
-                  >
-                  </label>
-              </p>
-              <p>
-                  <label for="storeName">店名
+                  <label for="storeName">開催場所名
                   <input
                           id="storeName"
                           v-model="request.storeName"
@@ -84,7 +74,17 @@
                   </label>
               </p>
               <p>
-                  <label for="seatInfo">開催場所のどこらへんに集合するか
+                  <label for="address">開催場所の住所
+                  <input
+                          id="address"
+                          v-model="request.address"
+                          type="text"
+                          name="address"
+                  >
+                  </label>
+              </p>
+              <p>
+                  <label for="seatInfo">開催場所内での集合位置
                   <input
                           id="seatInfo"
                           v-model="request.seatInfo"
@@ -221,10 +221,14 @@
         &--twoColumn {
           display: flex;
           > input {
-            width: 40%;
+            width: 35%;
             & + input {
               margin-left: 5%;
             }
+          }
+          .duration {
+            font-size: 1.5rem;
+            line-height: 3rem;
           }
         }
       }
